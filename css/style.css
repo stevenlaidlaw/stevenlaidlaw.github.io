@@ -69,11 +69,12 @@ hr.small {
   border-color: #fff;
 }
 .navbar-custom {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 3;
+  background-color: #242424;
 }
 .navbar-custom .navbar-brand {
   font-weight: 800;
