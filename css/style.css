@@ -87,6 +87,9 @@ hr.small {
   text-decoration: none;
 }
 @media only screen and (min-width: 768px) {
+  .navbar-custom {
+    border-bottom: 1px solid transparent;
+  }
   .navbar-custom .navbar-brand {
     color: #fff;
     padding: 20px;
