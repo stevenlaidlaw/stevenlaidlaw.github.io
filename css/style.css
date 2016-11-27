@@ -170,6 +170,7 @@ hr.small {
   .intro-header .post-heading,
   .intro-header .page-heading {
     padding: 80px 0;
+    margin-top: 60px;
   }
 }
 .intro-header .site-heading.archives,
