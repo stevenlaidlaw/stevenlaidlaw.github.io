@@ -69,7 +69,7 @@ hr.small {
   border-color: #fff;
 }
 .navbar-custom {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -87,10 +87,6 @@ hr.small {
   text-decoration: none;
 }
 @media only screen and (min-width: 768px) {
-  .navbar-custom {
-    background: transparent;
-    border-bottom: 1px solid transparent;
-  }
   .navbar-custom .navbar-brand {
     color: #fff;
     padding: 20px;
