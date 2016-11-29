@@ -421,6 +421,13 @@ form .row:first-child .floating-label-form-group {
   background-color: #404040;
   cursor: not-allowed;
 }
+.designBlock {
+  text-align: center;
+}
+.designBlock .design {
+  display: inline-block;
+  margin: 3px;
+}
 ::-moz-selection {
   color: #fff;
   text-shadow: none;
