@@ -427,6 +427,7 @@ form .row:first-child .floating-label-form-group {
 .designBlock .design {
   display: inline-block;
   margin: 3px;
+  box-shadow: 0 0 5px #888;
 }
 ::-moz-selection {
   color: #fff;
