@@ -430,6 +430,9 @@ form .row:first-child .floating-label-form-group {
   height: 250px;
   box-shadow: 0 0 5px #888;
 }
+.designBlock .design img {
+  height: 100%;
+}
 ::-moz-selection {
   color: #fff;
   text-shadow: none;
