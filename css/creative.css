@@ -386,8 +386,8 @@ footer #footer-logo {
 }
 
 .post-preview {
-	padding: 8pt 0;
-	border-top: 1px solid #ddd;
+	padding: 0;
+	border-bottom: 1px solid #f6f6f6;
 }
 
 .post {
@@ -395,13 +395,13 @@ footer #footer-logo {
 }
 
 .post-preview h6 {
-	color: #ccc;
+	color: #aaa;
 }
 
 .count {
 	text-align: right;
 	margin-top: -16px;
-	color: #ccc;
+	color: #888;
 	font-size: 80%;
 }
 
@@ -410,16 +410,15 @@ main {
 }
 
 section {
-	width: calc(100% - 32px);
-	padding: 16px;
-	background: #444;
-	color: #fff;
-	border-radius: 4pt;
+	width: 100%;
+	padding: 8px 16px;
+	background: #fdfdfd;
+	border: 1px solid #eee;
 	margin-bottom: 16px;
 }
 
 section h3 {
-	color: #fff;
+	/*color: #fff;*/
 }
 
 
