@@ -395,7 +395,8 @@ footer #footer-logo {
 }
 
 .post-preview h6 {
-	color: #aaa;
+	color: #888;
+	font-weight: 200;
 }
 
 .count {
