@@ -366,9 +366,10 @@ footer {
 	margin-top: 64px;
 	padding: 64px 0;
 	font-size: 80%;
-	color: #888!important;
+	color: #fff;
 	text-transform: uppercase;
-	background-color: #111 !important
+	background: url(../img/background.jpg);
+	background-position: center;
 }
 
 footer #footer-logo {
