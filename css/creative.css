@@ -364,7 +364,7 @@ img::-moz-selection {
 
 footer {
 	margin-top: 64px;
-	padding: 64px 0;
+	padding: 128px 0;
 	font-size: 80%;
 	color: #fff;
 	text-transform: uppercase;
@@ -443,4 +443,22 @@ smallhead {
 	background-size: cover;
 	-o-background-size: cover;
 	padding: 30px 0 60px;
+}
+
+.review {
+	border-bottom: 1px solid #f6f6f6;
+	margin-bottom: 8px;
+}
+
+.review > .stars {
+	color: #ffd752;
+}
+
+.review > p {
+	margin-bottom: 8px;
+	font-size: 90%;
+}
+
+.center {
+	text-align: center;
 }

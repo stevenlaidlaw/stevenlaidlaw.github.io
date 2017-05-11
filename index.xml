@@ -317,6 +317,15 @@ This is essentially the same as the complaint above, but rooted more in pompousn
     
     <item>
       <title></title>
+      <link>/blog/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title></title>
       <link>/contact/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
@@ -332,7 +341,7 @@ This is essentially the same as the complaint above, but rooted more in pompousn
       <guid>/about/</guid>
       <description>
 
-&lt;p&gt;&lt;img src=&#34;http://www.stevenlaidlaw.com/img/portrait.jpg&#34; alt=&#34;So Handsome&#34; style=&#34;width: 300px;margin-right:24px;&#34; align=&#34;left&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://www.stevenlaidlaw.com/img/portrait.jpg&#34; alt=&#34;So Handsome&#34; style=&#34;width:40%;margin-right:24px;&#34; align=&#34;left&#34;/&gt;&lt;/p&gt;
 
 &lt;p&gt;Steven Laidlaw was born in Western Australia and moved around a lot as a kid. As a teenager a drunk friend introduced him to Raymond Feist, and so began a quest to read as many fantasy novels as he could get his hands on (which, being in a kid rural Australia in the 90s, wasn&amp;rsquo;t very many). Naturally this led to attempting writing a few, but as is genrally the case with youth it never really progressed anywhere.&lt;/p&gt;
 
@@ -374,7 +383,7 @@ This is essentially the same as the complaint above, but rooted more in pompousn
 
 &lt;h3 id=&#34;book-1-pulse&#34;&gt;&lt;em&gt;Book 1 - Pulse&lt;/em&gt;&lt;/h3&gt;
 
-&lt;p&gt;&lt;img src=&#34;/img/pulse.png&#34; alt=&#34;Pulse Cover Image&#34; title=&#34;Pulse Cover Image&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://www.stevenlaidlaw.com/img/pulse.png&#34; alt=&#34;Pulse Cover Image&#34; style=&#34;width:20%;margin-right:24px;&#34; align=&#34;left&#34;/&gt;&lt;/p&gt;
 
 &lt;p&gt;Pickpocket Alexandra Murray has grown up learning that you can never rely on anyone but yourself, and since terrorist attacks gave the military power to act on US soil, it&amp;rsquo;s made life hard for someone who relies on stealing to survive.&lt;/p&gt;
 
@@ -386,7 +395,7 @@ This is essentially the same as the complaint above, but rooted more in pompousn
 
 &lt;h3 id=&#34;book-2-blink&#34;&gt;&lt;em&gt;Book 2 - Blink&lt;/em&gt;&lt;/h3&gt;
 
-&lt;p&gt;&lt;img src=&#34;/img/blink.png&#34; alt=&#34;Blink Cover Image&#34; title=&#34;Blink Cover Image&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://www.stevenlaidlaw.com/img/blink.png&#34; alt=&#34;Blink Cover Image&#34; style=&#34;width:20%;margin-right:24px;&#34; align=&#34;left&#34;/&gt;&lt;/p&gt;
 
 &lt;p&gt;Alexandra Murray is back and this time the stakes have been raised to their deadliest heights. After being on the run for months – from people that were once friends – she finds herself at the end of her rope and taking risks she would never have considered in the past.&lt;/p&gt;
 
