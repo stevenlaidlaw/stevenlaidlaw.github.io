@@ -4,8 +4,9 @@ body {
 	font-weight: 300;
 	font-size: 20px;
 	margin: 0;
-	padding: 0;
+	padding: 4px 0 0;
 	color: #444;
+	overflow-x: hidden;
 }
 
 h1:first-child {
@@ -17,18 +18,71 @@ a {
 	text-decoration: none;
 	color: cornflowerblue;
 	font-weight: bold;
-	transition: .5s;
 }
 
 a:hover {
 	opacity: 0.5;
+	transition: .5s;
+}
+
+@keyframes marquee {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(-50%);
+	}
 }
 
 .rainbow {
 	padding: 4px;
-	background: linear-gradient(90deg, lightblue, lightcoral, lightgoldenrodyellow, lightgreen, lightpink);
+	background: linear-gradient(90deg, lightblue, lightcoral, lightgoldenrodyellow, lightgreen, lightpink, lightblue, lightcoral, lightgoldenrodyellow, lightgreen, lightpink, lightblue);
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 200%;
+	animation: marquee 7s linear 0s infinite;
+}
+
+@keyframes loadin {
+	from {
+		opacity: 0;
+		transform: translateY(1em);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+h1, h2, p {
+	opacity: 0;
 }
 
 .content {
 	padding: 2em;
+}
+
+.content > h1 {
+	animation: loadin 0.6s linear 0s forwards;
+}
+
+.content > h2 {
+	animation: loadin 0.6s linear 1s forwards;
+}
+
+.content > p:nth-child(3) {
+	animation: loadin 0.6s linear 2s forwards;
+}
+
+.content > p:nth-child(4) {
+	animation: loadin 0.6s linear 3s forwards;
+}
+
+.content > p:nth-child(5) {
+	animation: loadin 0.6s linear 4s forwards;
+}
+
+.content > p:nth-child(6) {
+	animation: loadin 0.6s linear 5s forwards;
 }
