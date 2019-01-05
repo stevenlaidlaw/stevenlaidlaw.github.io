@@ -1,29 +1,25 @@
 body {
-	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial,
-	'Lucida Grande', sans-serif;
+	font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
 	font-weight: 300;
-	font-size: 20px;
+	font-size: 21px;
 	margin: 0;
-	padding: 4px 0 0;
-	color: #444;
-	overflow-x: hidden;
-}
-
-h1:first-child {
-	padding-top: 0;
-	margin-top: 0;
+	padding: 0;
+	color: #232323;
 }
 
 a {
 	text-decoration: none;
 	color: cornflowerblue;
-	font-weight: bold;
 }
 
 a:hover {
-	opacity: 0.5;
+	opacity: 0.6;
 	transition: .5s;
 }
+
+/**************************************/
+/* ANIMATIONS                         */
+/**************************************/
 
 @keyframes marquee {
 	from {
@@ -34,8 +30,51 @@ a:hover {
 	}
 }
 
-.rainbow {
-	padding: 4px;
+/**************************************/
+/* HEADER                             */
+/**************************************/
+
+.header {
+	width: calc(100% - 1em);
+	margin: 0 auto;
+	max-width: 1200px;
+	display: flex;
+	align-items: center;
+	padding: 0 0.5em;
+	height: 2.5em;
+}
+
+.header > .logo {
+	flex: 1;
+	font-size: 1.5em;
+}
+
+.header > .logo > a {
+	color: #232323;
+	font-weight: bold;
+}
+
+.header > .nav {
+	display: block;
+	font-size: 0.8em;
+	text-transform: uppercase;
+	padding: 0 1em;
+	font-weight: normal;
+}
+
+.header > .nav:hover {
+	opacity: 1;
+}
+
+.rainbowContainer {
+	width: 100%;
+	position: relative;
+	overflow-x: hidden;
+	height: 4px;
+}
+
+.rainbowContainer > .rainbow {
+	height: 4px;
 	background: linear-gradient(90deg, lightblue, lightcoral, lightgoldenrodyellow, lightgreen, lightpink, lightblue, lightcoral, lightgoldenrodyellow, lightgreen, lightpink, lightblue);
 	position: absolute;
 	top: 0;
@@ -44,45 +83,13 @@ a:hover {
 	animation: marquee 7s linear 0s infinite;
 }
 
-@keyframes loadin {
-	from {
-		opacity: 0;
-		transform: translateY(1em);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
-}
-
-h1, h2, p {
-	opacity: 0;
-}
+/**************************************/
+/* MAIN                               */
+/**************************************/
 
 .content {
-	padding: 2em;
-}
-
-.content > h1 {
-	animation: loadin 0.6s linear 0s forwards;
-}
-
-.content > h2 {
-	animation: loadin 0.6s linear 1s forwards;
-}
-
-.content > p:nth-child(3) {
-	animation: loadin 0.6s linear 2s forwards;
-}
-
-.content > p:nth-child(4) {
-	animation: loadin 0.6s linear 3s forwards;
-}
-
-.content > p:nth-child(5) {
-	animation: loadin 0.6s linear 4s forwards;
-}
-
-.content > p:nth-child(6) {
-	animation: loadin 0.6s linear 5s forwards;
+	padding: 0.5em;
+	margin: 0 auto;
+	max-width: 1200px;
+	line-height: 1.6;
 }
