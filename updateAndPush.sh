@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-npm run build
+# After npm run build
 rsync -aivP public/ ../stevenlaidlaw/
 
 git add .
