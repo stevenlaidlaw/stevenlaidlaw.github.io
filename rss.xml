@@ -1,4 +1,171 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Steven Laidlaw]]></title><description><![CDATA[My blog]]></description><link>http://stevenlaidlaw.com/</link><generator>RSS for Node</generator><lastBuildDate>Sun, 10 Mar 2019 23:34:50 GMT</lastBuildDate><item><title><![CDATA[Perixi]]></title><description><![CDATA[This post will always contain the latest version of Perixi for each OS. Windows (1.1.0) OSX (1.1.1) Linux (1.1.1)   deb amd64]]></description><link>http://stevenlaidlaw.com//perixi-latest/</link><guid isPermaLink="false">http://stevenlaidlaw.com//perixi-latest/</guid><pubDate>Fri, 11 Jan 2019 18:43:02 GMT</pubDate><content:encoded>&lt;p&gt;This post will always contain the latest version of Perixi for each OS.&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Steven Laidlaw]]></title><description><![CDATA[My blog]]></description><link>http://stevenlaidlaw.com/</link><generator>RSS for Node</generator><lastBuildDate>Mon, 06 May 2019 23:31:11 GMT</lastBuildDate><item><title><![CDATA[Learn Docker via an Over-engineered Todo]]></title><description><![CDATA[Learning new stuff is hard, so today I’m going to guide you through using Docker by over-engineering the hell out of Todo app. We will build…]]></description><link>http://stevenlaidlaw.com//overengineered-todo/</link><guid isPermaLink="false">http://stevenlaidlaw.com//overengineered-todo/</guid><pubDate>Mon, 06 May 2019 21:28:02 GMT</pubDate><content:encoded>&lt;p&gt;Learning new stuff is hard, so today I’m going to guide you through using Docker by over-engineering the hell out of Todo app. We will build a three-tier, RESTful web app running multiple containers. You know, like a normal person would.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Disclaimer:&lt;/strong&gt; All the commands here will assume you’re running Linux. If you’re not, then substitute the commands for your OS.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;The Specification&lt;/h2&gt;
+&lt;p&gt;First we need to lay out the spec to make sure we know what we’re building. For a standard three-tier app we’d need three separate containers that spoke to each other: the DB, the server, and the app.&lt;/p&gt;
+&lt;p&gt;For these I chose to use Postgres, Express, and React, respectively, but those technologies aren’t the point of this article and can be replaced with anything you need. I’ll include some of that code just so you understand what is going on, but won’t go deep into detail on them.&lt;/p&gt;
+&lt;p&gt;The complete code is available in a link to my GitHub at the end of the article, so if you’re interested in that part (or making fun of me for bad code) then feel free to peruse.&lt;/p&gt;
+&lt;p&gt;In any case, here is the basic spec I came up with:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Database container automatically initialise with relevant structure.&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Express server with the following RESTful endpoints:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;GET&lt;/strong&gt; &lt;em&gt;/todo&lt;/em&gt; - List all todos&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;POST&lt;/strong&gt; &lt;em&gt;/todo&lt;/em&gt; - Insert a new todo &lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;PATCH&lt;/strong&gt; &lt;em&gt;/todo/:id&lt;/em&gt; - Update the relevant todo&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;React app that consumes the endpoints to update the database.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;So it’s a weak spec. I’m not a Product Manager, sue me, but it serves our purpose.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; You might notice there is no DELETE endpoint. This is deliberate, as it’s been drilled into me never to delete user data. Instead we will flag items as deleted in the database.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;So let’s create our directory structure:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token function&quot;&gt;mkdir&lt;/span&gt; -p overengineeredTodo/&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;app,db,server&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;cd&lt;/span&gt; overengineeredTodo&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;The Database Container&lt;/h2&gt;
+&lt;p&gt;First we need to create the database which will persist our Todos. This is one of the simplest parts of Docker as containers for all your standard databases already exist. Whatever you’re familiar with there is very likely to be a container for you. As I’m using Postgres we just need two files:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The Dockerfile&lt;/li&gt;
+&lt;li&gt;The DB init SQL file&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Let’s create them:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token function&quot;&gt;touch&lt;/span&gt; Dockerfile todo-init.sql&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The &lt;em&gt;Dockerfile&lt;/em&gt; file is what tells Docker what you want it to do and thanks to the pre-existing containers are really simple to use. Open it up in your editor of choice and enter the following line:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;dockerfile&quot;&gt;&lt;pre class=&quot;language-dockerfile&quot;&gt;&lt;code class=&quot;language-dockerfile&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;FROM&lt;/span&gt; postgres&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;9.5
+&lt;span class=&quot;token keyword&quot;&gt;ENV&lt;/span&gt; POSTGRES_DB tododb
+&lt;span class=&quot;token keyword&quot;&gt;COPY&lt;/span&gt; todo&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;init.sql /docker&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;entrypoint&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;initdb.d/&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Boom. That’s it. Using just that first line you can have a running, containerised instance of Postgres 9.5 running on your machine. The second is an optional environment variable to rename the database from the default. I’ve called it “tododb”, but you can call it whatever you want. The third is a bit of Postgres specific magic that will allow us to run some SQL when the container is first initialised. Any files (you can have multiple) that are copied over to &lt;em&gt;/docker-entrypoint-initdb.d/&lt;/em&gt; will be run automatically.&lt;/p&gt;
+&lt;p&gt;Of course now we need to fill that file with data, so let’s open up &lt;em&gt;todo-init.sql&lt;/em&gt; and enter our database structure inside:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;sql&quot;&gt;&lt;pre class=&quot;language-sql&quot;&gt;&lt;code class=&quot;language-sql&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;create&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;table&lt;/span&gt; todo &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+	id &lt;span class=&quot;token keyword&quot;&gt;serial&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;primary&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+	label &lt;span class=&quot;token keyword&quot;&gt;varchar&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;256&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+	complete &lt;span class=&quot;token keyword&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+	deleted &lt;span class=&quot;token keyword&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+	updated_date &lt;span class=&quot;token keyword&quot;&gt;timestamp&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;current_timestamp&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Here we’re setting an id, a label, two flags for whether the todo is complete or deleted, and a timestamp for when the item was last updated. That’s really all we need to do for the database.&lt;/p&gt;
+&lt;h2&gt;The Server Container&lt;/h2&gt;
+&lt;p&gt;We won’t go into full detail on the server as it’s all specific to Express and Postgres, but you can view the relevant files in my &lt;a href=&quot;https://github.com/stevenlaidlaw/OverengineeredTodo/blob/master/server/server.js&quot;&gt;GitHub, here&lt;/a&gt;. There are just some things to take note of relating to Docker that I’d like to call attention to:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Use environment variables for all the DB and server information.&lt;/li&gt;
+&lt;li&gt;CORS. We have to make sure to use CORS, as the separate containers are cross-origin.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Now run the commands to create the package.json file and install the required dependencies:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token function&quot;&gt;npm&lt;/span&gt; init &lt;span class=&quot;token operator&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;npm&lt;/span&gt; i -S express body-parser cors pg-promise&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;We also want to modify the scripts in package.json to allow the container to run it:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;js&quot;&gt;&lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;token operator&quot;&gt;...&lt;/span&gt;
+	&lt;span class=&quot;token string&quot;&gt;&quot;scripts&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;token string&quot;&gt;&quot;start&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;node server.js&quot;&lt;/span&gt;
+	&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+	&lt;span class=&quot;token operator&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Once this is set up you can go ahead and create another &lt;em&gt;Dockerfile&lt;/em&gt; file in the server directory. We’ll go through this one a few lines at a time as it’s the most complex of the three.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;dockerfile&quot;&gt;&lt;pre class=&quot;language-dockerfile&quot;&gt;&lt;code class=&quot;language-dockerfile&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;FROM&lt;/span&gt; node&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;8
+&lt;span class=&quot;token keyword&quot;&gt;WORKDIR&lt;/span&gt; /usr/src/app&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;First we set the base container to be node 8 so that we can run the express server and set the working directory to &lt;em&gt;/usr/src/app&lt;/em&gt;. This will determine where all the files we copy from this point on end up in the container’s filesystem.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;dockerfile&quot;&gt;&lt;pre class=&quot;language-dockerfile&quot;&gt;&lt;code class=&quot;language-dockerfile&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;COPY&lt;/span&gt; package*.json ./
+&lt;span class=&quot;token keyword&quot;&gt;RUN&lt;/span&gt; npm install&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now we copy over the package files and then use the &lt;strong&gt;RUN&lt;/strong&gt; command to install the relevant dependencies. &lt;strong&gt;RUN&lt;/strong&gt; is a build step in the image, and you can have as many of those as you like. We include the wildcard in &lt;strong&gt;COPY&lt;/strong&gt; to make sure we transfer over the &lt;em&gt;package-lock.json&lt;/em&gt; file too.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;dockerfile&quot;&gt;&lt;pre class=&quot;language-dockerfile&quot;&gt;&lt;code class=&quot;language-dockerfile&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;COPY&lt;/span&gt; server.js ./
+&lt;span class=&quot;token keyword&quot;&gt;CMD&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;npm&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;start&quot;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now we copy over the actual server file, and then run it! Here we use &lt;strong&gt;CMD&lt;/strong&gt;, which describes what the container executes when you launch it. There can only be one &lt;strong&gt;CMD&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2&gt;The Application Container&lt;/h2&gt;
+&lt;p&gt;For ease of use I used ‘create-react-app’ for this, but you can use whatever you like. Here I made a choice to run the builds locally and then copy over the built files to the Docker image. This is a judgement call, as you can just as well copy over the package.json files and run the build as part of the Dockerfile using the &lt;strong&gt;RUN&lt;/strong&gt; command (just like our server did).&lt;/p&gt;
+&lt;p&gt;As with the server file I won’t go into full detail in this post, but you can find the full application logic &lt;a href=&quot;https://github.com/stevenlaidlaw/OverengineeredTodo/blob/master/app/src/App.js&quot;&gt;here&lt;/a&gt;. It’s a fairly basic todo app written in React.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;dockerfile&quot;&gt;&lt;pre class=&quot;language-dockerfile&quot;&gt;&lt;code class=&quot;language-dockerfile&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;FROM&lt;/span&gt; nginx
+&lt;span class=&quot;token keyword&quot;&gt;COPY&lt;/span&gt; build /usr/share/nginx/html&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;First we use the base ‘nginx’ image to use as our webserver, and then copy over the build output. We will ensure that the build folder always contains the latest build by adding it to our build step.&lt;/p&gt;
+&lt;h2&gt;Bringing it all together&lt;/h2&gt;
+&lt;p&gt;Now that all the individual container images are configured we can use Docker Compose to orchestrate it. Docker Compose is a tool for defining and running multi-container applications, so it’s exactly what we need here! Drop back to the base &lt;em&gt;overengineeredTodo&lt;/em&gt; directory and run the following command:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token function&quot;&gt;touch&lt;/span&gt; docker-compose.yml&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This will create a configuration file for us to define how the containers should be brought up. First I’ll dump the whole file here, and the we’ll go through each command and what it does.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;yaml&quot;&gt;&lt;pre class=&quot;language-yaml&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;2.1&apos;&lt;/span&gt;
+&lt;span class=&quot;token key atrule&quot;&gt;services&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+
+  &lt;span class=&quot;token key atrule&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;app&apos;&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;restart&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; on&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;failure
+    &lt;span class=&quot;token key atrule&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; 8888&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;80&lt;/span&gt;
+
+  &lt;span class=&quot;token key atrule&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;db&apos;&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;restart&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; on&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;failure
+    &lt;span class=&quot;token key atrule&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; 5444&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;5432&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;healthcheck&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;CMD-SHELL&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;pg_isready -h localhost -U postgres&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;interval&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 10s
+      &lt;span class=&quot;token key atrule&quot;&gt;timeout&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 5s
+      &lt;span class=&quot;token key atrule&quot;&gt;retries&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;20&lt;/span&gt;
+
+  &lt;span class=&quot;token key atrule&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;server&apos;&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;restart&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; on&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;failure
+    &lt;span class=&quot;token key atrule&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; 8889&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;8889&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;environment&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; DB_HOST=localhost
+      &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; DB_PORT=5444
+      &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; DB_NAME=tododb
+      &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; DB_USERNAME=postgres
+      &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; DB_PASSWORD=postgres
+      &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; API_HOST=localhost
+      &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; API_PORT=8889
+    &lt;span class=&quot;token key atrule&quot;&gt;network_mode&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;host&apos;&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;depends_on&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;token key atrule&quot;&gt;condition&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; service_healthy&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;First we set the &lt;em&gt;version&lt;/em&gt;. This tells us which format the docker-compose file should take. I’m personally using 2.1 as it’s the one I’m most familiar with, but if you’re starting a new project you should use the latest which, at time of this writing, is 3.7.&lt;/p&gt;
+&lt;p&gt;Next we build the services. These can be named whatever you like. Common to each service are a few commands.&lt;/p&gt;
+&lt;h3&gt;Common Commands&lt;/h3&gt;
+&lt;p&gt;First is the &lt;em&gt;build&lt;/em&gt; command, which is a path to a directory that contains a &lt;em&gt;Dockerfile&lt;/em&gt;. This tells Compose where to find the images for building.&lt;/p&gt;
+&lt;p&gt;The next shared command is &lt;em&gt;restart&lt;/em&gt;, which I’ve set to &lt;em&gt;on-failure&lt;/em&gt;. This ensures the containers restart themselves if there are any issues.&lt;/p&gt;
+&lt;p&gt;The last common command is &lt;em&gt;ports&lt;/em&gt;, which maps the relevant ports for each container.&lt;/p&gt;
+&lt;p&gt;For the ports I’ve done a few different things. On &lt;em&gt;app&lt;/em&gt; I’ve remapped port 80 to 8888. This is for development purposes, and would likely just stay on port 80 in a live deployment environment. Similarly, I’ve remapped the default postgres port (5432) to &lt;em&gt;5444&lt;/em&gt;. This isn’t necessary at all, but I’ve got various other postgres containers running on my machine, so that’s what you’re stuck with.&lt;/p&gt;
+&lt;h3&gt;Unique Commands&lt;/h3&gt;
+&lt;h4&gt;healthcheck&lt;/h4&gt;
+&lt;p&gt;This command is used to check on the health of the container and determine whether it’s ready for operation. This is important for the database as if we attempt to bring up the &lt;em&gt;server&lt;/em&gt; container before postgres is ready then it will crash. To implement this we pass the following arguments:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;test&lt;/strong&gt;: The command to run on the container to determine the health. Arguments are provided as a comma-separated array.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;interval&lt;/strong&gt;: This determines how long the container will wait to run the check, and then the interval thereafter. Default is &lt;em&gt;30s&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;timeout&lt;/strong&gt;: How long the test should run before timing out. Default is &lt;em&gt;30s&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;retries&lt;/strong&gt;: How many attempts to make before giving up and considering the container &lt;em&gt;unhealthy&lt;/em&gt;. Defaults to &lt;em&gt;3&lt;/em&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4&gt;environment&lt;/h4&gt;
+&lt;p&gt;Pretty self explanatory, these are the environment variables we’d like the container to receive. Here we pass in all the API and DB information we need for the server to run.&lt;/p&gt;
+&lt;h4&gt;network_mode&lt;/h4&gt;
+&lt;p&gt;This changes the network mode that the container runs in. We’ve switched it to &lt;em&gt;hosts&lt;/em&gt; here to ensure that it allows incoming connections from other containers.&lt;/p&gt;
+&lt;p&gt;Note that when setting the network_mode to ‘host’ you are unable to map any ports.&lt;/p&gt;
+&lt;h4&gt;depends_on&lt;/h4&gt;
+&lt;p&gt;This is where we link back to the &lt;em&gt;healthcheck&lt;/em&gt; command that we set up in the &lt;em&gt;db&lt;/em&gt; container. This command tells us to wait until the &lt;em&gt;db&lt;/em&gt; is healthy before running the container. This ensures the database is ready to accept connections.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Of course there are many more commands are your disposal for a variety of setups. The full list of Docker Compose commands, and their available arguments, are available &lt;a href=&quot;https://docs.docker.com/compose/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;Bringing it all up&lt;/h2&gt;
+&lt;p&gt;Now we’re ready to launch! Now if you jump into the &lt;em&gt;overengineeredTodo&lt;/em&gt; directory and run the following commands:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;docker-compose up -d&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This builds the images and brings the containers up. The &lt;em&gt;-d&lt;/em&gt; command detaches the containers so we aren’t getting the output of them streamed to the console. If you followed the steps you should now be able to visit your app at &lt;a href=&quot;http://localhost:8888&quot;&gt;http://localhost:8888&lt;/a&gt;. If you used my project it should look something like this:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://github.com/stevenlaidlaw/OverengineeredTodo/blob/master/overengineeredTodo.png?raw=true&quot; alt=&quot;App demo&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Try changing a few things then refresh the page. You’ll see your changes have persisted to the database, and will continue to be available for the lifetime of the container.&lt;/p&gt;
+&lt;p&gt;Some more helpful commands:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# Build the images&lt;/span&gt;
+docker-compose build
+&lt;span class=&quot;token comment&quot;&gt;# Start the containers&lt;/span&gt;
+docker-compose start 
+&lt;span class=&quot;token comment&quot;&gt;# Stop the containers&lt;/span&gt;
+docker-compose stop 
+&lt;span class=&quot;token comment&quot;&gt;# Stop and destroys the containers&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;# Be careful as you&apos;ll lose your DB data!&lt;/span&gt;
+docker-compose down
+&lt;span class=&quot;token comment&quot;&gt;# Get the status of the relevant containers&lt;/span&gt;
+docker-compose &lt;span class=&quot;token function&quot;&gt;ps&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;hr&gt;
+&lt;p&gt;Hopefully this &lt;em&gt;very&lt;/em&gt; basic introduction has shed some light on Docker and how to use it in a real world app. Don’t forget to add the build step for &lt;em&gt;app&lt;/em&gt; before running the &lt;em&gt;docker-compose&lt;/em&gt; command to ensure your files are the most up-to-date. You can see the way I’ve done it in the scripts section of my &lt;em&gt;package.json&lt;/em&gt; file &lt;a href=&quot;https://github.com/stevenlaidlaw/OverengineeredTodo&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;That’s it! Please let me know if you have any questions or corrections to any of the information here.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Perixi]]></title><description><![CDATA[This post will always contain the latest version of Perixi for each OS. Windows (1.1.0) OSX (1.1.1) Linux (1.1.1)   deb amd64]]></description><link>http://stevenlaidlaw.com//perixi-latest/</link><guid isPermaLink="false">http://stevenlaidlaw.com//perixi-latest/</guid><pubDate>Fri, 11 Jan 2019 18:43:02 GMT</pubDate><content:encoded>&lt;p&gt;This post will always contain the latest version of Perixi for each OS.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;http://stevenlaidlaw-loan-repayment-calculator.s3.amazonaws.com/Perixi-1.1.0-WIN.exe&quot;&gt;Windows (1.1.0)&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;http://stevenlaidlaw-loan-repayment-calculator.s3.amazonaws.com/Perixi-1.1.1-OSX.dmg&quot;&gt;OSX (1.1.1)&lt;/a&gt;&lt;/li&gt;
