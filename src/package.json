@@ -61,7 +61,7 @@
     "develop": "gatsby develop",
     "start": "npm run develop",
     "build": "gatsby build",
-    "deploy": "npm run build && cd ../ && find . -not -path '*/src*' -not -path '*/.git*' -not -path '.' -exec rm -rf {} + && rsync -aivP src/public/. . && git add . && git commit -m \"`date`\" && git push",
+    "deploy": "npm run build && cd ../ && find . -not -path '*/src*' -not -path '*/.git*' -not -path '.' -exec rm -rf {} + && rsync -aivP src/public/. . && echo stevenlaidlaw.com > CNAME && git add . && git commit -m \"`date`\" && git push",
     "fix-semi": "eslint --quiet --ignore-pattern node_modules --ignore-pattern public --parser babel-eslint --no-eslintrc --rule '{\"semi\": [2, \"never\"], \"no-extra-semi\": [2]}' --fix gatsby-node.js"
   }
 }
