@@ -33,9 +33,8 @@ function Bio() {
             />
             <div>
               Senior full-stack engineer at{' '}
-              <a href="http://seqta.com.au/">SEQTA Software</a>. JavaScript
-              expert. Built{' '}
-              <a href="http://stevenlaidlaw.com/perixi-latest/">Perixi</a>.
+              <a href="http://agworld.com.au/">Agworld</a>. JavaScript
+              expert. Voracious reader. Inept author.
             </div>
           </div>
         )
