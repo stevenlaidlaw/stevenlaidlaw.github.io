@@ -32,8 +32,8 @@ function Bio() {
               }}
             />
             <div>
-              Senior full-stack engineer at{' '}
-              <a href="http://agworld.com.au/">Agworld</a>. JavaScript
+              Consultant at{' '}
+              <a href="http://mechanicalrock.io/">Mechanical Rock</a>. JavaScript
               expert. Voracious reader. Inept author.
             </div>
           </div>
