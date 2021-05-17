@@ -1,21 +1,44 @@
-h1, h2, h3, h4, h5, h6 {
-	font-weight: bold;
-	border: none;
-	margin: 1em 0;
-	padding: 0;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: bold;
+  border: none;
+  margin: 1em 0;
+  padding: 0;
+  color: cornflowerblue;
 }
 
-h1::before, h2::before, h3::before, h4::before, h5::before, h6::before {
-	opacity: 0.5;
+h1::before,
+h2::before,
+h3::before,
+h4::before,
+h5::before,
+h6::before {
+  opacity: 0.5;
 }
 
-h1::before { content: '# '; }
-h2::before { content: '## '; }
-h3::before { content: '### '; }
-h4::before { content: '#### '; }
-h5::before { content: '##### '; }
-h6::before { content: '###### '; }
+h1::before {
+  content: '# ';
+}
+h2::before {
+  content: '## ';
+}
+h3::before {
+  content: '### ';
+}
+h4::before {
+  content: '#### ';
+}
+h5::before {
+  content: '##### ';
+}
+h6::before {
+  content: '###### ';
+}
 
 blockquote {
-	padding: 1em;
+  padding: 1em;
 }
