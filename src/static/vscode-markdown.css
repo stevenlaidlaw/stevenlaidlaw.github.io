@@ -1,3 +1,8 @@
+body {
+  color: white;
+  background: #232323;
+}
+
 h1,
 h2,
 h3,
@@ -8,7 +13,7 @@ h6 {
   border: none;
   margin: 1em 0;
   padding: 0;
-  color: cornflowerblue;
+  color: rgba(135, 165, 255, 1);
 }
 
 h1::before,
@@ -40,5 +45,28 @@ h6::before {
 }
 
 blockquote {
+  margin: 1em 0;
   padding: 1em;
+  background: rgba(255, 255, 255, 0.05);
+  border-left: 4px solid rgba(135, 165, 255, 1);
+  border-radius: 4px;
+}
+
+table {
+  margin: 1em 0;
+}
+
+table > thead > tr > th {
+  background: rgba(135, 165, 255, 1);
+  border: none;
+  color: #232323;
+  border-left: 1px solid #232323;
+}
+
+table > thead > tr > th:first-child {
+  border-left: none;
+}
+
+a {
+  color: rgba(105, 135, 225, 1);
 }
