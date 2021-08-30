@@ -30,8 +30,8 @@ function Bio() {
             />
             <div>
               Consultant at{' '}
-              <a href="http://mechanicalrock.io/">Mechanical Rock</a>.
-              JavaScript expert. Voracious reader. Inept author.
+              <a href="http://mechanicalrock.io/">Mechanical Rock</a>. Software
+              engineer. Voracious reader. Inept author.
             </div>
           </div>
         )
@@ -42,7 +42,7 @@ function Bio() {
 
 const bioQuery = graphql`
   query BioQuery {
-    avatar: file(absolutePath: { regex: "/Steven.jpeg/" }) {
+    avatar: file(absolutePath: { regex: "/Steven.png/" }) {
       childImageSharp {
         fixed(width: 100, height: 100) {
           ...GatsbyImageSharpFixed
