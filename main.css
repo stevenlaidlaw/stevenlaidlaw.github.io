@@ -83,3 +83,7 @@ a {
 a:hover {
   color: var(--primary-400);
 }
+
+.logo {
+  width: 6em;
+}
