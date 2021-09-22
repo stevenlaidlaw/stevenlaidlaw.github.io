@@ -1,0 +1,85 @@
+:root {
+  /* Fonts */
+  --fonts: 'Roboto', -apple-system, BlinkMacSystemFont, 'Helvetica Neue',
+    Helvetica, 'Nimbus Sans L', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', sans-serif;
+  --header-fonts: Poppins, sans-serif;
+  --primary-100: #e9eff5;
+  --primary-200: #8db2d5;
+  --primary-300: #3283d4;
+  --primary-400: #13487a;
+  --primary-500: #03284d;
+  --neutral-100: #ffffff;
+  --neutral-200: #dadada;
+  --neutral-300: #898989;
+  --neutral-400: #323232;
+  --neutral-500: #1b1b19;
+}
+
+body {
+  margin: 0;
+  font-family: var(--fonts);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 12pt;
+  color: var(--neutral-500);
+  background: var(--neutral-100);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+button {
+  color: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  padding: 0;
+  margin: 0;
+  font-family: var(--header-fonts);
+  font-weight: 700;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1.2em;
+}
+
+h4 {
+  font-size: 1em;
+}
+
+h5 {
+  font-size: 0.8em;
+}
+
+h6 {
+  font-size: 0.5em;
+}
+
+p {
+  line-height: 1.5;
+}
+
+a {
+  color: var(--primary-300);
+  cursor: pointer;
+}
+
+a:hover {
+  color: var(--primary-400);
+}
