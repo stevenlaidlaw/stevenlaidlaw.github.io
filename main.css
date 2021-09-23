@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;700&family=Roboto&display=swap');
+
 :root {
   /* Fonts */
   --fonts: 'Roboto', -apple-system, BlinkMacSystemFont, 'Helvetica Neue',
@@ -21,7 +23,7 @@ body {
   font-family: var(--fonts);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: 12pt;
+  font-size: 14pt;
   color: var(--neutral-500);
   background: var(--neutral-100);
 }
@@ -45,6 +47,7 @@ h6 {
   margin: 0;
   font-family: var(--header-fonts);
   font-weight: 700;
+  color: var(--neutral-400);
 }
 
 h1 {
@@ -84,6 +87,21 @@ a:hover {
   color: var(--primary-400);
 }
 
-.logo {
+.main {
+  max-width: 840px;
+  margin: 0 auto;
+  padding: 1em;
+}
+
+.main > .header {
+  display: flex;
+}
+
+.main > .header > .logo {
   width: 6em;
+  box-shadow: #00000044 2px 4px 8px;
+}
+
+.main > .header > .text {
+  flex: 1;
 }

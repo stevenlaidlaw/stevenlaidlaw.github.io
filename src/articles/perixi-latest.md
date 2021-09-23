@@ -1,7 +1,4 @@
----
-title: Perixi
-date: '2019-01-11T18:43:02.284Z'
----
+# Perixi
 
 ![Perixi Preview](/images/perixiPreview2.png)
 

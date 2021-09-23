@@ -1,7 +1,4 @@
----
-title: Creating a Widget Wrapper with React's createPortal
-date: '2019-06-04T17:56:52.431Z'
----
+# Creating a Widget Wrapper with React's createPortal
 
 React is pretty sweet. It works in a nested, hierarchical way&mdash;which is awesome in most cases&mdash;but sometimes that can cause issues. Sometimes you need something to jump out of the parent container, like a modal dialog or a menu. This is precisely what React's `createPortal` is used for!
 
