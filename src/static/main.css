@@ -23,9 +23,15 @@ body {
   font-family: var(--fonts);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: 14pt;
+  /* font-size: 14pt; */
   color: var(--neutral-500);
   background: var(--neutral-100);
+}
+
+@media only screen and (max-width: 600px) {
+  body {
+
+  }
 }
 
 code {
