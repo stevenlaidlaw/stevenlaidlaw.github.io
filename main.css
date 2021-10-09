@@ -99,6 +99,7 @@ a:hover {
 
 .main > .header > .logo {
   width: 6em;
+  height: 6em;
   box-shadow: #00000044 2px 4px 8px;
 }
 
