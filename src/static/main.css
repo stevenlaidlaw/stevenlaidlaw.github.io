@@ -106,3 +106,12 @@ a:hover {
 .main > .header > .text {
   flex: 1;
 }
+
+.content {
+  opacity: 0.9;
+  margin: 1em 0;
+}
+
+.footer {
+  /* text-align: right; */
+}
