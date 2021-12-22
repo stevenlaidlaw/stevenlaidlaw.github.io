@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;700&family=Roboto&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;700&family=Roboto&display=swap");
 
 :root {
   /* Fonts */
-  --fonts: 'Roboto', -apple-system, BlinkMacSystemFont, 'Helvetica Neue',
-    Helvetica, 'Nimbus Sans L', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
-    'Cantarell', 'Fira Sans', 'Droid Sans', sans-serif;
+  --fonts: "Roboto", -apple-system, BlinkMacSystemFont, "Helvetica Neue",
+    Helvetica, "Nimbus Sans L", "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", sans-serif;
   --header-fonts: Poppins, sans-serif;
   --primary-100: #e9eff5;
   --primary-200: #8db2d5;
@@ -23,19 +23,13 @@ body {
   font-family: var(--fonts);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* font-size: 14pt; */
+  font-size: 16pt;
   color: var(--neutral-500);
   background: var(--neutral-100);
 }
 
-@media only screen and (max-width: 600px) {
-  body {
-
-  }
-}
-
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
