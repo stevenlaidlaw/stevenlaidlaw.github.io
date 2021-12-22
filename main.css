@@ -51,7 +51,7 @@ h6 {
 }
 
 p {
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 a {
@@ -61,6 +61,13 @@ a {
 
 a:hover {
   color: var(--primary-400);
+}
+
+ul {
+}
+
+ul > li {
+  padding: 0.2em 0;
 }
 
 .main {
