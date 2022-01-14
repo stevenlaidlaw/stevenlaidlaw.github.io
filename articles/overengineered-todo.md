@@ -1,4 +1,9 @@
-# Learn Docker via an Over-engineered Todo
+---
+layout: main.njk
+title: Learn Docker via an Over-engineered Todo
+---
+
+# {{ title }}
 
 Learning new stuff is hard, so today I'm going to guide you through using Docker by over-engineering the hell out of Todo app. We will build a three-tier, RESTful web app running multiple containers. You know, like a normal person would.
 

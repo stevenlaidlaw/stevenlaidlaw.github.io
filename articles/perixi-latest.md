@@ -1,4 +1,9 @@
-# Perixi
+---
+layout: main.njk
+title: Perixi
+---
+
+# {{ title }}
 
 ![Perixi Preview](/images/perixiPreview2.png)
 
