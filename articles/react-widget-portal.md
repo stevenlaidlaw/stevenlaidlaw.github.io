@@ -1,5 +1,5 @@
 ---
-layout: main.njk
+layout: main.hbs
 title: Creating a Widget Wrapper with React's createPortal
 ---
 

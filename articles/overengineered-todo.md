@@ -1,5 +1,5 @@
 ---
-layout: main.njk
+layout: main.hbs
 title: Learn Docker via an Over-engineered Todo
 ---
 

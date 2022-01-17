@@ -1,2 +1,5 @@
-build-blog:
-	npx @11ty/eleventy --input articles --output blog
+build:
+	npx @11ty/eleventy
+
+dev:
+	npx @11ty/eleventy --serve
