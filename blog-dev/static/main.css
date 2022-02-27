@@ -1,0 +1,28 @@
+body {
+  font-family: source-serif-pro;
+  font-size: 21px;
+  letter-spacing: 0.01em;
+  line-height: 1.8em;
+}
+
+.post-content {
+  width: 50%;
+}
+
+@media (max-width: 1024px) {
+  .post-content {
+    width: 66%;
+  }
+}
+
+@media (max-width: 768px) {
+  .post-content {
+    width: 83%;
+  }
+}
+
+@media (max-width: 640px) {
+  .post-content {
+    width: 100%;
+  }
+}
