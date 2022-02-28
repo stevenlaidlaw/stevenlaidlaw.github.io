@@ -1,22 +1,13 @@
 <!DOCTYPE html>
-<html{{ if .Site.Params.opengraph }} prefix="og: http://ogp.me/ns#" {{ end }}>
+<html>
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>{{ .Title }} &middot; {{ .Site.Author.name }}</title>
-    <meta
-      name="description"
-      content="{{ with .Description }}{{ . }}{{ else }}{{ if .IsPage }}{{ .Summary }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}{{ end }}"
-    />
     <meta name="HandheldFriendly" content="True" />
     <meta name="MobileOptimized" content="320" />
-    {{ hugo.Generator }}
     <meta name="robots" content="index,follow" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    {{ if .Site.Params.opengraph }}{{ partial "opengraph.html" . }}{{ end }}
-    <link rel="stylesheet" href="{{ .Site.BaseURL }}stylesheets/site.css" />
-    <link rel="stylesheet" href="{{ .Site.BaseURL }}stylesheets/syntax.css" />
-
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -29,6 +20,8 @@
       integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="{{ .Site.BaseURL }}stylesheets/site.css" />
+    <link rel="stylesheet" href="{{ .Site.BaseURL }}stylesheets/syntax.css" />
   </head>
   <body>
     <div id="wrapper">
@@ -129,5 +122,6 @@
       </header>
 
       <div id="container"></div>
-    </div></body
-></html>
+    </div>
+  </body>
+</html>
