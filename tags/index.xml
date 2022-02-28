@@ -2,89 +2,89 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Steven Laidlaw</title>
-    <link>http://stevenlaidlaw.com/blog/tags/</link>
+    <link>http://stevenlaidlaw.com/tags/</link>
     <description>Recent content in Tags on Steven Laidlaw</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 17 Feb 2022 11:55:34 +0800</lastBuildDate><atom:link href="http://stevenlaidlaw.com/blog/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 17 Feb 2022 11:55:34 +0800</lastBuildDate><atom:link href="http://stevenlaidlaw.com/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>auth</title>
-      <link>http://stevenlaidlaw.com/blog/tags/auth/</link>
+      <link>http://stevenlaidlaw.com/tags/auth/</link>
       <pubDate>Thu, 17 Feb 2022 11:55:34 +0800</pubDate>
       
-      <guid>http://stevenlaidlaw.com/blog/tags/auth/</guid>
+      <guid>http://stevenlaidlaw.com/tags/auth/</guid>
       <description></description>
     </item>
     
     <item>
       <title>authentication</title>
-      <link>http://stevenlaidlaw.com/blog/tags/authentication/</link>
+      <link>http://stevenlaidlaw.com/tags/authentication/</link>
       <pubDate>Thu, 17 Feb 2022 11:55:34 +0800</pubDate>
       
-      <guid>http://stevenlaidlaw.com/blog/tags/authentication/</guid>
+      <guid>http://stevenlaidlaw.com/tags/authentication/</guid>
       <description></description>
     </item>
     
     <item>
       <title>express</title>
-      <link>http://stevenlaidlaw.com/blog/tags/express/</link>
+      <link>http://stevenlaidlaw.com/tags/express/</link>
       <pubDate>Thu, 17 Feb 2022 11:55:34 +0800</pubDate>
       
-      <guid>http://stevenlaidlaw.com/blog/tags/express/</guid>
+      <guid>http://stevenlaidlaw.com/tags/express/</guid>
       <description></description>
     </item>
     
     <item>
       <title>javascript</title>
-      <link>http://stevenlaidlaw.com/blog/tags/javascript/</link>
+      <link>http://stevenlaidlaw.com/tags/javascript/</link>
       <pubDate>Thu, 17 Feb 2022 11:55:34 +0800</pubDate>
       
-      <guid>http://stevenlaidlaw.com/blog/tags/javascript/</guid>
+      <guid>http://stevenlaidlaw.com/tags/javascript/</guid>
       <description></description>
     </item>
     
     <item>
       <title>JWT</title>
-      <link>http://stevenlaidlaw.com/blog/tags/jwt/</link>
+      <link>http://stevenlaidlaw.com/tags/jwt/</link>
       <pubDate>Thu, 17 Feb 2022 11:55:34 +0800</pubDate>
       
-      <guid>http://stevenlaidlaw.com/blog/tags/jwt/</guid>
+      <guid>http://stevenlaidlaw.com/tags/jwt/</guid>
       <description></description>
     </item>
     
     <item>
       <title>one-time password</title>
-      <link>http://stevenlaidlaw.com/blog/tags/one-time-password/</link>
+      <link>http://stevenlaidlaw.com/tags/one-time-password/</link>
       <pubDate>Thu, 17 Feb 2022 11:55:34 +0800</pubDate>
       
-      <guid>http://stevenlaidlaw.com/blog/tags/one-time-password/</guid>
+      <guid>http://stevenlaidlaw.com/tags/one-time-password/</guid>
       <description></description>
     </item>
     
     <item>
       <title>passwordless</title>
-      <link>http://stevenlaidlaw.com/blog/tags/passwordless/</link>
+      <link>http://stevenlaidlaw.com/tags/passwordless/</link>
       <pubDate>Thu, 17 Feb 2022 11:55:34 +0800</pubDate>
       
-      <guid>http://stevenlaidlaw.com/blog/tags/passwordless/</guid>
+      <guid>http://stevenlaidlaw.com/tags/passwordless/</guid>
       <description></description>
     </item>
     
     <item>
       <title>postgresql</title>
-      <link>http://stevenlaidlaw.com/blog/tags/postgresql/</link>
+      <link>http://stevenlaidlaw.com/tags/postgresql/</link>
       <pubDate>Thu, 17 Feb 2022 11:55:34 +0800</pubDate>
       
-      <guid>http://stevenlaidlaw.com/blog/tags/postgresql/</guid>
+      <guid>http://stevenlaidlaw.com/tags/postgresql/</guid>
       <description></description>
     </item>
     
     <item>
       <title>psql</title>
-      <link>http://stevenlaidlaw.com/blog/tags/psql/</link>
+      <link>http://stevenlaidlaw.com/tags/psql/</link>
       <pubDate>Thu, 17 Feb 2022 11:55:34 +0800</pubDate>
       
-      <guid>http://stevenlaidlaw.com/blog/tags/psql/</guid>
+      <guid>http://stevenlaidlaw.com/tags/psql/</guid>
       <description></description>
     </item>
     

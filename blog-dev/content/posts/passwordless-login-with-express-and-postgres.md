@@ -562,6 +562,4 @@ And we're done! We have successfully created a secure registration and login sys
 
 While no system is completely secure, I hope this leaves you confident enough to implement passwordless authentication in your own applications without the risk and issues related to static passwords.
 
-If you have any questions regarding this article feel free to contact us either via [email](mailto:contact@mechanicalrock.io) or our [web form](https://mechanicalrock.io/lets-get-started).
-
 > A more complete version of this code using Handlebars for templating and express-validator for parameter validation (among other things) is available [here](https://github.com/stevenlaidlaw/passwordless-login-express-postgres).

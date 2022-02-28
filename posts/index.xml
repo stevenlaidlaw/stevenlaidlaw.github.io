@@ -2,27 +2,27 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Steven Laidlaw</title>
-    <link>http://stevenlaidlaw.com/blog/posts/</link>
+    <link>http://stevenlaidlaw.com/posts/</link>
     <description>Recent content in Posts on Steven Laidlaw</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 17 Feb 2022 11:55:34 +0800</lastBuildDate><atom:link href="http://stevenlaidlaw.com/blog/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 17 Feb 2022 11:55:34 +0800</lastBuildDate><atom:link href="http://stevenlaidlaw.com/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Passwordless authentication with Express and PostgreSQL</title>
-      <link>http://stevenlaidlaw.com/blog/posts/passwordless-login-with-express-and-postgres/</link>
+      <link>http://stevenlaidlaw.com/posts/passwordless-login-with-express-and-postgres/</link>
       <pubDate>Thu, 17 Feb 2022 11:55:34 +0800</pubDate>
       
-      <guid>http://stevenlaidlaw.com/blog/posts/passwordless-login-with-express-and-postgres/</guid>
+      <guid>http://stevenlaidlaw.com/posts/passwordless-login-with-express-and-postgres/</guid>
       <description>Table of Contents  Introduction Disclaimer Overview Implementation  Setup Database Structure Creating Queries HTML Templates API endpoints  GET /register, /login POST /register POST /login POST /token GET /account GET /logout     Summary  Introduction Static passwords suck. Not only are they a well-known security risk, but they are also the weakest part of the chain when determining a user&amp;rsquo;s authenticity.
 Users generally either make them so simple as to be easily guessable, or are reused so often that getting a password cracked in one website means the rest of your accounts are up for grabs.</description>
     </item>
     
     <item>
       <title>Learn Docker via an Over-engineered Todo</title>
-      <link>http://stevenlaidlaw.com/blog/posts/overengineered-todo/</link>
+      <link>http://stevenlaidlaw.com/posts/overengineered-todo/</link>
       <pubDate>Thu, 16 Dec 2021 11:55:34 +0800</pubDate>
       
-      <guid>http://stevenlaidlaw.com/blog/posts/overengineered-todo/</guid>
+      <guid>http://stevenlaidlaw.com/posts/overengineered-todo/</guid>
       <description>Learning new stuff is hard, so today I&amp;rsquo;m going to guide you through using Docker by over-engineering the hell out of Todo app. We will build a three-tier, RESTful web app running multiple containers. You know, like a normal person would.
  Disclaimer: All the commands here will assume you&amp;rsquo;re running Linux. If you&amp;rsquo;re not, then substitute the commands for your OS.
  The Specification First we need to lay out the spec to make sure we know what we&amp;rsquo;re building.</description>
@@ -30,10 +30,10 @@ Users generally either make them so simple as to be easily guessable, or are reu
     
     <item>
       <title>Creating a Widget Wrapper with React&#39;s createPortal</title>
-      <link>http://stevenlaidlaw.com/blog/posts/react-widget-portal/</link>
+      <link>http://stevenlaidlaw.com/posts/react-widget-portal/</link>
       <pubDate>Sat, 27 Nov 2021 08:12:54 +0800</pubDate>
       
-      <guid>http://stevenlaidlaw.com/blog/posts/react-widget-portal/</guid>
+      <guid>http://stevenlaidlaw.com/posts/react-widget-portal/</guid>
       <description>React is pretty sweet. It works in a nested, hierarchical way—which is awesome in most cases—but sometimes that can cause issues. Sometimes you need something to jump out of the parent container, like a modal dialog or a menu. This is precisely what React&amp;rsquo;s createPortal is used for!
 The problem you&amp;rsquo;ll run into though is that when creating a menu or other kind of dropdown, you need to be aware of the parent container&amp;rsquo;s location and display the floating element appropriately positioned on the page.</description>
     </item>
