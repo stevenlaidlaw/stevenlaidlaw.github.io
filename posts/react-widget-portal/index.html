@@ -3,7 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Creating a Widget Wrapper with React&#39;s createPortal &middot; Steven Laidlaw</title>
+    <title>
+      Creating a Widget Wrapper with React&#39;s createPortal &middot; Steven
+      Laidlaw
+    </title>
     <meta name="HandheldFriendly" content="True" />
     <meta name="MobileOptimized" content="320" />
     <meta name="robots" content="index,follow" />
@@ -20,52 +23,99 @@
       integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="http://stevenlaidlaw.com/stylesheets/site.css" />
-    <link rel="stylesheet" href="http://stevenlaidlaw.com/stylesheets/syntax.css" />
+    <link
+      rel="stylesheet"
+      href="http://stevenlaidlaw.com/stylesheets/site.css"
+    />
+    <link
+      rel="stylesheet"
+      href="http://stevenlaidlaw.com/stylesheets/syntax.css"
+    />
   </head>
   <body>
     <div id="wrapper">
       <header class="site-header">
         <div class="container">
           <div class="site-title-wrapper">
-            
             <h1 class="site-title">
               <a href="http://stevenlaidlaw.com/">Steven Laidlaw</a>
             </h1>
-                    
           </div>
 
-          <ul class="site-nav">
-            
-
-          </ul>
+          <ul class="site-nav"></ul>
         </div>
       </header>
 
       <div id="container">
+        <div class="container">
+          <article class="post-container">
+            <header class="post-header">
+              <h1 class="post-title">
+                Creating a Widget Wrapper with React&#39;s createPortal
+              </h1>
+            </header>
 
-
-<div class="container">
-    <article class="post-container">
-        <header class="post-header">
-    <h1 class="post-title">Creating a Widget Wrapper with React&#39;s createPortal</h1>
-    
-</header>
-
-        <div class="post-content clearfix">
-    
-
-    <p>React is pretty sweet. It works in a nested, hierarchical way—which is awesome in most cases—but sometimes that can cause issues. Sometimes you need something to jump out of the parent container, like a modal dialog or a menu. This is precisely what React&rsquo;s <code>createPortal</code> is used for!</p>
-<p>The problem you&rsquo;ll run into though is that when creating a menu or other kind of dropdown, you need to be aware of the parent container&rsquo;s location and display the floating element appropriately positioned on the page. We also need to make sure that we don&rsquo;t fall outside the bounds of the page.</p>
-<p>So, without any further ado, let&rsquo;s create a wrapper that we can use for any kind of dropdown we&rsquo;d ever need!</p>
-<h2 id="the-setup">The Setup</h2>
-<p>First lets create a dumb use-case that will enable us to use this wrapper. We&rsquo;ll build a wide help button that shows a tooltip and stick it in various locations around the page.</p>
-<p><a href="https://gist.github.com/stevenlaidlaw/bc8e85166194340c69282e0ae6e46e39">This code</a> gives us the following page, with all the info panels toggled on:</p>
-<p><img src="/images/react-widget-portal-0.png" alt="Info Pane Bad"></p>
-<p>As you can see the info boxes are currently trapped inside the container, so what we want to do is break it out of the regular DOM hierarchy.</p>
-<h2 id="the-basic-widget">The Basic Widget</h2>
-<p>First let&rsquo;s create the most basic version of the widget. This should render whatever children we pass in using the <code>createPortal</code> method.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-jsx" data-lang="jsx"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WidgetPortal</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">React</span>.<span style="color:#a6e22e">Component</span> {
+            <div class="post-content clearfix">
+              <p>
+                React is pretty sweet. It works in a nested, hierarchical
+                way—which is awesome in most cases—but sometimes that can cause
+                issues. Sometimes you need something to jump out of the parent
+                container, like a modal dialog or a menu. This is precisely what
+                React&rsquo;s <code>createPortal</code> is used for!
+              </p>
+              <p>
+                The problem you&rsquo;ll run into though is that when creating a
+                menu or other kind of dropdown, you need to be aware of the
+                parent container&rsquo;s location and display the floating
+                element appropriately positioned on the page. We also need to
+                make sure that we don&rsquo;t fall outside the bounds of the
+                page.
+              </p>
+              <p>
+                So, without any further ado, let&rsquo;s create a wrapper that
+                we can use for any kind of dropdown we&rsquo;d ever need!
+              </p>
+              <h2 id="the-setup">The Setup</h2>
+              <p>
+                First lets create a dumb use-case that will enable us to use
+                this wrapper. We&rsquo;ll build a wide help button that shows a
+                tooltip and stick it in various locations around the page.
+              </p>
+              <p>
+                <a
+                  href="https://gist.github.com/stevenlaidlaw/bc8e85166194340c69282e0ae6e46e39"
+                  >This code</a
+                >
+                gives us the following page, with all the info panels toggled
+                on:
+              </p>
+              <p>
+                <img
+                  src="/images/react-widget-portal-0.png"
+                  alt="Info Pane Bad"
+                />
+              </p>
+              <p>
+                As you can see the info boxes are currently trapped inside the
+                container, so what we want to do is break it out of the regular
+                DOM hierarchy.
+              </p>
+              <h2 id="the-basic-widget">The Basic Widget</h2>
+              <p>
+                First let&rsquo;s create the most basic version of the widget.
+                This should render whatever children we pass in using the
+                <code>createPortal</code> method.
+              </p>
+              <div class="highlight">
+                <pre
+                  style="
+                    color: #f8f8f2;
+                    background-color: #272822;
+                    -moz-tab-size: 4;
+                    -o-tab-size: 4;
+                    tab-size: 4;
+                  "
+                ><code class="language-jsx" data-lang="jsx"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WidgetPortal</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">React</span>.<span style="color:#a6e22e">Component</span> {
 	<span style="color:#a6e22e">constructor</span>(<span style="color:#a6e22e">props</span>) {
 		<span style="color:#66d9ef">super</span>(<span style="color:#a6e22e">props</span>);
 		<span style="color:#75715e">// Grab the document root to append the modal to it
@@ -85,31 +135,108 @@
 		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">ReactDOM</span>.<span style="color:#a6e22e">createPortal</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">props</span>.<span style="color:#a6e22e">children</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">el</span>);
 	}
 }
-</code></pre></div><p>As you can see in the constructor we first get the root element, then create the modal element using <code>document.createElement</code>. After the component has mounted we then append the element to the root element. In the render method we then use the <code>ReactDOM.createPortal</code> method. This takes two arguments — first the child you&rsquo;d like to render and next the container element to render to. Here we pass in the children and the element we created earlier.</p>
-<p>We can now use this WidgetPortal to wrap the notes portion of our original code.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-jsx" data-lang="jsx">&lt;<span style="color:#f92672">WidgetPortal</span>&gt;
+</code></pre>
+              </div>
+              <p>
+                As you can see in the constructor we first get the root element,
+                then create the modal element using
+                <code>document.createElement</code>. After the component has
+                mounted we then append the element to the root element. In the
+                render method we then use the
+                <code>ReactDOM.createPortal</code> method. This takes two
+                arguments — first the child you&rsquo;d like to render and next
+                the container element to render to. Here we pass in the children
+                and the element we created earlier.
+              </p>
+              <p>
+                We can now use this WidgetPortal to wrap the notes portion of
+                our original code.
+              </p>
+              <div class="highlight">
+                <pre
+                  style="
+                    color: #f8f8f2;
+                    background-color: #272822;
+                    -moz-tab-size: 4;
+                    -o-tab-size: 4;
+                    tab-size: 4;
+                  "
+                ><code class="language-jsx" data-lang="jsx">&lt;<span style="color:#f92672">WidgetPortal</span>&gt;
 	&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">className</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;info&#34;</span> <span style="color:#a6e22e">onClick</span><span style="color:#f92672">=</span>{<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">onToggle</span>}&gt;
 		<span style="color:#a6e22e">This</span> <span style="color:#a6e22e">is</span> <span style="color:#a6e22e">the</span> <span style="color:#a6e22e">tooltip</span> <span style="color:#66d9ef">for</span> {<span style="color:#a6e22e">label</span>}
 	&lt;/<span style="color:#f92672">div</span>&gt;
 &lt;/<span style="color:#f92672">WidgetPortal</span>&gt;
-</code></pre></div><p>And we get the following result:</p>
-<p><img src="/images/react-widget-portal-1.png" alt="Info Pane Better"></p>
-<p>This is better, but still isn&rsquo;t 100% correct and is quite buggy. We can see the whole tooltip now, but it&rsquo;s always up in the top left of the screen and all the tooltips overlap each other. Let&rsquo;s work on first getting the tooltips to sit themselves underneath the buttons like you&rsquo;d expect.</p>
-<h2 id="widget-portal-improved">Widget Portal Improved</h2>
-<p>First we need to wrap the returned value from the render method in a div and create a reference to it. We do this so that we have something still within the natural flow of the page to reference our position from.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-jsx" data-lang="jsx"><span style="color:#a6e22e">constructor</span>(<span style="color:#a6e22e">props</span>) {
+</code></pre>
+              </div>
+              <p>And we get the following result:</p>
+              <p>
+                <img
+                  src="/images/react-widget-portal-1.png"
+                  alt="Info Pane Better"
+                />
+              </p>
+              <p>
+                This is better, but still isn&rsquo;t 100% correct and is quite
+                buggy. We can see the whole tooltip now, but it&rsquo;s always
+                up in the top left of the screen and all the tooltips overlap
+                each other. Let&rsquo;s work on first getting the tooltips to
+                sit themselves underneath the buttons like you&rsquo;d expect.
+              </p>
+              <h2 id="widget-portal-improved">Widget Portal Improved</h2>
+              <p>
+                First we need to wrap the returned value from the render method
+                in a div and create a reference to it. We do this so that we
+                have something still within the natural flow of the page to
+                reference our position from.
+              </p>
+              <div class="highlight">
+                <pre
+                  style="
+                    color: #f8f8f2;
+                    background-color: #272822;
+                    -moz-tab-size: 4;
+                    -o-tab-size: 4;
+                    tab-size: 4;
+                  "
+                ><code class="language-jsx" data-lang="jsx"><span style="color:#a6e22e">constructor</span>(<span style="color:#a6e22e">props</span>) {
 	...
 	<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ref</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">React</span>.<span style="color:#a6e22e">createRef</span>();
 	...
 }
-</code></pre></div><p>And then wrap the render method to use the new Ref.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-jsx" data-lang="jsx"><span style="color:#a6e22e">render</span>() {
+</code></pre>
+              </div>
+              <p>And then wrap the render method to use the new Ref.</p>
+              <div class="highlight">
+                <pre
+                  style="
+                    color: #f8f8f2;
+                    background-color: #272822;
+                    -moz-tab-size: 4;
+                    -o-tab-size: 4;
+                    tab-size: 4;
+                  "
+                ><code class="language-jsx" data-lang="jsx"><span style="color:#a6e22e">render</span>() {
 	<span style="color:#66d9ef">return</span> &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">ref</span><span style="color:#f92672">=</span>{<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ref</span>}&gt;
 		{<span style="color:#a6e22e">ReactDOM</span>.<span style="color:#a6e22e">createPortal</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">props</span>.<span style="color:#a6e22e">children</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">el</span>)}
 	&lt;/<span style="color:#f92672">div</span>&gt;;
 }
-</code></pre></div><p>Now for the fun part! We have a reference to a wrapper container that we can use as the basis for the location of the portal element. Let&rsquo;s do that now.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-jsx" data-lang="jsx"><span style="color:#a6e22e">componentDidMount</span>() {
+</code></pre>
+              </div>
+              <p>
+                Now for the fun part! We have a reference to a wrapper container
+                that we can use as the basis for the location of the portal
+                element. Let&rsquo;s do that now.
+              </p>
+              <div class="highlight">
+                <pre
+                  style="
+                    color: #f8f8f2;
+                    background-color: #272822;
+                    -moz-tab-size: 4;
+                    -o-tab-size: 4;
+                    tab-size: 4;
+                  "
+                ><code class="language-jsx" data-lang="jsx"><span style="color:#a6e22e">componentDidMount</span>() {
 	...
 
 	<span style="color:#66d9ef">const</span> {
@@ -129,23 +256,93 @@
 	<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">el</span>.<span style="color:#a6e22e">style</span>.<span style="color:#a6e22e">top</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">`</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">top</span><span style="color:#e6db74">}</span><span style="color:#e6db74">px`</span>;
 	<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">el</span>.<span style="color:#a6e22e">style</span>.<span style="color:#a6e22e">left</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">`</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">left</span><span style="color:#e6db74">}</span><span style="color:#e6db74">px`</span>;
 }
-</code></pre></div><p>Note that we&rsquo;re getting the center point so we can place the element in a more logical way.</p>
-<p>With this done we get the following:</p>
-<p><img src="/images/react-widget-portal-2.png" alt="Info Pane Almost There"></p>
-<p>Yay, it&rsquo;s now positioning correctly! The downside is it&rsquo;s running off the side of the page again, so let&rsquo;s fix that up now. To do this all we need to do is get the edges of the page and force the element to stay within it.</p>
-<h2 id="widget-portal-complete">Widget Portal Complete</h2>
-<p>First I like to add a little buffer so it&rsquo;s not flat up against the edge of the page, so add this to the constructor:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-jsx" data-lang="jsx"><span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">BUFFER</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span>;
-</code></pre></div><p>Next let&rsquo;s modify the componentDidMount function to take into account the page width and height. First grab the data we need based on the dimensions of the HTML:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-jsx" data-lang="jsx"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">documentHeight</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">documentElement</span>.<span style="color:#a6e22e">clientHeight</span>;
+</code></pre>
+              </div>
+              <p>
+                Note that we&rsquo;re getting the center point so we can place
+                the element in a more logical way.
+              </p>
+              <p>With this done we get the following:</p>
+              <p>
+                <img
+                  src="/images/react-widget-portal-2.png"
+                  alt="Info Pane Almost There"
+                />
+              </p>
+              <p>
+                Yay, it&rsquo;s now positioning correctly! The downside is
+                it&rsquo;s running off the side of the page again, so
+                let&rsquo;s fix that up now. To do this all we need to do is get
+                the edges of the page and force the element to stay within it.
+              </p>
+              <h2 id="widget-portal-complete">Widget Portal Complete</h2>
+              <p>
+                First I like to add a little buffer so it&rsquo;s not flat up
+                against the edge of the page, so add this to the constructor:
+              </p>
+              <div class="highlight">
+                <pre
+                  style="
+                    color: #f8f8f2;
+                    background-color: #272822;
+                    -moz-tab-size: 4;
+                    -o-tab-size: 4;
+                    tab-size: 4;
+                  "
+                ><code class="language-jsx" data-lang="jsx"><span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">BUFFER</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span>;
+</code></pre>
+              </div>
+              <p>
+                Next let&rsquo;s modify the componentDidMount function to take
+                into account the page width and height. First grab the data we
+                need based on the dimensions of the HTML:
+              </p>
+              <div class="highlight">
+                <pre
+                  style="
+                    color: #f8f8f2;
+                    background-color: #272822;
+                    -moz-tab-size: 4;
+                    -o-tab-size: 4;
+                    tab-size: 4;
+                  "
+                ><code class="language-jsx" data-lang="jsx"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">documentHeight</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">documentElement</span>.<span style="color:#a6e22e">clientHeight</span>;
 <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">documentWidth</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">documentElement</span>.<span style="color:#a6e22e">clientWidth</span>;
-</code></pre></div><p>Next, after getting the container and portal dimensions we set all the absolute position values of the element:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-jsx" data-lang="jsx"><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">top</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">containerTop</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">containerHeight</span>;
+</code></pre>
+              </div>
+              <p>
+                Next, after getting the container and portal dimensions we set
+                all the absolute position values of the element:
+              </p>
+              <div class="highlight">
+                <pre
+                  style="
+                    color: #f8f8f2;
+                    background-color: #272822;
+                    -moz-tab-size: 4;
+                    -o-tab-size: 4;
+                    tab-size: 4;
+                  "
+                ><code class="language-jsx" data-lang="jsx"><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">top</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">containerTop</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">containerHeight</span>;
 <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">bottom</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">documentHeight</span> <span style="color:#f92672">-</span> (<span style="color:#a6e22e">top</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">height</span>);
 <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">left</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">containerXCenter</span> <span style="color:#f92672">-</span> (<span style="color:#a6e22e">width</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>);
 <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">right</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">documentWidth</span> <span style="color:#f92672">-</span> (<span style="color:#a6e22e">left</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">width</span>);
-</code></pre></div><p>Lastly we need to make sure none of these elements fall outside the screen (and buffer), and if they do force them in.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-jsx" data-lang="jsx"><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">right</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">BUFFER</span>) {
+</code></pre>
+              </div>
+              <p>
+                Lastly we need to make sure none of these elements fall outside
+                the screen (and buffer), and if they do force them in.
+              </p>
+              <div class="highlight">
+                <pre
+                  style="
+                    color: #f8f8f2;
+                    background-color: #272822;
+                    -moz-tab-size: 4;
+                    -o-tab-size: 4;
+                    tab-size: 4;
+                  "
+                ><code class="language-jsx" data-lang="jsx"><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">right</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">BUFFER</span>) {
 	<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">el</span>.<span style="color:#a6e22e">style</span>.<span style="color:#a6e22e">right</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">`</span><span style="color:#e6db74">${</span><span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">BUFFER</span><span style="color:#e6db74">}</span><span style="color:#e6db74">px`</span>;
 } <span style="color:#66d9ef">else</span> {
 	<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">el</span>.<span style="color:#a6e22e">style</span>.<span style="color:#a6e22e">left</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">`</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">left</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">BUFFER</span> <span style="color:#f92672">?</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">BUFFER</span> <span style="color:#f92672">:</span> <span style="color:#a6e22e">left</span><span style="color:#e6db74">}</span><span style="color:#e6db74">px`</span>;
@@ -155,11 +352,41 @@
 } <span style="color:#66d9ef">else</span> {
 	<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">el</span>.<span style="color:#a6e22e">style</span>.<span style="color:#a6e22e">top</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">`</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">top</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">BUFFER</span> <span style="color:#f92672">?</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">BUFFER</span> <span style="color:#f92672">:</span> <span style="color:#a6e22e">top</span><span style="color:#e6db74">}</span><span style="color:#e6db74">px`</span>;
 }
-</code></pre></div><p>As you can see all we&rsquo;re doing is setting either the right/left and bottom/top absolute positions to make sure they sit within the bounds of the screen. You can see the result of this as so:</p>
-<p><img src="/images/react-widget-portal-3.png" alt="Info Pane Success"></p>
-<p>Success! The tooltips now all sit within the bounds of the page, and always will based on the size of whatever portal you throw at it. Well, as long as the portal itself isn&rsquo;t larger than the page, but that would just be silly, right?</p>
-<p>Just to make it clear how it all works I&rsquo;ll post the whole <code>componentDidMount</code> here with comments so you can see how all the parts work together.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-jsx" data-lang="jsx"><span style="color:#a6e22e">componentDidMount</span>() {
+</code></pre>
+              </div>
+              <p>
+                As you can see all we&rsquo;re doing is setting either the
+                right/left and bottom/top absolute positions to make sure they
+                sit within the bounds of the screen. You can see the result of
+                this as so:
+              </p>
+              <p>
+                <img
+                  src="/images/react-widget-portal-3.png"
+                  alt="Info Pane Success"
+                />
+              </p>
+              <p>
+                Success! The tooltips now all sit within the bounds of the page,
+                and always will based on the size of whatever portal you throw
+                at it. Well, as long as the portal itself isn&rsquo;t larger
+                than the page, but that would just be silly, right?
+              </p>
+              <p>
+                Just to make it clear how it all works I&rsquo;ll post the whole
+                <code>componentDidMount</code> here with comments so you can see
+                how all the parts work together.
+              </p>
+              <div class="highlight">
+                <pre
+                  style="
+                    color: #f8f8f2;
+                    background-color: #272822;
+                    -moz-tab-size: 4;
+                    -o-tab-size: 4;
+                    tab-size: 4;
+                  "
+                ><code class="language-jsx" data-lang="jsx"><span style="color:#a6e22e">componentDidMount</span>() {
 	<span style="color:#75715e">// Get the document height and width which this portal is added to
 </span><span style="color:#75715e"></span>	<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">documentHeight</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">documentElement</span>.<span style="color:#a6e22e">clientHeight</span>;
 	<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">documentWidth</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">documentElement</span>.<span style="color:#a6e22e">clientWidth</span>;
@@ -201,40 +428,69 @@
 </span><span style="color:#75715e"></span>		<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">el</span>.<span style="color:#a6e22e">style</span>.<span style="color:#a6e22e">top</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">`</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">top</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">BUFFER</span> <span style="color:#f92672">?</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">BUFFER</span> <span style="color:#f92672">:</span> <span style="color:#a6e22e">top</span><span style="color:#e6db74">}</span><span style="color:#e6db74">px`</span>;
 	}
 }
-</code></pre></div><p>Before we forget we have to make sure we clean up our references so make sure you do that in the standard React way like so:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-jsx" data-lang="jsx"><span style="color:#a6e22e">componentWillUnmount</span>() {
+</code></pre>
+              </div>
+              <p>
+                Before we forget we have to make sure we clean up our references
+                so make sure you do that in the standard React way like so:
+              </p>
+              <div class="highlight">
+                <pre
+                  style="
+                    color: #f8f8f2;
+                    background-color: #272822;
+                    -moz-tab-size: 4;
+                    -o-tab-size: 4;
+                    tab-size: 4;
+                  "
+                ><code class="language-jsx" data-lang="jsx"><span style="color:#a6e22e">componentWillUnmount</span>() {
 	<span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">el</span>) <span style="color:#66d9ef">return</span>;
 	<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">documentRoot</span>.<span style="color:#a6e22e">removeChild</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">el</span>);
 }
-</code></pre></div><h2 id="conclusion">Conclusion</h2>
-<p>Now we have a complete and functional widget wrapper that uses React&rsquo;s <code>createPortal</code> to wrap any and all dropdown/modal/popup elements we may need. There are, of course, ways to improve upon this such as: passing in a reference instead of creating one within the portal for a more accurate location; handling correcting the elements position when zoomed in; and more, but I&rsquo;ll leave those as an exercise to the reader. (For a hint on the zoom, look at <code>window.scrollX</code> and <code>window.scrollY</code>)</p>
-<p>Thanks for reading, and if you have any questions/corrections please feel free to let me know!</p>
-
-</div>
-
-        <footer class="post-footer clearfix"><div class="share">
-    </div>
-</footer>
-    </article>
-</div>
-
+</code></pre>
+              </div>
+              <h2 id="conclusion">Conclusion</h2>
+              <p>
+                Now we have a complete and functional widget wrapper that uses
+                React&rsquo;s <code>createPortal</code> to wrap any and all
+                dropdown/modal/popup elements we may need. There are, of course,
+                ways to improve upon this such as: passing in a reference
+                instead of creating one within the portal for a more accurate
+                location; handling correcting the elements position when zoomed
+                in; and more, but I&rsquo;ll leave those as an exercise to the
+                reader. (For a hint on the zoom, look at
+                <code>window.scrollX</code> and <code>window.scrollY</code>)
+              </p>
+              <p>
+                Thanks for reading, and if you have any questions/corrections
+                please feel free to let me know!
+              </p>
             </div>
+
+            <footer class="post-footer clearfix">
+              <div class="share"></div>
+            </footer>
+          </article>
         </div>
+      </div>
+    </div>
 
-        <footer class="footer">
-            <div class="container">
-                <div class="site-title-wrapper">
-                    <a class="button-square button-jump-top js-jump-top" href="#" aria-label="Back to Top">
-                        <i class="fa fa-angle-up" aria-hidden="true"></i>
-                    </a>
-                </div>
-            </div>
-        </footer>
+    <footer class="footer">
+      <div class="container">
+        <div class="site-title-wrapper">
+          <a
+            class="button-square button-jump-top js-jump-top"
+            href="#"
+            aria-label="Back to Top"
+          >
+            <i class="fa fa-angle-up" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+    </footer>
 
-        <script src="http://stevenlaidlaw.com/js/jquery-1.11.3.min.js"></script>
-        <script src="http://stevenlaidlaw.com/js/jquery.fitvids.js"></script>
-        <script src="http://stevenlaidlaw.com/js/scripts.js"></script>
-        
-    </body>
+    <script src="http://stevenlaidlaw.com/js/jquery-1.11.3.min.js"></script>
+    <script src="http://stevenlaidlaw.com/js/jquery.fitvids.js"></script>
+    <script src="http://stevenlaidlaw.com/js/scripts.js"></script>
+  </body>
 </html>
-
