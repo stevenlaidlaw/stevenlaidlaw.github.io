@@ -528,7 +528,7 @@
         padding: 0;
       }
       .post-stub {
-        border-bottom: 1px dotted #303030;
+        border-bottom: 1px solid #303030;
         margin: 0;
         position: relative;
       }
@@ -538,18 +538,10 @@
       .post-stub a {
         color: #424242;
         display: block;
-        padding: 20px 5px;
-        -webkit-transition: all 0.2s ease-in-out;
-        -moz-transition: all 0.2s ease-in-out;
-        transition: all 0.2s ease-in-out;
+        padding: 2em 1em;
       }
       .post-stub a:hover {
-        background: #fcf5f5;
         color: cornflowerblue;
-        padding: 20px 12px;
-      }
-      .post-stub a:hover .post-stub-tag {
-        background: cornflowerblue;
       }
       .post-stub-tag {
         background: #303030;
@@ -563,15 +555,16 @@
       }
       .post-stub-description,
       .post-stub-title {
-        display: inline-block;
         margin: 0;
         text-transform: none;
       }
       .post-stub-date {
-        display: inline-block;
+        font-size: 0.8em;
+        text-transform: uppercase;
+        margin-top: 0.3em;
+        opacity: 0.7;
       }
       .post-stub-date:before {
-        content: "/ ";
       }
       .next-posts-link a,
       .previous-posts-link a {
