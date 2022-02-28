@@ -3,9 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>
-      Learn Docker via an Over-engineered Todo &middot; Steven Laidlaw
-    </title>
+    <title>Learn Docker via an Over-engineered Todo &middot; Steven Laidlaw</title>
     <meta name="HandheldFriendly" content="True" />
     <meta name="MobileOptimized" content="320" />
     <meta name="robots" content="index,follow" />
@@ -22,410 +20,180 @@
       integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
       crossorigin="anonymous"
     />
-    <link
-      rel="stylesheet"
-      href="http://stevenlaidlaw.com/stylesheets/site.css"
-    />
-    <link
-      rel="stylesheet"
-      href="http://stevenlaidlaw.com/stylesheets/syntax.css"
-    />
+    <link rel="stylesheet" href="http://stevenlaidlaw.com/stylesheets/site.css" />
+    <link rel="stylesheet" href="http://stevenlaidlaw.com/stylesheets/syntax.css" />
+
+    <style>
+      body {
+        max-width: 768px;
+        margin: 0 auto;
+        background: #fefefe;
+        color: #353638;
+        font-family: "source-serif-pro";
+        font-size: 21px;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: "League Spartan";
+        margin: 1em 0;
+        text-transform: none;
+      }
+      h1 {
+        font-size: 2.5em;
+      }
+      h2 {
+        font-size: 2em;
+      }
+      h3 {
+        font-size: 1.5em;
+      }
+      h4 {
+        font-size: 1.25em;
+      }
+      h5 {
+        font-size: 1em;
+      }
+      h6 {
+        font-size: 0.875em;
+      }
+      p {
+        letter-spacing: 0.01em;
+        line-height: 1.8em;
+        margin: 1em 0;
+      }
+      a {
+        color: cornflowerblue;
+        text-decoration: none;
+      }
+      ol,
+      ul {
+        line-height: 1.4;
+        margin: 0 0 20px;
+      }
+    </style>
   </head>
   <body>
     <div id="wrapper">
       <header class="site-header">
         <div class="container">
           <div class="site-title-wrapper">
+            
             <h1 class="site-title">
               <a href="http://stevenlaidlaw.com/">Steven Laidlaw</a>
             </h1>
+                    
           </div>
 
-          <ul class="site-nav"></ul>
+          <ul class="site-nav">
+            
+
+          </ul>
         </div>
       </header>
 
       <div id="container">
-        <div class="container">
-          <article class="post-container">
-            <header class="post-header">
-              <h1 class="post-title">
-                Learn Docker via an Over-engineered Todo
-              </h1>
-            </header>
 
-            <div class="post-content clearfix">
-              <p>
-                Learning new stuff is hard, so today I&rsquo;m going to guide
-                you through using Docker by over-engineering the hell out of
-                Todo app. We will build a three-tier, RESTful web app running
-                multiple containers. You know, like a normal person would.
-              </p>
-              <blockquote>
-                <p>
-                  <strong>Disclaimer:</strong> All the commands here will assume
-                  you&rsquo;re running Linux. If you&rsquo;re not, then
-                  substitute the commands for your OS.
-                </p>
-              </blockquote>
-              <h2 id="the-specification">The Specification</h2>
-              <p>
-                First we need to lay out the spec to make sure we know what
-                we&rsquo;re building. For a standard three-tier app we&rsquo;d
-                need three separate containers that spoke to each other: the DB,
-                the server, and the app.
-              </p>
-              <p>
-                For these I chose to use Postgres, Express, and React,
-                respectively, but those technologies aren&rsquo;t the point of
-                this article and can be replaced with anything you need.
-                I&rsquo;ll include some of that code just so you understand what
-                is going on, but won&rsquo;t go deep into detail on them.
-              </p>
-              <p>
-                The complete code is available in a link to my GitHub at the end
-                of the article, so if you&rsquo;re interested in that part (or
-                making fun of me for bad code) then feel free to peruse.
-              </p>
-              <p>In any case, here is the basic spec I came up with:</p>
-              <ol>
-                <li>
-                  Database container automatically initialise with relevant
-                  structure.
-                </li>
-                <li>
-                  Express server with the following RESTful endpoints:
-                  <ol>
-                    <li>
-                      <strong>GET</strong> <code>/todo</code> - List all todos
-                    </li>
-                    <li>
-                      <strong>POST</strong> <code>/todo</code> - Insert a new
-                      todo
-                    </li>
-                    <li>
-                      <strong>PATCH</strong> <code>/todo/:id</code> - Update the
-                      relevant todo
-                    </li>
-                  </ol>
-                </li>
-                <li>
-                  React app that consumes the endpoints to update the database.
-                </li>
-              </ol>
-              <p>
-                So it&rsquo;s a weak spec. I&rsquo;m not a Product Manager, sue
-                me, but it serves our purpose.
-              </p>
-              <blockquote>
-                <p>
-                  <strong>Note:</strong> You might notice there is no DELETE
-                  endpoint. This is deliberate, as it&rsquo;s been drilled into
-                  me never to delete user data. Instead we will flag items as
-                  deleted in the database.
-                </p>
-              </blockquote>
-              <p>So let&rsquo;s create our directory structure:</p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-bash" data-lang="bash">mkdir -p overengineeredTodo/<span style="color:#f92672">{</span>app,db,server<span style="color:#f92672">}</span> <span style="color:#f92672">&amp;&amp;</span> cd overengineeredTodo
-</code></pre>
-              </div>
-              <h2 id="the-database-container">The Database Container</h2>
-              <p>
-                First we need to create the database which will persist our
-                Todos. This is one of the simplest parts of Docker as containers
-                for all your standard databases already exist. Whatever
-                you&rsquo;re familiar with there is very likely to be a
-                container for you. As I&rsquo;m using Postgres we just need two
-                files:
-              </p>
-              <ol>
-                <li>The Dockerfile</li>
-                <li>The DB init SQL file</li>
-              </ol>
-              <p>Let&rsquo;s create them:</p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-bash" data-lang="bash">touch Dockerfile todo-init.sql
-</code></pre>
-              </div>
-              <p>
-                The <code>Dockerfile</code> file is what tells Docker what you
-                want it to do and thanks to the pre-existing containers are
-                really simple to use. Open it up in your editor of choice and
-                enter the following line:
-              </p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-Dockerfile" data-lang="Dockerfile"><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> postgres:9.5</span><span style="color:#960050;background-color:#1e0010">
+
+<div class="container">
+    <article class="post-container">
+        <header class="post-header">
+    <h1 class="post-title">Learn Docker via an Over-engineered Todo</h1>
+    
+</header>
+
+        <div class="post-content clearfix">
+    
+
+    <p>Learning new stuff is hard, so today I&rsquo;m going to guide you through using Docker by over-engineering the hell out of Todo app. We will build a three-tier, RESTful web app running multiple containers. You know, like a normal person would.</p>
+<blockquote>
+<p><strong>Disclaimer:</strong> All the commands here will assume you&rsquo;re running Linux. If you&rsquo;re not, then substitute the commands for your OS.</p>
+</blockquote>
+<h2 id="the-specification">The Specification</h2>
+<p>First we need to lay out the spec to make sure we know what we&rsquo;re building. For a standard three-tier app we&rsquo;d need three separate containers that spoke to each other: the DB, the server, and the app.</p>
+<p>For these I chose to use Postgres, Express, and React, respectively, but those technologies aren&rsquo;t the point of this article and can be replaced with anything you need. I&rsquo;ll include some of that code just so you understand what is going on, but won&rsquo;t go deep into detail on them.</p>
+<p>The complete code is available in a link to my GitHub at the end of the article, so if you&rsquo;re interested in that part (or making fun of me for bad code) then feel free to peruse.</p>
+<p>In any case, here is the basic spec I came up with:</p>
+<ol>
+<li>Database container automatically initialise with relevant structure.</li>
+<li>Express server with the following RESTful endpoints:
+<ol>
+<li><strong>GET</strong> <code>/todo</code> - List all todos</li>
+<li><strong>POST</strong> <code>/todo</code> - Insert a new todo</li>
+<li><strong>PATCH</strong> <code>/todo/:id</code> - Update the relevant todo</li>
+</ol>
+</li>
+<li>React app that consumes the endpoints to update the database.</li>
+</ol>
+<p>So it&rsquo;s a weak spec. I&rsquo;m not a Product Manager, sue me, but it serves our purpose.</p>
+<blockquote>
+<p><strong>Note:</strong> You might notice there is no DELETE endpoint. This is deliberate, as it&rsquo;s been drilled into me never to delete user data. Instead we will flag items as deleted in the database.</p>
+</blockquote>
+<p>So let&rsquo;s create our directory structure:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir -p overengineeredTodo/<span style="color:#f92672">{</span>app,db,server<span style="color:#f92672">}</span> <span style="color:#f92672">&amp;&amp;</span> cd overengineeredTodo
+</code></pre></div><h2 id="the-database-container">The Database Container</h2>
+<p>First we need to create the database which will persist our Todos. This is one of the simplest parts of Docker as containers for all your standard databases already exist. Whatever you&rsquo;re familiar with there is very likely to be a container for you. As I&rsquo;m using Postgres we just need two files:</p>
+<ol>
+<li>The Dockerfile</li>
+<li>The DB init SQL file</li>
+</ol>
+<p>Let&rsquo;s create them:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">touch Dockerfile todo-init.sql
+</code></pre></div><p>The <code>Dockerfile</code> file is what tells Docker what you want it to do and thanks to the pre-existing containers are really simple to use. Open it up in your editor of choice and enter the following line:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Dockerfile" data-lang="Dockerfile"><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> postgres:9.5</span><span style="color:#960050;background-color:#1e0010">
 </span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">ENV</span> POSTGRES_DB tododb<span style="color:#960050;background-color:#1e0010">
 </span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> todo-init.sql /docker-entrypoint-initdb.d/<span style="color:#960050;background-color:#1e0010">
-</span></code></pre>
-              </div>
-              <p>
-                Boom. That&rsquo;s it. Using just that first line you can have a
-                running, containerised instance of Postgres 9.5 running on your
-                machine. The second is an optional environment variable to
-                rename the database from the default. I&rsquo;ve called it
-                &ldquo;tododb&rdquo;, but you can call it whatever you want. The
-                third is a bit of Postgres specific magic that will allow us to
-                run some SQL when the container is first initialised. Any files
-                (you can have multiple) that are copied over to
-                <code>/docker-entrypoint-initdb.d/</code> will be run
-                automatically. For more information about Postgres entrypoints,
-                see the Docker Hub documentation
-                <a href="https://hub.docker.com/_/postgres/">here</a>.
-              </p>
-              <p>
-                Of course now we need to fill that file with data, so
-                let&rsquo;s open up <code>todo-init.sql</code> and enter our
-                database structure inside:
-              </p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> todo (
+</span></code></pre></div><p>Boom. That&rsquo;s it. Using just that first line you can have a running, containerised instance of Postgres 9.5 running on your machine. The second is an optional environment variable to rename the database from the default. I&rsquo;ve called it &ldquo;tododb&rdquo;, but you can call it whatever you want. The third is a bit of Postgres specific magic that will allow us to run some SQL when the container is first initialised. Any files (you can have multiple) that are copied over to <code>/docker-entrypoint-initdb.d/</code> will be run automatically. For more information about Postgres entrypoints, see the Docker Hub documentation <a href="https://hub.docker.com/_/postgres/">here</a>.</p>
+<p>Of course now we need to fill that file with data, so let&rsquo;s open up <code>todo-init.sql</code> and enter our database structure inside:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> todo (
 	id serial <span style="color:#66d9ef">primary</span> <span style="color:#66d9ef">key</span>,
 	label varchar(<span style="color:#ae81ff">256</span>),
 	complete boolean <span style="color:#66d9ef">default</span> <span style="color:#66d9ef">false</span>,
 	deleted boolean <span style="color:#66d9ef">default</span> <span style="color:#66d9ef">false</span>,
 	updated_date <span style="color:#66d9ef">timestamp</span> <span style="color:#66d9ef">default</span> <span style="color:#66d9ef">current_timestamp</span>
 );
-</code></pre>
-              </div>
-              <p>
-                Here we&rsquo;re setting an id, a label, two flags for whether
-                the todo is complete or deleted, and a timestamp for when the
-                item was last updated. That&rsquo;s really all we need to do for
-                the database.
-              </p>
-              <h2 id="the-server-container">The Server Container</h2>
-              <p>
-                We won&rsquo;t go into full detail on the server as it&rsquo;s
-                all specific to Express and Postgres, but you can view the
-                relevant files in my
-                <a
-                  href="https://github.com/stevenlaidlaw/OverengineeredTodo/blob/master/server/server.js"
-                  >GitHub, here</a
-                >. There are just some things to take note of relating to Docker
-                that I&rsquo;d like to call attention to:
-              </p>
-              <ol>
-                <li>
-                  Use environment variables for all the DB and server
-                  information.
-                </li>
-                <li>
-                  CORS. We have to make sure to use CORS, as the separate
-                  containers are cross-origin.
-                </li>
-              </ol>
-              <p>
-                Now run the commands to create the package.json file and install
-                the required dependencies:
-              </p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-bash" data-lang="bash">npm init <span style="color:#f92672">&amp;&amp;</span> npm i -S express body-parser cors pg-promise
-</code></pre>
-              </div>
-              <p>
-                We also want to modify the scripts in package.json to allow the
-                container to run it:
-              </p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-js" data-lang="js">{
+</code></pre></div><p>Here we&rsquo;re setting an id, a label, two flags for whether the todo is complete or deleted, and a timestamp for when the item was last updated. That&rsquo;s really all we need to do for the database.</p>
+<h2 id="the-server-container">The Server Container</h2>
+<p>We won&rsquo;t go into full detail on the server as it&rsquo;s all specific to Express and Postgres, but you can view the relevant files in my <a href="https://github.com/stevenlaidlaw/OverengineeredTodo/blob/master/server/server.js">GitHub, here</a>. There are just some things to take note of relating to Docker that I&rsquo;d like to call attention to:</p>
+<ol>
+<li>Use environment variables for all the DB and server information.</li>
+<li>CORS. We have to make sure to use CORS, as the separate containers are cross-origin.</li>
+</ol>
+<p>Now run the commands to create the package.json file and install the required dependencies:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">npm init <span style="color:#f92672">&amp;&amp;</span> npm i -S express body-parser cors pg-promise
+</code></pre></div><p>We also want to modify the scripts in package.json to allow the container to run it:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">{
 	...
 	<span style="color:#e6db74">&#34;scripts&#34;</span><span style="color:#f92672">:</span> {
 		<span style="color:#e6db74">&#34;start&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;node server.js&#34;</span>
 	}
 	...
 }
-</code></pre>
-              </div>
-              <p>
-                Once this is set up you can go ahead and create another
-                <code>Dockerfile</code> file in the server directory.
-                We&rsquo;ll go through this one a few lines at a time as
-                it&rsquo;s the most complex of the three.
-              </p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-Dockerfile" data-lang="Dockerfile"><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> node:8</span><span style="color:#960050;background-color:#1e0010">
+</code></pre></div><p>Once this is set up you can go ahead and create another <code>Dockerfile</code> file in the server directory. We&rsquo;ll go through this one a few lines at a time as it&rsquo;s the most complex of the three.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Dockerfile" data-lang="Dockerfile"><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> node:8</span><span style="color:#960050;background-color:#1e0010">
 </span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">WORKDIR</span><span style="color:#e6db74"> /usr/src/app</span><span style="color:#960050;background-color:#1e0010">
-</span></code></pre>
-              </div>
-              <p>
-                First we set the base container to be node 8 so that we can run
-                the express server and set the working directory to
-                <code>/usr/src/app</code>. This will determine where all the
-                files we copy from this point on end up in the container&rsquo;s
-                filesystem.
-              </p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-Dockerfile" data-lang="Dockerfile"><span style="color:#66d9ef">COPY</span> package*.json ./<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>First we set the base container to be node 8 so that we can run the express server and set the working directory to <code>/usr/src/app</code>. This will determine where all the files we copy from this point on end up in the container&rsquo;s filesystem.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Dockerfile" data-lang="Dockerfile"><span style="color:#66d9ef">COPY</span> package*.json ./<span style="color:#960050;background-color:#1e0010">
 </span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> npm install<span style="color:#960050;background-color:#1e0010">
-</span></code></pre>
-              </div>
-              <p>
-                Now we copy over the package files and then use the
-                <strong>RUN</strong> command to install the relevant
-                dependencies. <strong>RUN</strong> is a build step in the image,
-                and you can have as many of those as you like. We include the
-                wildcard in <strong>COPY</strong> to make sure we transfer over
-                the <code>package-lock.json</code> file too.
-              </p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-Dockerfile" data-lang="Dockerfile"><span style="color:#66d9ef">COPY</span> server.js ./<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>Now we copy over the package files and then use the <strong>RUN</strong> command to install the relevant dependencies. <strong>RUN</strong> is a build step in the image, and you can have as many of those as you like. We include the wildcard in <strong>COPY</strong> to make sure we transfer over the <code>package-lock.json</code> file too.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Dockerfile" data-lang="Dockerfile"><span style="color:#66d9ef">COPY</span> server.js ./<span style="color:#960050;background-color:#1e0010">
 </span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">CMD</span> [ <span style="color:#e6db74">&#34;npm&#34;</span>, <span style="color:#e6db74">&#34;start&#34;</span> ]<span style="color:#960050;background-color:#1e0010">
-</span></code></pre>
-              </div>
-              <p>
-                Now we copy over the actual server file, and then run it! Here
-                we use <strong>CMD</strong>, which describes what the container
-                executes when you launch it. There can only be one
-                <strong>CMD</strong>.
-              </p>
-              <h2 id="the-application-container">The Application Container</h2>
-              <p>
-                For ease of use I used &lsquo;create-react-app&rsquo; for this,
-                but you can use whatever you like. Here I made a choice to run
-                the builds locally and then copy over the built files to the
-                Docker image. This is a judgement call, as you can just as well
-                copy over the package.json files and run the build as part of
-                the Dockerfile using the <strong>RUN</strong> command (just like
-                our server did).
-              </p>
-              <p>
-                As with the server file I won&rsquo;t go into full detail in
-                this post, but you can find the full application logic
-                <a
-                  href="https://github.com/stevenlaidlaw/OverengineeredTodo/blob/master/app/src/App.js"
-                  >here</a
-                >. It&rsquo;s a fairly basic todo app written in React.
-              </p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-Dockerfile" data-lang="Dockerfile"><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> nginx</span><span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>Now we copy over the actual server file, and then run it! Here we use <strong>CMD</strong>, which describes what the container executes when you launch it. There can only be one <strong>CMD</strong>.</p>
+<h2 id="the-application-container">The Application Container</h2>
+<p>For ease of use I used &lsquo;create-react-app&rsquo; for this, but you can use whatever you like. Here I made a choice to run the builds locally and then copy over the built files to the Docker image. This is a judgement call, as you can just as well copy over the package.json files and run the build as part of the Dockerfile using the <strong>RUN</strong> command (just like our server did).</p>
+<p>As with the server file I won&rsquo;t go into full detail in this post, but you can find the full application logic <a href="https://github.com/stevenlaidlaw/OverengineeredTodo/blob/master/app/src/App.js">here</a>. It&rsquo;s a fairly basic todo app written in React.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Dockerfile" data-lang="Dockerfile"><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> nginx</span><span style="color:#960050;background-color:#1e0010">
 </span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> build /usr/share/nginx/html<span style="color:#960050;background-color:#1e0010">
-</span></code></pre>
-              </div>
-              <p>
-                First we use the base &lsquo;nginx&rsquo; image to use as our
-                webserver, and then copy over the build output. We will ensure
-                that the build folder always contains the latest build by adding
-                it to our build step.
-              </p>
-              <h2 id="bringing-it-all-together">Bringing it all together</h2>
-              <p>
-                Now that all the individual container images are configured we
-                can use Docker Compose to orchestrate it. Docker Compose is a
-                tool for defining and running multi-container applications, so
-                it&rsquo;s exactly what we need here! Drop back to the base
-                <code>overengineeredTodo</code> directory and run the following
-                command:
-              </p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-bash" data-lang="bash">touch docker-compose.yml
-</code></pre>
-              </div>
-              <p>
-                This will create a configuration file for us to define how the
-                containers should be brought up. First I&rsquo;ll dump the whole
-                file here, and the we&rsquo;ll go through each command and what
-                it does.
-              </p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">version</span>: <span style="color:#e6db74">&#39;2.1&#39;</span>
+</span></code></pre></div><p>First we use the base &lsquo;nginx&rsquo; image to use as our webserver, and then copy over the build output. We will ensure that the build folder always contains the latest build by adding it to our build step.</p>
+<h2 id="bringing-it-all-together">Bringing it all together</h2>
+<p>Now that all the individual container images are configured we can use Docker Compose to orchestrate it. Docker Compose is a tool for defining and running multi-container applications, so it&rsquo;s exactly what we need here! Drop back to the base <code>overengineeredTodo</code> directory and run the following command:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">touch docker-compose.yml
+</code></pre></div><p>This will create a configuration file for us to define how the containers should be brought up. First I&rsquo;ll dump the whole file here, and the we&rsquo;ll go through each command and what it does.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">version</span>: <span style="color:#e6db74">&#39;2.1&#39;</span>
 <span style="color:#f92672">services</span>:
 
   <span style="color:#f92672">app</span>:
@@ -462,153 +230,39 @@
     <span style="color:#f92672">depends_on</span>:
       <span style="color:#f92672">db</span>:
         <span style="color:#f92672">condition</span>: <span style="color:#ae81ff">service_healthy</span>
-</code></pre>
-              </div>
-              <p>
-                First we set the <code>version</code>. This tells us which
-                format the docker-compose file should take. I&rsquo;m personally
-                using 2.1 as it&rsquo;s the one I&rsquo;m most familiar with,
-                but if you&rsquo;re starting a new project you should use the
-                latest which, at time of this writing, is 3.7.
-              </p>
-              <p>
-                Next we build the services. These can be named whatever you
-                like. Common to each service are a few commands.
-              </p>
-              <h3 id="common-commands">Common Commands</h3>
-              <p>
-                First is the <code>build</code> command, which is a path to a
-                directory that contains a <code>Dockerfile</code>. This tells
-                Compose where to find the images for building.
-              </p>
-              <p>
-                The next shared command is <code>restart</code>, which
-                I&rsquo;ve set to <code>on-failure</code>. This ensures the
-                containers restart themselves if there are any issues.
-              </p>
-              <p>
-                The last common command is <code>ports</code>, which maps the
-                relevant ports for each container.
-              </p>
-              <p>
-                For the ports I&rsquo;ve done a few different things. On
-                <code>app</code> I&rsquo;ve remapped port 80 to 8888. This is
-                for development purposes, and would likely just stay on port 80
-                in a live deployment environment. Similarly, I&rsquo;ve remapped
-                the default postgres port (5432) to <code>5444</code>. This
-                isn&rsquo;t necessary at all, but I&rsquo;ve got various other
-                postgres containers running on my machine, so that&rsquo;s what
-                you&rsquo;re stuck with.
-              </p>
-              <h3 id="unique-commands">Unique Commands</h3>
-              <h4 id="healthcheck">healthcheck</h4>
-              <p>
-                This command is used to check on the health of the container and
-                determine whether it&rsquo;s ready for operation. This is
-                important for the database as if we attempt to bring up the
-                <code>server</code> container before postgres is ready then it
-                will crash. To implement this we pass the following arguments:
-              </p>
-              <ol>
-                <li>
-                  <strong>test</strong>: The command to run on the container to
-                  determine the health. Arguments are provided as a
-                  comma-separated array.
-                </li>
-                <li>
-                  <strong>interval</strong>: This determines how long the
-                  container will wait to run the check, and then the interval
-                  thereafter. Default is <code>30s</code>.
-                </li>
-                <li>
-                  <strong>timeout</strong>: How long the test should run before
-                  timing out. Default is <code>30s</code>
-                </li>
-                <li>
-                  <strong>retries</strong>: How many attempts to make before
-                  giving up and considering the container
-                  <code>unhealthy</code>. Defaults to <code>3</code>.
-                </li>
-              </ol>
-              <h4 id="environment">environment</h4>
-              <p>
-                Pretty self explanatory, these are the environment variables
-                we&rsquo;d like the container to receive. Here we pass in all
-                the API and DB information we need for the server to run.
-              </p>
-              <h4 id="network_mode">network_mode</h4>
-              <p>
-                This changes the network mode that the container runs in.
-                We&rsquo;ve switched it to <code>hosts</code> here to ensure
-                that it allows incoming connections from other containers.
-              </p>
-              <p>
-                Note that when setting the <code>network_mode</code> to
-                &lsquo;host&rsquo; you are unable to map any ports.
-              </p>
-              <h4 id="depends_on">depends_on</h4>
-              <p>
-                This is where we link back to the
-                <code>healthcheck</code> command that we set up in the
-                <code>db</code> container. This command tells us to wait until
-                the <code>db</code> is healthy before running the container.
-                This ensures the database is ready to accept connections.
-              </p>
-              <hr />
-              <p>
-                Of course there are many more commands are your disposal for a
-                variety of setups. The full list of Docker Compose commands, and
-                their available arguments, are available
-                <a href="https://docs.docker.com/compose/">here</a>.
-              </p>
-              <h2 id="bringing-it-all-up">Bringing it all up</h2>
-              <p>
-                Now we&rsquo;re ready to launch! Now if you jump into the
-                <code>overengineeredTodo</code> directory and run the following
-                commands:
-              </p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-bash" data-lang="bash">docker-compose up -d
-</code></pre>
-              </div>
-              <p>
-                This builds the images and brings the containers up. The
-                <code>-d</code> command detaches the containers so we
-                aren&rsquo;t getting the output of them streamed to the console.
-                If you followed the steps you should now be able to visit your
-                app at http://localhost:8888. If you used my project it should
-                look something like this:
-              </p>
-              <p>
-                <img
-                  src="https://github.com/stevenlaidlaw/OverengineeredTodo/blob/master/overengineeredTodo.png?raw=true"
-                  alt="App demo"
-                />
-              </p>
-              <p>
-                Try changing a few things then refresh the page. You&rsquo;ll
-                see your changes have persisted to the database, and will
-                continue to be available for the lifetime of the container.
-              </p>
-              <p>Some more helpful commands:</p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-bash" data-lang="bash"><span style="color:#75715e"># Build the images</span>
+</code></pre></div><p>First we set the <code>version</code>. This tells us which format the docker-compose file should take. I&rsquo;m personally using 2.1 as it&rsquo;s the one I&rsquo;m most familiar with, but if you&rsquo;re starting a new project you should use the latest which, at time of this writing, is 3.7.</p>
+<p>Next we build the services. These can be named whatever you like. Common to each service are a few commands.</p>
+<h3 id="common-commands">Common Commands</h3>
+<p>First is the <code>build</code> command, which is a path to a directory that contains a <code>Dockerfile</code>. This tells Compose where to find the images for building.</p>
+<p>The next shared command is <code>restart</code>, which I&rsquo;ve set to <code>on-failure</code>. This ensures the containers restart themselves if there are any issues.</p>
+<p>The last common command is <code>ports</code>, which maps the relevant ports for each container.</p>
+<p>For the ports I&rsquo;ve done a few different things. On <code>app</code> I&rsquo;ve remapped port 80 to 8888. This is for development purposes, and would likely just stay on port 80 in a live deployment environment. Similarly, I&rsquo;ve remapped the default postgres port (5432) to <code>5444</code>. This isn&rsquo;t necessary at all, but I&rsquo;ve got various other postgres containers running on my machine, so that&rsquo;s what you&rsquo;re stuck with.</p>
+<h3 id="unique-commands">Unique Commands</h3>
+<h4 id="healthcheck">healthcheck</h4>
+<p>This command is used to check on the health of the container and determine whether it&rsquo;s ready for operation. This is important for the database as if we attempt to bring up the <code>server</code> container before postgres is ready then it will crash. To implement this we pass the following arguments:</p>
+<ol>
+<li><strong>test</strong>: The command to run on the container to determine the health. Arguments are provided as a comma-separated array.</li>
+<li><strong>interval</strong>: This determines how long the container will wait to run the check, and then the interval thereafter. Default is <code>30s</code>.</li>
+<li><strong>timeout</strong>: How long the test should run before timing out. Default is <code>30s</code></li>
+<li><strong>retries</strong>: How many attempts to make before giving up and considering the container <code>unhealthy</code>. Defaults to <code>3</code>.</li>
+</ol>
+<h4 id="environment">environment</h4>
+<p>Pretty self explanatory, these are the environment variables we&rsquo;d like the container to receive. Here we pass in all the API and DB information we need for the server to run.</p>
+<h4 id="network_mode">network_mode</h4>
+<p>This changes the network mode that the container runs in. We&rsquo;ve switched it to <code>hosts</code> here to ensure that it allows incoming connections from other containers.</p>
+<p>Note that when setting the <code>network_mode</code> to &lsquo;host&rsquo; you are unable to map any ports.</p>
+<h4 id="depends_on">depends_on</h4>
+<p>This is where we link back to the <code>healthcheck</code> command that we set up in the <code>db</code> container. This command tells us to wait until the <code>db</code> is healthy before running the container. This ensures the database is ready to accept connections.</p>
+<hr>
+<p>Of course there are many more commands are your disposal for a variety of setups. The full list of Docker Compose commands, and their available arguments, are available <a href="https://docs.docker.com/compose/">here</a>.</p>
+<h2 id="bringing-it-all-up">Bringing it all up</h2>
+<p>Now we&rsquo;re ready to launch! Now if you jump into the <code>overengineeredTodo</code> directory and run the following commands:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker-compose up -d
+</code></pre></div><p>This builds the images and brings the containers up. The <code>-d</code> command detaches the containers so we aren&rsquo;t getting the output of them streamed to the console. If you followed the steps you should now be able to visit your app at http://localhost:8888. If you used my project it should look something like this:</p>
+<p><img src="https://github.com/stevenlaidlaw/OverengineeredTodo/blob/master/overengineeredTodo.png?raw=true" alt="App demo"></p>
+<p>Try changing a few things then refresh the page. You&rsquo;ll see your changes have persisted to the database, and will continue to be available for the lifetime of the container.</p>
+<p>Some more helpful commands:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># Build the images</span>
 docker-compose build
 <span style="color:#75715e"># Start the containers</span>
 docker-compose start 
@@ -619,51 +273,35 @@ docker-compose stop
 docker-compose down
 <span style="color:#75715e"># Get the status of the relevant containers</span>
 docker-compose ps
-</code></pre>
-              </div>
-              <hr />
-              <p>
-                Hopefully this <em>very</em> basic introduction has shed some
-                light on Docker and how to use it in a real world app.
-                Don&rsquo;t forget to add the build step for
-                <code>app</code> before running the
-                <code>docker-compose</code> command to ensure your files are the
-                most up-to-date. You can see the way I&rsquo;ve done it in the
-                scripts section of my <code>package.json</code> file
-                <a href="https://github.com/stevenlaidlaw/OverengineeredTodo"
-                  >here</a
-                >.
-              </p>
-              <p>
-                That&rsquo;s it! Please let me know if you have any questions or
-                corrections to any of the information here.
-              </p>
-            </div>
+</code></pre></div><hr>
+<p>Hopefully this <em>very</em> basic introduction has shed some light on Docker and how to use it in a real world app. Don&rsquo;t forget to add the build step for <code>app</code> before running the <code>docker-compose</code> command to ensure your files are the most up-to-date. You can see the way I&rsquo;ve done it in the scripts section of my <code>package.json</code> file <a href="https://github.com/stevenlaidlaw/OverengineeredTodo">here</a>.</p>
+<p>That&rsquo;s it! Please let me know if you have any questions or corrections to any of the information here.</p>
 
-            <footer class="post-footer clearfix">
-              <div class="share"></div>
-            </footer>
-          </article>
-        </div>
-      </div>
+</div>
+
+        <footer class="post-footer clearfix"><div class="share">
     </div>
+</footer>
+    </article>
+</div>
 
-    <footer class="footer">
-      <div class="container">
-        <div class="site-title-wrapper">
-          <a
-            class="button-square button-jump-top js-jump-top"
-            href="#"
-            aria-label="Back to Top"
-          >
-            <i class="fa fa-angle-up" aria-hidden="true"></i>
-          </a>
+            </div>
         </div>
-      </div>
-    </footer>
 
-    <script src="http://stevenlaidlaw.com/js/jquery-1.11.3.min.js"></script>
-    <script src="http://stevenlaidlaw.com/js/jquery.fitvids.js"></script>
-    <script src="http://stevenlaidlaw.com/js/scripts.js"></script>
-  </body>
+        <footer class="footer">
+            <div class="container">
+                <div class="site-title-wrapper">
+                    <a class="button-square button-jump-top js-jump-top" href="#" aria-label="Back to Top">
+                        <i class="fa fa-angle-up" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+        </footer>
+
+        <script src="http://stevenlaidlaw.com/js/jquery-1.11.3.min.js"></script>
+        <script src="http://stevenlaidlaw.com/js/jquery.fitvids.js"></script>
+        <script src="http://stevenlaidlaw.com/js/scripts.js"></script>
+        
+    </body>
 </html>
+

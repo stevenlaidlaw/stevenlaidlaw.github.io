@@ -3,10 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>
-      Passwordless authentication with Express and PostgreSQL &middot; Steven
-      Laidlaw
-    </title>
+    <title>Passwordless authentication with Express and PostgreSQL &middot; Steven Laidlaw</title>
     <meta name="HandheldFriendly" content="True" />
     <meta name="MobileOptimized" content="320" />
     <meta name="robots" content="index,follow" />
@@ -23,213 +20,154 @@
       integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
       crossorigin="anonymous"
     />
-    <link
-      rel="stylesheet"
-      href="http://stevenlaidlaw.com/stylesheets/site.css"
-    />
-    <link
-      rel="stylesheet"
-      href="http://stevenlaidlaw.com/stylesheets/syntax.css"
-    />
+    <link rel="stylesheet" href="http://stevenlaidlaw.com/stylesheets/site.css" />
+    <link rel="stylesheet" href="http://stevenlaidlaw.com/stylesheets/syntax.css" />
+
+    <style>
+      body {
+        max-width: 768px;
+        margin: 0 auto;
+        background: #fefefe;
+        color: #353638;
+        font-family: "source-serif-pro";
+        font-size: 21px;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: "League Spartan";
+        margin: 1em 0;
+        text-transform: none;
+      }
+      h1 {
+        font-size: 2.5em;
+      }
+      h2 {
+        font-size: 2em;
+      }
+      h3 {
+        font-size: 1.5em;
+      }
+      h4 {
+        font-size: 1.25em;
+      }
+      h5 {
+        font-size: 1em;
+      }
+      h6 {
+        font-size: 0.875em;
+      }
+      p {
+        letter-spacing: 0.01em;
+        line-height: 1.8em;
+        margin: 1em 0;
+      }
+      a {
+        color: cornflowerblue;
+        text-decoration: none;
+      }
+      ol,
+      ul {
+        line-height: 1.4;
+        margin: 0 0 20px;
+      }
+    </style>
   </head>
   <body>
     <div id="wrapper">
       <header class="site-header">
         <div class="container">
           <div class="site-title-wrapper">
+            
             <h1 class="site-title">
               <a href="http://stevenlaidlaw.com/">Steven Laidlaw</a>
             </h1>
+                    
           </div>
 
-          <ul class="site-nav"></ul>
+          <ul class="site-nav">
+            
+
+          </ul>
         </div>
       </header>
 
       <div id="container">
-        <div class="container">
-          <article class="post-container">
-            <header class="post-header">
-              <h1 class="post-title">
-                Passwordless authentication with Express and PostgreSQL
-              </h1>
-            </header>
 
-            <div class="post-content clearfix">
-              <h1 id="table-of-contents">Table of Contents</h1>
-              <ul>
-                <li><a href="#introduction">Introduction</a></li>
-                <li><a href="#disclaimer">Disclaimer</a></li>
-                <li><a href="#overview">Overview</a></li>
-                <li>
-                  <a href="#implementation">Implementation</a>
-                  <ul>
-                    <li><a href="#setup">Setup</a></li>
-                    <li>
-                      <a href="#database-structure">Database Structure</a>
-                    </li>
-                    <li><a href="#creating-queries">Creating Queries</a></li>
-                    <li><a href="#html-templates">HTML Templates</a></li>
-                    <li>
-                      <a href="#api-endpoints">API endpoints</a>
-                      <ul>
-                        <li>
-                          <a href="#get-register-login"
-                            >GET /register, /login</a
-                          >
-                        </li>
-                        <li><a href="#post-register">POST /register</a></li>
-                        <li><a href="#post-login">POST /login</a></li>
-                        <li><a href="#post-token">POST /token</a></li>
-                        <li><a href="#get-account">GET /account</a></li>
-                        <li><a href="#get-logout">GET /logout</a></li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-                <li><a href="#summary">Summary</a></li>
-              </ul>
-              <h1 id="introduction">Introduction</h1>
-              <p>
-                Static passwords suck. Not only are they a well-known
-                <a
-                  href="https://community.jisc.ac.uk/library/janet-services-documentation/passwords-threats-and-counter-measures"
-                  >security risk</a
-                >, but they are also the
-                <a
-                  href="https://www.afr.com/technology/passwords-often-the-weak-link-in-the-security-chain-20180808-h13pf3"
-                  >weakest part of the chain</a
-                >
-                when determining a user&rsquo;s authenticity.
-              </p>
-              <p>
-                Users generally either make them so simple as to be easily
-                guessable, or are reused so often that getting a password
-                cracked in one website means the rest of your accounts are up
-                for grabs. Even power users who use hard to guess randomly
-                generated passwords often are required to use password managers
-                to keep them all in line which introduces another single point
-                of failure.
-              </p>
-              <p>
-                These problems are so prevalent that most applications these
-                days either mandate or strongly recommend multi-factor
-                authentication. The most common of these is the one-time
-                password that is either emailed to the user or linked to a
-                special device. The recommendation of this article is that you
-                ditch static passwords altogether due to the aforementioned
-                security risks, and simply implement one-time passwords instead.
-              </p>
-              <p>
-                So why one-time passwords? First of all they&rsquo;re good for
-                users because they don&rsquo;t have to remember a password. Just
-                put your email address into the login field and they&rsquo;ll be
-                sent an auto-generated password or link to log them in. Secondly
-                these passwords are short-lived, which means that if a data
-                breach <em>does</em> happen then there are no active passwords
-                stored for crackers to log in with or share, which reduces the
-                attack window dramatically. As long as a user has access to
-                their email address their accounts will be safe.
-              </p>
-              <h1 id="disclaimer">Disclaimer</h1>
-              <p>
-                This article assumes you know your way around PostgreSQL and
-                ExpressJS. We will not be hand-holding you through the entire
-                application build, but instead will be focusing on the concepts
-                and things you&rsquo;ll need to know to implement a safe and
-                secure one-time password login system.
-              </p>
-              <p>
-                A complete working example will be available at the end of the
-                tutorial.
-              </p>
-              <h1 id="overview">Overview</h1>
-              <p>
-                For this article we&rsquo;ll be implementing the most simple
-                version of a one-time password (OTP): a short code sent via
-                email. This was chosen for simplicity, availability, and cost.
-                Almost every user will have an email, and there is very minimal
-                cost in sending them compared with something like SMS. A OTP is
-                used here over a link also for user convenience. It allows them
-                to retrieve the code on one device (like a phone) and log into
-                your service on another (like a public computer).
-              </p>
-              <p>
-                As a high-level overview the implementation will be as follows:
-              </p>
-              <ul>
-                <li>A user registers an account using their email address</li>
-                <li>The user attempts to log in using their email address</li>
-                <li>
-                  The site retrieves the user information and generates a OTP
-                </li>
-                <li>
-                  The OTP is stored securely in the database, and sent via plain
-                  text to the user
-                </li>
-                <li>
-                  The user will then retrieve the code and enter it into the
-                  login field provided
-                </li>
-                <li>The OTP is verified against the database</li>
-                <li>If successful, the user is logged into the application</li>
-                <li>
-                  The OTP is then deleted from the database to prevent re-use
-                </li>
-              </ul>
-              <p>
-                This flow is flexible and can be implemented using any
-                technology you are familiar with, but as mentioned we&rsquo;ll
-                be using PostgreSQL and ExpressJS for this example.
-              </p>
-              <h1 id="implementation">Implementation</h1>
-              <h2 id="setup">Setup</h2>
-              <p>
-                Generate yourself an Express app, and set up your Postgres
-                database. For libraries we&rsquo;ll be using:
-              </p>
-              <ul>
-                <li>
-                  <a href="https://github.com/brianc/node-postgres"
-                    >node-postgres</a
-                  >
-                  for interfacing with our database
-                </li>
-                <li>
-                  <a href="https://github.com/auth0/node-jsonwebtoken"
-                    >node-jsonwebtoken</a
-                  >
-                  for the JWT
-                </li>
-                <li>
-                  <a href="https://github.com/kelektiv/node.bcrypt.js"
-                    >bcrypt</a
-                  >
-                  for encrypting the one-time passwords
-                </li>
-                <li>
-                  <a href="https://github.com/eleith/emailjs">emailjs</a> for
-                  emailing the user
-                </li>
-                <li>
-                  <a href="https://github.com/motdotla/dotenv">dotenv</a> for
-                  loading our secrets and parameters
-                </li>
-              </ul>
-              <p>
-                For our <code>.env</code> file we need the following environment
-                variables in place:
-              </p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-env" data-lang="env"><span style="color:#75715e"># Database connection string</span>
+
+<div class="container">
+    <article class="post-container">
+        <header class="post-header">
+    <h1 class="post-title">Passwordless authentication with Express and PostgreSQL</h1>
+    
+</header>
+
+        <div class="post-content clearfix">
+    
+
+    <h1 id="table-of-contents">Table of Contents</h1>
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#disclaimer">Disclaimer</a></li>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#implementation">Implementation</a>
+<ul>
+<li><a href="#setup">Setup</a></li>
+<li><a href="#database-structure">Database Structure</a></li>
+<li><a href="#creating-queries">Creating Queries</a></li>
+<li><a href="#html-templates">HTML Templates</a></li>
+<li><a href="#api-endpoints">API endpoints</a>
+<ul>
+<li><a href="#get-register-login">GET /register, /login</a></li>
+<li><a href="#post-register">POST /register</a></li>
+<li><a href="#post-login">POST /login</a></li>
+<li><a href="#post-token">POST /token</a></li>
+<li><a href="#get-account">GET /account</a></li>
+<li><a href="#get-logout">GET /logout</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#summary">Summary</a></li>
+</ul>
+<h1 id="introduction">Introduction</h1>
+<p>Static passwords suck. Not only are they a well-known <a href="https://community.jisc.ac.uk/library/janet-services-documentation/passwords-threats-and-counter-measures">security risk</a>, but they are also the <a href="https://www.afr.com/technology/passwords-often-the-weak-link-in-the-security-chain-20180808-h13pf3">weakest part of the chain</a> when determining a user&rsquo;s authenticity.</p>
+<p>Users generally either make them so simple as to be easily guessable, or are reused so often that getting a password cracked in one website means the rest of your accounts are up for grabs. Even power users who use hard to guess randomly generated passwords often are required to use password managers to keep them all in line which introduces another single point of failure.</p>
+<p>These problems are so prevalent that most applications these days either mandate or strongly recommend multi-factor authentication. The most common of these is the one-time password that is either emailed to the user or linked to a special device. The recommendation of this article is that you ditch static passwords altogether due to the aforementioned security risks, and simply implement one-time passwords instead.</p>
+<p>So why one-time passwords? First of all they&rsquo;re good for users because they don&rsquo;t have to remember a password. Just put your email address into the login field and they&rsquo;ll be sent an auto-generated password or link to log them in. Secondly these passwords are short-lived, which means that if a data breach <em>does</em> happen then there are no active passwords stored for crackers to log in with or share, which reduces the attack window dramatically. As long as a user has access to their email address their accounts will be safe.</p>
+<h1 id="disclaimer">Disclaimer</h1>
+<p>This article assumes you know your way around PostgreSQL and ExpressJS. We will not be hand-holding you through the entire application build, but instead will be focusing on the concepts and things you&rsquo;ll need to know to implement a safe and secure one-time password login system.</p>
+<p>A complete working example will be available at the end of the tutorial.</p>
+<h1 id="overview">Overview</h1>
+<p>For this article we&rsquo;ll be implementing the most simple version of a one-time password (OTP): a short code sent via email. This was chosen for simplicity, availability, and cost. Almost every user will have an email, and there is very minimal cost in sending them compared with something like SMS. A OTP is used here over a link also for user convenience. It allows them to retrieve the code on one device (like a phone) and log into your service on another (like a public computer).</p>
+<p>As a high-level overview the implementation will be as follows:</p>
+<ul>
+<li>A user registers an account using their email address</li>
+<li>The user attempts to log in using their email address</li>
+<li>The site retrieves the user information and generates a OTP</li>
+<li>The OTP is stored securely in the database, and sent via plain text to the user</li>
+<li>The user will then retrieve the code and enter it into the login field provided</li>
+<li>The OTP is verified against the database</li>
+<li>If successful, the user is logged into the application</li>
+<li>The OTP is then deleted from the database to prevent re-use</li>
+</ul>
+<p>This flow is flexible and can be implemented using any technology you are familiar with, but as mentioned we&rsquo;ll be using PostgreSQL and ExpressJS for this example.</p>
+<h1 id="implementation">Implementation</h1>
+<h2 id="setup">Setup</h2>
+<p>Generate yourself an Express app, and set up your Postgres database. For libraries we&rsquo;ll be using:</p>
+<ul>
+<li><a href="https://github.com/brianc/node-postgres">node-postgres</a> for interfacing with our database</li>
+<li><a href="https://github.com/auth0/node-jsonwebtoken">node-jsonwebtoken</a> for the JWT</li>
+<li><a href="https://github.com/kelektiv/node.bcrypt.js">bcrypt</a> for encrypting the one-time passwords</li>
+<li><a href="https://github.com/eleith/emailjs">emailjs</a> for emailing the user</li>
+<li><a href="https://github.com/motdotla/dotenv">dotenv</a> for loading our secrets and parameters</li>
+</ul>
+<p>For our <code>.env</code> file we need the following environment variables in place:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-env" data-lang="env"><span style="color:#75715e"># Database connection string</span>
 DATABASE_URL<span style="color:#f92672">=</span>postgresql://username:password@localhost:5432/dbname
 <span style="color:#75715e"># Secret key for secure JWT generation</span>
 JWT_SECRET_KEY<span style="color:#f92672">=</span>ARandomStringOfCharacters0389j0jsdf8jr8h9as8jd
@@ -238,111 +176,46 @@ EMAIL_USER<span style="color:#f92672">=</span>admin@yourapp.com
 EMAIL_PASSWORD<span style="color:#f92672">=</span>TestPassword1
 EMAIL_HOST<span style="color:#f92672">=</span>mail.mailserver.com
 EMAIL_FROM<span style="color:#f92672">=</span>Your App &lt;admin@yourapp.com&gt;
-</code></pre>
-              </div>
-              <blockquote>
-                <p>
-                  Tip: This is not a great way to store secrets in a production
-                  app. A secure key store would be more appropriate, but for
-                  local development and testing this should be fine.
-                </p>
-              </blockquote>
-              <h2 id="database-structure">Database Structure</h2>
-              <p>
-                Firstly we must initialise our database to allow users to both
-                register and log-in using the one-time password. For that we
-                will need two tables, <code>users</code> and <code>otp</code>.
-                Users must contain at least an id and email address field like
-                so:
-              </p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> users (
+</code></pre></div><blockquote>
+<p>Tip: This is not a great way to store secrets in a production app. A secure key store would be more appropriate, but for local development and testing this should be fine.</p>
+</blockquote>
+<h2 id="database-structure">Database Structure</h2>
+<p>Firstly we must initialise our database to allow users to both register and log-in using the one-time password. For that we will need two tables, <code>users</code> and <code>otp</code>. Users must contain at least an id and email address field like so:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> users (
 	id INT <span style="color:#66d9ef">GENERATED</span> ALWAYS <span style="color:#66d9ef">AS</span> <span style="color:#66d9ef">IDENTITY</span>,
 	email varchar(<span style="color:#ae81ff">256</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
 	created_at <span style="color:#66d9ef">TIMESTAMP</span> <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> <span style="color:#66d9ef">CURRENT_TIMESTAMP</span>,
 	<span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>(id)
 );
-</code></pre>
-              </div>
-              <p>
-                This is a very simple user field which only stores the
-                user&rsquo;s unique ID and the their email address.
-              </p>
-              <p>
-                Next we want to create a table to handle the one-time passwords:
-              </p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> otp (
+</code></pre></div><p>This is a very simple user field which only stores the user&rsquo;s unique ID and the their email address.</p>
+<p>Next we want to create a table to handle the one-time passwords:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> otp (
 	user_id INT <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
 	code VARCHAR(<span style="color:#ae81ff">64</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
 	created_at <span style="color:#66d9ef">TIMESTAMP</span> <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> <span style="color:#66d9ef">CURRENT_TIMESTAMP</span>,
 	<span style="color:#66d9ef">CONSTRAINT</span> fk_user <span style="color:#66d9ef">FOREIGN</span> <span style="color:#66d9ef">KEY</span>(user_id) <span style="color:#66d9ef">REFERENCES</span> users(id)
 );
-</code></pre>
-              </div>
-              <p>
-                This will store the hashed OTP and the user&rsquo;s ID as a
-                pair. The <code>created_at</code> column here is also important
-                to ensure that the OTP expires quickly. Time between attempting
-                and completing the login should be minimal for security
-                purposes.
-              </p>
-              <h2 id="creating-queries">Creating Queries</h2>
-              <p>
-                Now we need to create some queries to handle the interfacing
-                with the database. At minimum we&rsquo;ll need the following:
-              </p>
-              <ul>
-                <li>
-                  Users
-                  <ul>
-                    <li>Create</li>
-                    <li>GetByEmail</li>
-                  </ul>
-                </li>
-                <li>
-                  OTP
-                  <ul>
-                    <li>Create</li>
-                    <li>GetByUserId</li>
-                    <li>DeleteByUserId</li>
-                  </ul>
-                </li>
-              </ul>
-              <p>
-                This will enable us to create users, and generate then delete
-                one-time passwords.
-              </p>
-              <p>
-                Firstly I like to create a function that will run our query, log
-                the attempt and results, and then return the results.
-              </p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-js" data-lang="js"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">dotenv</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#34;dotenv&#34;</span>);
+</code></pre></div><p>This will store the hashed OTP and the user&rsquo;s ID as a pair. The <code>created_at</code> column here is also important to ensure that the OTP expires quickly. Time between attempting and completing the login should be minimal for security purposes.</p>
+<h2 id="creating-queries">Creating Queries</h2>
+<p>Now we need to create some queries to handle the interfacing with the database. At minimum we&rsquo;ll need the following:</p>
+<ul>
+<li>Users
+<ul>
+<li>Create</li>
+<li>GetByEmail</li>
+</ul>
+</li>
+<li>OTP
+<ul>
+<li>Create</li>
+<li>GetByUserId</li>
+<li>DeleteByUserId</li>
+</ul>
+</li>
+</ul>
+<p>This will enable us to create users, and generate then delete one-time passwords.</p>
+<p>Firstly I like to create a function that will run our query, log the attempt and results, and then return the results.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">dotenv</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#34;dotenv&#34;</span>);
 <span style="color:#66d9ef">const</span> { <span style="color:#a6e22e">Pool</span> } <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#34;pg&#34;</span>);
 
 <span style="color:#75715e">// Load the environment variables
@@ -365,22 +238,8 @@ EMAIL_FROM<span style="color:#f92672">=</span>Your App &lt;admin@yourapp.com&gt;
   );
   <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">result</span>.<span style="color:#a6e22e">rows</span>;
 };
-</code></pre>
-              </div>
-              <p>
-                Now we can use this function to generate the aforementioned
-                queries like so:
-              </p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-js" data-lang="js"><span style="color:#a6e22e">module</span>.<span style="color:#a6e22e">exports</span> <span style="color:#f92672">=</span> {
+</code></pre></div><p>Now we can use this function to generate the aforementioned queries like so:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">module</span>.<span style="color:#a6e22e">exports</span> <span style="color:#f92672">=</span> {
   <span style="color:#a6e22e">Users</span><span style="color:#f92672">:</span> {
     <span style="color:#a6e22e">Create</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">async</span> (<span style="color:#a6e22e">email</span>) =&gt;
       <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">runQuery</span>(
@@ -415,31 +274,16 @@ EMAIL_FROM<span style="color:#f92672">=</span>Your App &lt;admin@yourapp.com&gt;
     },
   },
 };
-</code></pre>
-              </div>
-              <p>Our queries are now ready to use!</p>
-              <h2 id="html-templates">HTML Templates</h2>
-              <p>
-                Before we tackle the API endpoints lets quickly throw together
-                some forms for the front-end. We only need three forms to handle
-                everything:
-              </p>
-              <ul>
-                <li>Register</li>
-                <li>Login</li>
-                <li>Token</li>
-              </ul>
-              <p>Here are some examples:</p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">form</span> <span style="color:#a6e22e">action</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/users/register&#34;</span> <span style="color:#a6e22e">method</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;POST&#34;</span>&gt;
+</code></pre></div><p>Our queries are now ready to use!</p>
+<h2 id="html-templates">HTML Templates</h2>
+<p>Before we tackle the API endpoints lets quickly throw together some forms for the front-end. We only need three forms to handle everything:</p>
+<ul>
+<li>Register</li>
+<li>Login</li>
+<li>Token</li>
+</ul>
+<p>Here are some examples:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">form</span> <span style="color:#a6e22e">action</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/users/register&#34;</span> <span style="color:#a6e22e">method</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;POST&#34;</span>&gt;
   &lt;<span style="color:#f92672">div</span>&gt;
     &lt;<span style="color:#f92672">label</span> <span style="color:#a6e22e">for</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;email&#34;</span>&gt;Email&lt;/<span style="color:#f92672">label</span>&gt;
     &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;email&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;email&#34;</span> <span style="color:#a6e22e">placeholder</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Enter Email&#34;</span> /&gt;
@@ -463,95 +307,37 @@ EMAIL_FROM<span style="color:#f92672">=</span>Your App &lt;admin@yourapp.com&gt;
   &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;hidden&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{{email}}&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;email&#34;</span> /&gt;
   &lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;submit&#34;</span>&gt;Login&lt;/<span style="color:#f92672">button</span>&gt;
 &lt;/<span style="color:#f92672">form</span>&gt;
-</code></pre>
-              </div>
-              <p>
-                All three form templates are very similar. The only thing to
-                look out for is the hidden <code>email</code> field in the token
-                form. We have to make sure that this field is populated with the
-                email that was submitted from the login/register screen,
-                otherwise the back-end won&rsquo;t know what user we&rsquo;re
-                attempting to log in as.
-              </p>
-              <h2 id="api-endpoints">API endpoints</h2>
-              <p>
-                So we have our queries, now we can put them to use. We&rsquo;re
-                going to need six API endpoints in order to cover everything we
-                need for a simple login system:
-              </p>
-              <ol>
-                <li><code>/register GET</code> - To serve the register page</li>
-                <li><code>/register POST</code> - To create a user</li>
-                <li><code>/login GET</code> - To serve the login page</li>
-                <li>
-                  <code>/login POST</code> - To generate a one-time password
-                </li>
-                <li><code>/token POST</code> - To generate the user session</li>
-                <li>
-                  <code>/account GET</code> - To validate the session token
-                </li>
-                <li>
-                  <code>/logout GET</code> - To destroy the user&rsquo;s session
-                </li>
-              </ol>
-              <p>
-                We&rsquo;ll tackle these one at a time to get a feel for how it
-                all works together.
-              </p>
-              <h3 id="get-register-login">GET /register, /login</h3>
-              <p>
-                The simplest of all these endpoints are the get endpoints for
-                the Register and Login templates. We just want to render these
-                pages using your view engine of choice.
-              </p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-js" data-lang="js"><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#34;/login&#34;</span>, <span style="color:#66d9ef">async</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
+</code></pre></div><p>All three form templates are very similar. The only thing to look out for is the hidden <code>email</code> field in the token form. We have to make sure that this field is populated with the email that was submitted from the login/register screen, otherwise the back-end won&rsquo;t know what user we&rsquo;re attempting to log in as.</p>
+<h2 id="api-endpoints">API endpoints</h2>
+<p>So we have our queries, now we can put them to use. We&rsquo;re going to need six API endpoints in order to cover everything we need for a simple login system:</p>
+<ol>
+<li><code>/register GET</code> - To serve the register page</li>
+<li><code>/register POST</code> - To create a user</li>
+<li><code>/login GET</code> - To serve the login page</li>
+<li><code>/login POST</code> - To generate a one-time password</li>
+<li><code>/token POST</code> - To generate the user session</li>
+<li><code>/account GET</code> - To validate the session token</li>
+<li><code>/logout GET</code> - To destroy the user&rsquo;s session</li>
+</ol>
+<p>We&rsquo;ll tackle these one at a time to get a feel for how it all works together.</p>
+<h3 id="get-register-login">GET /register, /login</h3>
+<p>The simplest of all these endpoints are the get endpoints for the Register and Login templates. We just want to render these pages using your view engine of choice.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#34;/login&#34;</span>, <span style="color:#66d9ef">async</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
   <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">render</span>(<span style="color:#e6db74">&#34;login&#34;</span>);
 });
 
 <span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#34;/register&#34;</span>, <span style="color:#66d9ef">async</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
   <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">render</span>(<span style="color:#e6db74">&#34;register&#34;</span>);
 });
-</code></pre>
-              </div>
-              <p>
-                Usually you&rsquo;d want to check if the user is logged in on
-                any of these endpoints and redirect them away from the pages if
-                so, but I&rsquo;ll leave that as an exercise for the reader.
-              </p>
-              <h3 id="post-register">POST /register</h3>
-              <p>
-                Now our first endpoint that actually does something to the
-                database. We have two objectives here:
-              </p>
-              <ol>
-                <li>Make sure the user isn&rsquo;t already registered</li>
-                <li>Register the user</li>
-              </ol>
-              <p>
-                In both cases above we will redirect to the
-                <code>POST /login</code> page afterwards to give our users the
-                cleanest login experience (without having to re-enter their
-                email address).
-              </p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-js" data-lang="js"><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#34;/register&#34;</span>, <span style="color:#66d9ef">async</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
+</code></pre></div><p>Usually you&rsquo;d want to check if the user is logged in on any of these endpoints and redirect them away from the pages if so, but I&rsquo;ll leave that as an exercise for the reader.</p>
+<h3 id="post-register">POST /register</h3>
+<p>Now our first endpoint that actually does something to the database. We have two objectives here:</p>
+<ol>
+<li>Make sure the user isn&rsquo;t already registered</li>
+<li>Register the user</li>
+</ol>
+<p>In both cases above we will redirect to the <code>POST /login</code> page afterwards to give our users the cleanest login experience (without having to re-enter their email address).</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#34;/register&#34;</span>, <span style="color:#66d9ef">async</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
   <span style="color:#66d9ef">const</span> { <span style="color:#a6e22e">email</span> } <span style="color:#f92672">=</span> <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">body</span>;
 
   <span style="color:#75715e">// Check if a user exists
@@ -565,45 +351,13 @@ EMAIL_FROM<span style="color:#f92672">=</span>Your App &lt;admin@yourapp.com&gt;
   <span style="color:#75715e">// Redirect to /login POST
 </span><span style="color:#75715e"></span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">redirect</span>(<span style="color:#ae81ff">307</span>, <span style="color:#e6db74">&#34;/users/login&#34;</span>);
 });
-</code></pre>
-              </div>
-              <p>
-                Another reader exercise exists above &ndash; validate that email
-                address before creating a user.
-              </p>
-              <h3 id="post-login">POST /login</h3>
-              <p>
-                This is where the one-time password gets generated and emailed
-                to the user. First we need to make sure the appropriate
-                libraries are imported for these actions:
-              </p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-js" data-lang="js"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">bcrypt</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#34;bcrypt&#34;</span>);
+</code></pre></div><p>Another reader exercise exists above &ndash; validate that email address before creating a user.</p>
+<h3 id="post-login">POST /login</h3>
+<p>This is where the one-time password gets generated and emailed to the user. First we need to make sure the appropriate libraries are imported for these actions:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">bcrypt</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#34;bcrypt&#34;</span>);
 <span style="color:#66d9ef">const</span> { <span style="color:#a6e22e">SMTPClient</span> } <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#34;emailjs&#34;</span>);
-</code></pre>
-              </div>
-              <p>
-                Now that we have the appropriate libraries let&rsquo;s create a
-                function to handle sending the email to the user:
-              </p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-js" data-lang="js"><span style="color:#75715e">// Grab the environment variables
+</code></pre></div><p>Now that we have the appropriate libraries let&rsquo;s create a function to handle sending the email to the user:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#75715e">// Grab the environment variables
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> { <span style="color:#a6e22e">EMAIL_USER</span>, <span style="color:#a6e22e">EMAIL_PASSWORD</span>, <span style="color:#a6e22e">EMAIL_HOST</span>, <span style="color:#a6e22e">EMAIL_FROM</span> } <span style="color:#f92672">=</span> <span style="color:#a6e22e">process</span>.<span style="color:#a6e22e">env</span>;
 
 <span style="color:#75715e">// Create an email client using emailjs
@@ -623,31 +377,10 @@ EMAIL_FROM<span style="color:#f92672">=</span>Your App &lt;admin@yourapp.com&gt;
     <span style="color:#a6e22e">attachment</span><span style="color:#f92672">:</span> [{ <span style="color:#a6e22e">data</span>, <span style="color:#a6e22e">alternative</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span> }],
   });
 };
-</code></pre>
-              </div>
-              <p>
-                The code above should be fairly straight-forward. We create an
-                email client and then build a function that wraps sending
-                emails. Now we just need to pass in the recipient, subject, and
-                HTML data for the email.
-              </p>
-              <p>
-                The login step is a little more complex, we we&rsquo;ll go
-                through it line-by-line to make sure everything is understood.
-              </p>
-              <p>
-                First thing is to make sure the user exists in the database:
-              </p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-js" data-lang="js"><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#34;/login&#34;</span>, <span style="color:#66d9ef">async</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
+</code></pre></div><p>The code above should be fairly straight-forward. We create an email client and then build a function that wraps sending emails. Now we just need to pass in the recipient, subject, and HTML data for the email.</p>
+<p>The login step is a little more complex, we we&rsquo;ll go through it line-by-line to make sure everything is understood.</p>
+<p>First thing is to make sure the user exists in the database:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#34;/login&#34;</span>, <span style="color:#66d9ef">async</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
   <span style="color:#66d9ef">const</span> { <span style="color:#a6e22e">email</span> } <span style="color:#f92672">=</span> <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">body</span>;
 
   <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">users</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">Queries</span>.<span style="color:#a6e22e">Users</span>.<span style="color:#a6e22e">Get</span>.<span style="color:#a6e22e">ByEmail</span>(<span style="color:#a6e22e">email</span>);
@@ -657,28 +390,9 @@ EMAIL_FROM<span style="color:#f92672">=</span>Your App &lt;admin@yourapp.com&gt;
   <span style="color:#75715e">// There should only be one result, so grab it
 </span><span style="color:#75715e"></span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">user</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">users</span>[<span style="color:#ae81ff">0</span>];
 });
-</code></pre>
-              </div>
-              <p>
-                A more complete app will redirect to the registration screen
-                instead of throwing an error here.
-              </p>
-              <p>
-                Next we need to generate the one-time password. For this
-                we&rsquo;ll be generating a six character alphanumeric
-                passphrase using Node&rsquo;s <code>crypto</code> functions,
-                then encrypting it for storage in the database.
-              </p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-js" data-lang="js"><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#34;/login&#34;</span>, <span style="color:#66d9ef">async</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
+</code></pre></div><p>A more complete app will redirect to the registration screen instead of throwing an error here.</p>
+<p>Next we need to generate the one-time password. For this we&rsquo;ll be generating a six character alphanumeric passphrase using Node&rsquo;s <code>crypto</code> functions, then encrypting it for storage in the database.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#34;/login&#34;</span>, <span style="color:#66d9ef">async</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
   ...
   
   <span style="color:#75715e">// Generate OTP
@@ -689,137 +403,45 @@ EMAIL_FROM<span style="color:#f92672">=</span>Your App &lt;admin@yourapp.com&gt;
     .<span style="color:#a6e22e">toUpperCase</span>();
   <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">encrypted_code</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">bcrypt</span>.<span style="color:#a6e22e">hashSync</span>(<span style="color:#a6e22e">code</span>, <span style="color:#ae81ff">10</span>);
 });
-</code></pre>
-              </div>
-              <p>
-                Now that we have our code we first need to delete any
-                preexisting OTPs to avoid any conflicts, then add the new
-                encrypted code into the database.
-              </p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-js" data-lang="js"><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#34;/login&#34;</span>, <span style="color:#66d9ef">async</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
+</code></pre></div><p>Now that we have our code we first need to delete any preexisting OTPs to avoid any conflicts, then add the new encrypted code into the database.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#34;/login&#34;</span>, <span style="color:#66d9ef">async</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
   ...
   
   <span style="color:#75715e">// Delete any existing OTPs and insert this new one
 </span><span style="color:#75715e"></span>  <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">Queries</span>.<span style="color:#a6e22e">Otp</span>.<span style="color:#a6e22e">Delete</span>.<span style="color:#a6e22e">ById</span>(<span style="color:#a6e22e">user</span>.<span style="color:#a6e22e">id</span>);
   <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">Queries</span>.<span style="color:#a6e22e">Otp</span>.<span style="color:#a6e22e">Create</span>(<span style="color:#a6e22e">user</span>.<span style="color:#a6e22e">id</span>, <span style="color:#a6e22e">encrypted_code</span>);
 });
-</code></pre>
-              </div>
-              <blockquote>
-                <p>
-                  Ideally you&rsquo;d also run a regular cleanup on the database
-                  to delete any passcodes that are out of date.
-                </p>
-              </blockquote>
-              <p>
-                Our encrypted code now exists in the database, so we can email
-                the plaintext code to the user using the function we created
-                earlier.
-              </p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-js" data-lang="js"><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#34;/login&#34;</span>, <span style="color:#66d9ef">async</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
+</code></pre></div><blockquote>
+<p>Ideally you&rsquo;d also run a regular cleanup on the database to delete any passcodes that are out of date.</p>
+</blockquote>
+<p>Our encrypted code now exists in the database, so we can email the plaintext code to the user using the function we created earlier.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#34;/login&#34;</span>, <span style="color:#66d9ef">async</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
   ...
   
   <span style="color:#75715e">// Send Email
 </span><span style="color:#75715e"></span>  <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">sendEmail</span>(<span style="color:#a6e22e">email</span>, <span style="color:#e6db74">&#34;Login Code&#34;</span>, <span style="color:#e6db74">`Your login code is </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">code</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>);
 });
-</code></pre>
-              </div>
-              <p>
-                Now that all this is complete we want to render our token form
-                so the user can input the OTP when it arrives in their inbox.
-                Make sure to include the email provided as a parameter, as it is
-                necessary for the hidden input field as discussed previously.
-              </p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-js" data-lang="js"><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#34;/login&#34;</span>, <span style="color:#66d9ef">async</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
+</code></pre></div><p>Now that all this is complete we want to render our token form so the user can input the OTP when it arrives in their inbox. Make sure to include the email provided as a parameter, as it is necessary for the hidden input field as discussed previously.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#34;/login&#34;</span>, <span style="color:#66d9ef">async</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
   ...
   
   <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">render</span>(<span style="color:#e6db74">&#34;token&#34;</span>, {
     <span style="color:#a6e22e">email</span>,
   });
 });
-</code></pre>
-              </div>
-              <h3 id="post-token">POST /token</h3>
-              <p>
-                Now for the last half of the login chain &ndash; the token. Here
-                we need to decrypt the code in our database, compare it against
-                the one provided by the user, and then generate a JWT for their
-                session.
-              </p>
-              <p>
-                To start with we&rsquo;ll create a helper function for
-                generating the token.
-              </p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-js" data-lang="js"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">jwt</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#34;jsonwebtoken&#34;</span>);
+</code></pre></div><h3 id="post-token">POST /token</h3>
+<p>Now for the last half of the login chain &ndash; the token. Here we need to decrypt the code in our database, compare it against the one provided by the user, and then generate a JWT for their session.</p>
+<p>To start with we&rsquo;ll create a helper function for generating the token.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">jwt</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#34;jsonwebtoken&#34;</span>);
 
 <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">makeToken</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">data</span>) =&gt; {
   <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">expirationDate</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Date();
   <span style="color:#a6e22e">expirationDate</span>.<span style="color:#a6e22e">setMonth</span>(<span style="color:#66d9ef">new</span> Date().<span style="color:#a6e22e">getMonth</span>() <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>);
   <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">jwt</span>.<span style="color:#a6e22e">sign</span>({ ...<span style="color:#a6e22e">data</span>, <span style="color:#a6e22e">expirationDate</span> }, <span style="color:#a6e22e">process</span>.<span style="color:#a6e22e">env</span>.<span style="color:#a6e22e">JWT_SECRET_KEY</span>);
 };
-</code></pre>
-              </div>
-              <p>
-                This code will generate a token that lasts a month before the
-                user will need to log in again. You can modify this token to
-                last as long or as short as you&rsquo;d like. It&rsquo;s a
-                balancing act between annoying the user with logins, and the
-                security risk of a valid token existing for a long period of
-                time.
-              </p>
-              <p>
-                Same as the login endpoint we first need to verify that a user
-                with the provided email exists. Since we&rsquo;re coming from
-                the login page this should be guaranteed, but it&rsquo;s always
-                safe to validate again in case someone sends a post request
-                directly to this endpoint and bypasses the login step.
-              </p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-js" data-lang="js"><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#34;/token&#34;</span>, <span style="color:#66d9ef">async</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
+</code></pre></div><p>This code will generate a token that lasts a month before the user will need to log in again. You can modify this token to last as long or as short as you&rsquo;d like. It&rsquo;s a balancing act between annoying the user with logins, and the security risk of a valid token existing for a long period of time.</p>
+<p>Same as the login endpoint we first need to verify that a user with the provided email exists. Since we&rsquo;re coming from the login page this should be guaranteed, but it&rsquo;s always safe to validate again in case someone sends a post request directly to this endpoint and bypasses the login step.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#34;/token&#34;</span>, <span style="color:#66d9ef">async</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
   <span style="color:#66d9ef">const</span> { <span style="color:#a6e22e">email</span>, <span style="color:#a6e22e">code</span> } <span style="color:#f92672">=</span> <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">body</span>;
 
   <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">users</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">Queries</span>.<span style="color:#a6e22e">Users</span>.<span style="color:#a6e22e">Get</span>.<span style="color:#a6e22e">ByEmail</span>(<span style="color:#a6e22e">email</span>);
@@ -829,24 +451,8 @@ EMAIL_FROM<span style="color:#f92672">=</span>Your App &lt;admin@yourapp.com&gt;
   <span style="color:#75715e">// There should only be one result, so grab it
 </span><span style="color:#75715e"></span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">user</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">users</span>[<span style="color:#ae81ff">0</span>];
 });
-</code></pre>
-              </div>
-              <p>
-                Now we must get the one-time password and verify that it
-                isn&rsquo;t too old. In this case &ldquo;too old&rdquo; means
-                more than five minutes, which should give a user more than
-                enough time to enter the code sent to their email address.
-              </p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-js" data-lang="js"><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#34;/token&#34;</span>, <span style="color:#66d9ef">async</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
+</code></pre></div><p>Now we must get the one-time password and verify that it isn&rsquo;t too old. In this case &ldquo;too old&rdquo; means more than five minutes, which should give a user more than enough time to enter the code sent to their email address.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#34;/token&#34;</span>, <span style="color:#66d9ef">async</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
   ...
   
   <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">otps</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">Queries</span>.<span style="color:#a6e22e">Otp</span>.<span style="color:#a6e22e">Get</span>.<span style="color:#a6e22e">ByUserId</span>(<span style="color:#a6e22e">user</span>.<span style="color:#a6e22e">id</span>);
@@ -862,24 +468,8 @@ EMAIL_FROM<span style="color:#f92672">=</span>Your App &lt;admin@yourapp.com&gt;
     <span style="color:#66d9ef">throw</span> { <span style="color:#a6e22e">message</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;Login code has expired. Please request a new one.&#34;</span>   };
   }
 });
-</code></pre>
-              </div>
-              <p>
-                Now that we&rsquo;re sure the OTP in the database is valid we
-                can compare it to the one provided by the user. Remember to
-                clean up the database by deleting the code in the case that
-                it&rsquo;s used successfully.
-              </p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-js" data-lang="js"><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#34;/token&#34;</span>, <span style="color:#66d9ef">async</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
+</code></pre></div><p>Now that we&rsquo;re sure the OTP in the database is valid we can compare it to the one provided by the user. Remember to clean up the database by deleting the code in the case that it&rsquo;s used successfully.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#34;/token&#34;</span>, <span style="color:#66d9ef">async</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
   ...
   
   <span style="color:#75715e">// Verify the code matches
@@ -890,48 +480,16 @@ EMAIL_FROM<span style="color:#f92672">=</span>Your App &lt;admin@yourapp.com&gt;
   <span style="color:#75715e">// Delete code
 </span><span style="color:#75715e"></span>  <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">Queries</span>.<span style="color:#a6e22e">Otp</span>.<span style="color:#a6e22e">Delete</span>.<span style="color:#a6e22e">ByUserId</span>(<span style="color:#a6e22e">user</span>.<span style="color:#a6e22e">id</span>);
 });
-</code></pre>
-              </div>
-              <p>
-                If we&rsquo;ve made it this far the code provided matches the
-                one in the database, and we can log our user in. This is where
-                we use the <code>makeToken</code> function we created earlier to
-                generate a JWT with our user&rsquo;s details.
-              </p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-js" data-lang="js"><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#34;/token&#34;</span>, <span style="color:#66d9ef">async</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
+</code></pre></div><p>If we&rsquo;ve made it this far the code provided matches the one in the database, and we can log our user in. This is where we use the <code>makeToken</code> function we created earlier to generate a JWT with our user&rsquo;s details.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#34;/token&#34;</span>, <span style="color:#66d9ef">async</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
   ...
   
   <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">token</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">makeToken</span>({
     ...<span style="color:#a6e22e">user</span>,
   });
 });
-</code></pre>
-              </div>
-              <p>
-                We have our secure token! Now we just need to store it in the
-                user&rsquo;s cookies under the name
-                <code>access_token</code> and redirect them to the
-                <code>/account</code> page.
-              </p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-js" data-lang="js"><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#34;/token&#34;</span>, <span style="color:#66d9ef">async</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
+</code></pre></div><p>We have our secure token! Now we just need to store it in the user&rsquo;s cookies under the name <code>access_token</code> and redirect them to the <code>/account</code> page.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#34;/token&#34;</span>, <span style="color:#66d9ef">async</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
   ...
   
   <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">res</span>
@@ -942,39 +500,17 @@ EMAIL_FROM<span style="color:#f92672">=</span>Your App &lt;admin@yourapp.com&gt;
     .<span style="color:#a6e22e">status</span>(<span style="color:#ae81ff">200</span>)
     .<span style="color:#a6e22e">redirect</span>(<span style="color:#e6db74">&#34;/&#34;</span>);
 });
-</code></pre>
-              </div>
-              <h3 id="get-account">GET /account</h3>
-              <p>
-                Our user now has a secure JWT verifying their identity. Our next
-                step is to validate that JWT and present the user with a page
-                that shows they are logged in.
-              </p>
-              <p>
-                First we&rsquo;ll create the middleware function to validate the
-                token so that we can apply it to any endpoint we wish to be
-                protected. The steps here are as follows:
-              </p>
-              <ol>
-                <li>Make sure a token exists</li>
-                <li>Verify that it&rsquo;s not expired</li>
-                <li>Populate the user data into the request object</li>
-                <li>Continue to the next step in the application</li>
-              </ol>
-              <p>
-                If any of this fails we want to redirect the user to the login
-                screen.
-              </p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-js" data-lang="js"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">validateToken</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>, <span style="color:#a6e22e">next</span>) =&gt; {
+</code></pre></div><h3 id="get-account">GET /account</h3>
+<p>Our user now has a secure JWT verifying their identity. Our next step is to validate that JWT and present the user with a page that shows they are logged in.</p>
+<p>First we&rsquo;ll create the middleware function to validate the token so that we can apply it to any endpoint we wish to be protected. The steps here are as follows:</p>
+<ol>
+<li>Make sure a token exists</li>
+<li>Verify that it&rsquo;s not expired</li>
+<li>Populate the user data into the request object</li>
+<li>Continue to the next step in the application</li>
+</ol>
+<p>If any of this fails we want to redirect the user to the login screen.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">validateToken</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>, <span style="color:#a6e22e">next</span>) =&gt; {
   <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">token</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">cookies</span>.<span style="color:#a6e22e">access_token</span>;
 
   <span style="color:#66d9ef">try</span> {
@@ -992,116 +528,62 @@ EMAIL_FROM<span style="color:#f92672">=</span>Your App &lt;admin@yourapp.com&gt;
     <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">redirect</span>(<span style="color:#e6db74">&#34;/users/login&#34;</span>);
   }
 };
-</code></pre>
-              </div>
-              <p>
-                Now that we have the middleware in place we just need to use it
-                to protect an endpoint like so:
-              </p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-js" data-lang="js"><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#34;/account&#34;</span>, <span style="color:#a6e22e">validateToken</span>, <span style="color:#66d9ef">async</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
+</code></pre></div><p>Now that we have the middleware in place we just need to use it to protect an endpoint like so:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#34;/account&#34;</span>, <span style="color:#a6e22e">validateToken</span>, <span style="color:#66d9ef">async</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
   <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">send</span>(<span style="color:#e6db74">`Hello </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">user</span>.<span style="color:#a6e22e">name</span><span style="color:#e6db74">}</span><span style="color:#e6db74">!`</span>);
 });
-</code></pre>
-              </div>
-              <p>
-                This endpoint is now protected by a valid JWT, and will only
-                render for a securely logged in user.
-              </p>
-              <p>
-                We are almost done, just one last piece of the puzzle to go.
-              </p>
-              <h3 id="get-logout">GET /logout</h3>
-              <p>
-                This is the simplest of all the endpoints. All we want to do is
-                clear out the token from the cookie, and redirect them to the
-                login page.
-              </p>
-              <div class="highlight">
-                <pre
-                  style="
-                    color: #f8f8f2;
-                    background-color: #272822;
-                    -moz-tab-size: 4;
-                    -o-tab-size: 4;
-                    tab-size: 4;
-                  "
-                ><code class="language-js" data-lang="js"><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#34;/logout&#34;</span>, <span style="color:#66d9ef">async</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
+</code></pre></div><p>This endpoint is now protected by a valid JWT, and will only render for a securely logged in user.</p>
+<p>We are almost done, just one last piece of the puzzle to go.</p>
+<h3 id="get-logout">GET /logout</h3>
+<p>This is the simplest of all the endpoints. All we want to do is clear out the token from the cookie, and redirect them to the login page.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#34;/logout&#34;</span>, <span style="color:#66d9ef">async</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
   <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">clearCookie</span>(<span style="color:#e6db74">&#34;access_token&#34;</span>).<span style="color:#a6e22e">status</span>(<span style="color:#ae81ff">200</span>).<span style="color:#a6e22e">redirect</span>(<span style="color:#e6db74">&#34;/login&#34;</span>);
 });
-</code></pre>
-              </div>
-              <h1 id="summary">Summary</h1>
-              <p>
-                And we&rsquo;re done! We have successfully created a secure
-                registration and login system using one-time passwords. We can
-                be sure that our data is stored securely and expires quickly
-                enough that a data breach won&rsquo;t give anyone enough time or
-                information to do anything nefarious.
-              </p>
-              <p>
-                While no system is completely secure, I hope this leaves you
-                confident enough to implement passwordless authentication in
-                your own applications without the risk and issues related to
-                static passwords.
-              </p>
-              <blockquote>
-                <p>
-                  A more complete version of this code using Handlebars for
-                  templating and express-validator for parameter validation
-                  (among other things) is available
-                  <a
-                    href="https://github.com/stevenlaidlaw/passwordless-login-express-postgres"
-                    >here</a
-                  >.
-                </p>
-              </blockquote>
-            </div>
+</code></pre></div><h1 id="summary">Summary</h1>
+<p>And we&rsquo;re done! We have successfully created a secure registration and login system using one-time passwords. We can be sure that our data is stored securely and expires quickly enough that a data breach won&rsquo;t give anyone enough time or information to do anything nefarious.</p>
+<p>While no system is completely secure, I hope this leaves you confident enough to implement passwordless authentication in your own applications without the risk and issues related to static passwords.</p>
+<blockquote>
+<p>A more complete version of this code using Handlebars for templating and express-validator for parameter validation (among other things) is available <a href="https://github.com/stevenlaidlaw/passwordless-login-express-postgres">here</a>.</p>
+</blockquote>
 
-            <footer class="post-footer clearfix">
-              <p class="post-tags">
-                <span>Tagged:</span>
-                <a href="/tags/auth/">auth</a>,
-                <a href="/tags/authentication/">authentication</a>,
-                <a href="/tags/passwordless/">passwordless</a>,
-                <a href="/tags/one-time-password/">one-time password</a>,
-                <a href="/tags/express/">express</a>,
-                <a href="/tags/postgresql/">postgresql</a>,
-                <a href="/tags/psql/">psql</a>,
-                <a href="/tags/javascript/">javascript</a>,
+</div>
+
+        <footer class="post-footer clearfix">
+        <p class="post-tags">
+            <span>Tagged:</span>
+                <a href="/tags/auth/">auth</a>, 
+                <a href="/tags/authentication/">authentication</a>, 
+                <a href="/tags/passwordless/">passwordless</a>, 
+                <a href="/tags/one-time-password/">one-time password</a>, 
+                <a href="/tags/express/">express</a>, 
+                <a href="/tags/postgresql/">postgresql</a>, 
+                <a href="/tags/psql/">psql</a>, 
+                <a href="/tags/javascript/">javascript</a>, 
                 <a href="/tags/jwt/">JWT</a>
-              </p>
-              <div class="share"></div>
-            </footer>
-          </article>
-        </div>
-      </div>
+        </p>
+    <div class="share">
     </div>
+</footer>
+    </article>
+</div>
 
-    <footer class="footer">
-      <div class="container">
-        <div class="site-title-wrapper">
-          <a
-            class="button-square button-jump-top js-jump-top"
-            href="#"
-            aria-label="Back to Top"
-          >
-            <i class="fa fa-angle-up" aria-hidden="true"></i>
-          </a>
+            </div>
         </div>
-      </div>
-    </footer>
 
-    <script src="http://stevenlaidlaw.com/js/jquery-1.11.3.min.js"></script>
-    <script src="http://stevenlaidlaw.com/js/jquery.fitvids.js"></script>
-    <script src="http://stevenlaidlaw.com/js/scripts.js"></script>
-  </body>
+        <footer class="footer">
+            <div class="container">
+                <div class="site-title-wrapper">
+                    <a class="button-square button-jump-top js-jump-top" href="#" aria-label="Back to Top">
+                        <i class="fa fa-angle-up" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+        </footer>
+
+        <script src="http://stevenlaidlaw.com/js/jquery-1.11.3.min.js"></script>
+        <script src="http://stevenlaidlaw.com/js/jquery.fitvids.js"></script>
+        <script src="http://stevenlaidlaw.com/js/scripts.js"></script>
+        
+    </body>
 </html>
+
