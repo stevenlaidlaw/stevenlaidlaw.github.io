@@ -1,5 +1,5 @@
 build:
-	npx @11ty/eleventy
+	rm -rf blog && cd blog-dev && hugo -D && mv public/ ../blog
 
 dev:
-	npx @11ty/eleventy --serve
+	cd blog-dev && hugo server -D
