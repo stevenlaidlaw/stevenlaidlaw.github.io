@@ -1,7 +1,9 @@
 dev:
 	hugo server -D
 
-build:
+build: clean hugo-build copy-static
+
+hugo-build:
 	hugo -D && rsync -aivP public/ .. && rm -rf public/ && rsync -aivP non-hugo/ ..
 
 copy-static:
@@ -9,3 +11,4 @@ copy-static:
 
 clean:
 	cd .. && rm -rf `ls | grep -v '.git' | grep -v 'blog-dev'`
+

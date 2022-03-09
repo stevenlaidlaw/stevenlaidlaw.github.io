@@ -10,10 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400&family=Source+Serif+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@200&family=Lexend+Deca:wght@700&family=Source+Serif+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet"> 
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -178,6 +175,9 @@
         color: #353638;
         font-family: "source-serif-pro";
         font-size: 21px;
+        display: flex;
+        flex-direction: column;
+        height: 100hv;
       }
       h1,
       h2,
@@ -331,8 +331,11 @@
         position: relative;
         width: 100%;
       }
+      #container {
+        margin-top: 2em;
+      }
       #wrapper {
-        height: auto;
+        flex: 1;
       }
       .button {
         background: #303030;
@@ -366,15 +369,18 @@
       }
       .site-header {
         overflow: auto;
-        padding: 40px 0 0;
-        text-align: center;
-        text-transform: uppercase;
+        padding: 0;
+        background: #353638;
+        padding: 1em 0;
       }
       .site-title-wrapper {
         display: table;
         margin: 0 auto;
       }
       .site-title {
+        font-family: "Lexend Deca";
+        font-size: 1.5em;
+        letter-spacing: -3px;
         text-transform: uppercase;
       }
       .site-logo {
@@ -384,6 +390,7 @@
         margin: 0;
       }
       .site-nav {
+        display: none;
         list-style: none;
         margin: 28px 0 10px;
         padding: 0;
@@ -557,11 +564,10 @@
         text-transform: none;
       }
       .post-stub-date {
-        font-size: 0.7em;
+        font-size: 0.9em;
         text-transform: uppercase;
-        margin-top: 0.3em;
-        opacity: 0.5;
-        font-family: source-serif-pro;
+        opacity: 0.7;
+        font-family: "League Spartan", sans-serif;
       }
       .post-stub-date:before {
       }
@@ -631,14 +637,13 @@
         text-align: center;
       }
       .footer {
-        background: #303030;
+        background: #353638;
         color: #d3d3d3;
-        height: 265px;
-        margin-top: 95px;
-        overflow: auto;
+        margin-top: 2em;
       }
       .footer .site-title-wrapper {
-        margin: 80px auto 35px;
+        font-family: "League Spartan", sans-serif;
+        margin: 2em auto;
       }
       .footer .button-square:hover,
       .footer .site-title a:hover {
@@ -690,23 +695,6 @@
         }
         hr {
           margin: 35px 0;
-        }
-        .site-header {
-          padding-top: 40px;
-        }
-        .site-title {
-          float: none;
-          margin-bottom: 15px;
-        }
-        .site-title a {
-          float: none;
-        }
-        .site-title + .button-square {
-          margin-left: 0;
-        }
-        .site-nav-item {
-          display: block;
-          margin: 15px 0;
         }
         .post-header {
           margin-bottom: 20px;
@@ -786,9 +774,6 @@
         }
       }
       @media only screen and (max-width: 400px) {
-        .site-header {
-          padding-top: 40px;
-        }
         .author-heading,
         .author-name,
         .page-title,
@@ -1029,9 +1014,9 @@
         <div class="container">
           <div class="site-title-wrapper">
             
-            <h1 class="site-title">
+            <div class="site-title">
               <a href="http://stevenlaidlaw.com/">Steven Laidlaw</a>
-            </h1>
+            </div>
                     
           </div>
 
@@ -1074,9 +1059,7 @@
         <footer class="footer">
             <div class="container">
                 <div class="site-title-wrapper">
-                    <a class="button-square button-jump-top js-jump-top" href="#" aria-label="Back to Top">
-                        <i class="fa fa-angle-up" aria-hidden="true"></i>
-                    </a>
+                    &copy; StevenLaidlaw.com 2022
                 </div>
             </div>
         </footer>
