@@ -14,7 +14,7 @@ marked.setOptions({
 const run = () => {
   fs.mkdirSync("../posts", { recursive: true });
   const layoutContent = fs.readFileSync("./layout.html", "utf8");
-  const posts = fs.readdirSync("./posts");
+  const posts = fs.readdirSync("./posts").reverse();
 
   // Generate the index page
   const postsLinks = posts.map((post) => {
