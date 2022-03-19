@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Steven Laidlaw</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="robots" content="index,follow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700&family=Source+Serif+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --color-bg: #fefefe;
+        --color-fg: #353638;
+      }
+      body,
+      html {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: var(--color-bg);
+        color: var(--color-fg);
+        font-family: "source-serif-pro";
+        font-size: 21px;
+        display: flex;
+        flex-direction: column;
+        height: 100hv;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: "League Spartan";
+        margin: 1em 0;
+        text-transform: none;
+        font-weight: 700;
+      }
+      h1 {
+        font-size: 2.5em;
+      }
+      h2 {
+        font-size: 2em;
+      }
+      h3 {
+        font-size: 1.5em;
+      }
+      h4 {
+        font-size: 1.25em;
+      }
+      h5 {
+        font-size: 1em;
+      }
+      h6 {
+        font-size: 0.875em;
+      }
+      p {
+        letter-spacing: 0.01em;
+        line-height: 1.8em;
+        margin: 1em 0;
+      }
+      a {
+        color: cornflowerblue;
+        text-decoration: none;
+      }
+      ol,
+      ul {
+        line-height: 1.4;
+        margin: 0 0 20px;
+      }
+      ol ol,
+      ol ul,
+      ul ol,
+      ul ul {
+        margin: 10px 0 0 20px;
+      }
+      ol li,
+      ul li {
+        margin: 0 0 2px;
+      }
+      ol li:last-of-type,
+      ul li:last-of-type {
+        margin-bottom: 0;
+      }
+      blockquote {
+        border-left: 4px solid #353638;
+        margin: 40px 0;
+        padding: 5px 30px;
+        opacity: 0.5;
+      }
+
+      /*!
+  Theme: Dracula
+  Author: Mike Barkmin (http://github.com/mikebarkmin) based on Dracula Theme (http://github.com/dracula)
+  License: ~ MIT (or more permissive) [via base16-schemes-source]
+  Maintainer: @highlightjs/core-team
+  Version: 2021.09.0
+*/
+      pre code.hljs {
+        display: block;
+        overflow-x: auto;
+        padding: 1em;
+        font-size: 0.9em;
+        border-radius: 0.5em;
+      }
+      code.hljs {
+        padding: 3px 5px;
+      }
+      .hljs {
+        color: #e9e9f4;
+        background: #282936;
+      }
+      .hljs ::selection,
+      .hljs::selection {
+        background-color: #4d4f68;
+        color: #e9e9f4;
+      }
+      .hljs-comment {
+        color: #626483;
+      }
+      .hljs-tag {
+        color: #62d6e8;
+      }
+      .hljs-operator,
+      .hljs-punctuation,
+      .hljs-subst {
+        color: #e9e9f4;
+      }
+      .hljs-operator {
+        opacity: 0.7;
+      }
+      .hljs-bullet,
+      .hljs-deletion,
+      .hljs-name,
+      .hljs-selector-tag,
+      .hljs-template-variable,
+      .hljs-variable {
+        color: #ea51b2;
+      }
+      .hljs-attr,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-number,
+      .hljs-symbol,
+      .hljs-variable.constant_ {
+        color: #b45bcf;
+      }
+      .hljs-class .hljs-title,
+      .hljs-title,
+      .hljs-title.class_ {
+        color: #00f769;
+      }
+      .hljs-strong {
+        font-weight: 700;
+        color: #00f769;
+      }
+      .hljs-addition,
+      .hljs-code,
+      .hljs-string,
+      .hljs-title.class_.inherited__ {
+        color: #ebff87;
+      }
+      .hljs-built_in,
+      .hljs-doctag,
+      .hljs-keyword.hljs-atrule,
+      .hljs-quote,
+      .hljs-regexp {
+        color: #a1efe4;
+      }
+      .hljs-attribute,
+      .hljs-function .hljs-title,
+      .hljs-section,
+      .hljs-title.function_,
+      .ruby .hljs-property {
+        color: #62d6e8;
+      }
+      .diff .hljs-meta,
+      .hljs-keyword,
+      .hljs-template-tag,
+      .hljs-type {
+        color: #b45bcf;
+      }
+      .hljs-emphasis {
+        color: #b45bcf;
+        font-style: italic;
+      }
+      .hljs-meta,
+      .hljs-meta .hljs-keyword,
+      .hljs-meta .hljs-string {
+        color: #00f769;
+      }
+      .hljs-meta .hljs-keyword,
+      .hljs-meta-keyword {
+        font-weight: 700;
+      }
+
+      header,
+      footer {
+        padding: 1em;
+      }
+
+      #content {
+        padding: 1em;
+        max-width: 800px;
+      }
+
+      .postLink {
+        display: flex;
+        align-items: center;
+        margin: 1em 0;
+        gap: 1em;
+        text-transform: capitalize;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="/">Steven Laidlaw</a>
+    </header>
+
+    <div id="content"><h1 id="creating-a-widget-wrapper-with-reacts-createportal">Creating a Widget Wrapper with React&#39;s createPortal</h1>
+<p>React is pretty sweet. It works in a nested, hierarchical way&mdash;which is awesome in most cases&mdash;but sometimes that can cause issues. Sometimes you need something to jump out of the parent container, like a modal dialog or a menu. This is precisely what React&#39;s <code>createPortal</code> is used for!</p>
+<p>The problem you&#39;ll run into though is that when creating a menu or other kind of dropdown, you need to be aware of the parent container&#39;s location and display the floating element appropriately positioned on the page. We also need to make sure that we don&#39;t fall outside the bounds of the page.</p>
+<p>So, without any further ado, let&#39;s create a wrapper that we can use for any kind of dropdown we&#39;d ever need!</p>
+<h2 id="the-setup">The Setup</h2>
+<p>First lets create a dumb use-case that will enable us to use this wrapper. We&#39;ll build a wide help button that shows a tooltip and stick it in various locations around the page.</p>
+<p><a href="https://gist.github.com/stevenlaidlaw/bc8e85166194340c69282e0ae6e46e39">This code</a> gives us the following page, with all the info panels toggled on:</p>
+<p><img src="/images/react-widget-portal-0.png" alt="Info Pane Bad"></p>
+<p>As you can see the info boxes are currently trapped inside the container, so what we want to do is break it out of the regular DOM hierarchy.</p>
+<h2 id="the-basic-widget">The Basic Widget</h2>
+<p>First let&#39;s create the most basic version of the widget. This should render whatever children we pass in using the <code>createPortal</code> method.</p>
+<pre><code class="hljs language-jsx"><span class="hljs-keyword">class</span> <span class="hljs-title class_">WidgetPortal</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">React.Component</span> {
+    <span class="hljs-title function_">constructor</span>(<span class="hljs-params">props</span>) {
+        <span class="hljs-variable language_">super</span>(props);
+        <span class="hljs-comment">// Grab the document root to append the modal to it</span>
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">documentRoot</span> = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;root&#x27;</span>) || <span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>;
+
+        <span class="hljs-comment">// Create the modal Element</span>
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">el</span> = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&#x27;div&#x27;</span>);
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">el</span>.<span class="hljs-property">style</span>.<span class="hljs-property">zIndex</span> = <span class="hljs-string">&#x27;10000&#x27;</span>;
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">el</span>.<span class="hljs-property">style</span>.<span class="hljs-property">position</span> = <span class="hljs-string">&#x27;absolute&#x27;</span>;
+    }
+
+    <span class="hljs-title function_">componentDidMount</span>(<span class="hljs-params"></span>) {
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">documentRoot</span>.<span class="hljs-title function_">appendChild</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">el</span>);
+    }
+
+    <span class="hljs-title function_">render</span>(<span class="hljs-params"></span>) {
+        <span class="hljs-keyword">return</span> <span class="hljs-title class_">ReactDOM</span>.<span class="hljs-title function_">createPortal</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">props</span>.<span class="hljs-property">children</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">el</span>);
+    }
+}
+</code></pre>
+<p>As you can see in the constructor we first get the root element, then create the modal element using <code>document.createElement</code>. After the component has mounted we then append the element to the root element. In the render method we then use the <code>ReactDOM.createPortal</code> method. This takes two arguments &mdash; first the child you&#39;d like to render and next the container element to render to. Here we pass in the children and the element we created earlier.</p>
+<p>We can now use this WidgetPortal to wrap the notes portion of our original code.</p>
+<pre><code class="hljs language-jsx">&lt;<span class="hljs-title class_">WidgetPortal</span>&gt;
+    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;info&quot;</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{this.onToggle}</span>&gt;</span>
+        This is the tooltip for {label}
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+&lt;/<span class="hljs-title class_">WidgetPortal</span>&gt;
+</code></pre>
+<p>And we get the following result:</p>
+<p><img src="/images/react-widget-portal-1.png" alt="Info Pane Better"></p>
+<p>This is better, but still isn&#39;t 100% correct and is quite buggy. We can see the whole tooltip now, but it&#39;s always up in the top left of the screen and all the tooltips overlap each other. Let&#39;s work on first getting the tooltips to sit themselves underneath the buttons like you&#39;d expect.</p>
+<h2 id="widget-portal-improved">Widget Portal Improved</h2>
+<p>First we need to wrap the returned value from the render method in a div and create a reference to it. We do this so that we have something still within the natural flow of the page to reference our position from.</p>
+<pre><code class="hljs language-jsx"><span class="hljs-title function_">constructor</span>(<span class="hljs-params">props</span>) {
+    ...
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">ref</span> = <span class="hljs-title class_">React</span>.<span class="hljs-title function_">createRef</span>();
+    ...
+}
+</code></pre>
+<p>And then wrap the render method to use the new Ref.</p>
+<pre><code class="hljs language-jsx"><span class="hljs-title function_">render</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">return</span> <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">{this.ref}</span>&gt;</span>
+        {ReactDOM.createPortal(this.props.children, this.el)}
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>;
+}
+</code></pre>
+<p>Now for the fun part! We have a reference to a wrapper container that we can use as the basis for the location of the portal element. Let&#39;s do that now.</p>
+<pre><code class="hljs language-jsx"><span class="hljs-title function_">componentDidMount</span>(<span class="hljs-params"></span>) {
+    ...
+
+    <span class="hljs-keyword">const</span> {
+        <span class="hljs-attr">top</span>: containerTop,
+        <span class="hljs-attr">left</span>: containerLeft,
+        <span class="hljs-attr">width</span>: containerWidth,
+        <span class="hljs-attr">height</span>: containerHeight
+    } = (<span class="hljs-variable language_">this</span>.<span class="hljs-property">ref</span>.<span class="hljs-property">current</span>.<span class="hljs-property">getBoundingClientRect</span> &amp;&amp; <span class="hljs-variable language_">this</span>.<span class="hljs-property">ref</span>.<span class="hljs-property">current</span>.<span class="hljs-title function_">getBoundingClientRect</span>()) || {};
+
+    <span class="hljs-keyword">const</span> containerXCenter = containerLeft + (containerWidth / <span class="hljs-number">2</span>);
+
+    <span class="hljs-keyword">const</span> {width, height} = (<span class="hljs-variable language_">this</span>.<span class="hljs-property">el</span>.<span class="hljs-property">getBoundingClientRect</span> &amp;&amp; <span class="hljs-variable language_">this</span>.<span class="hljs-property">el</span>.<span class="hljs-title function_">getBoundingClientRect</span>()) || {};
+
+    <span class="hljs-keyword">let</span> top = containerTop + containerHeight;
+    <span class="hljs-keyword">let</span> left = containerXCenter - (width / <span class="hljs-number">2</span>);
+
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">el</span>.<span class="hljs-property">style</span>.<span class="hljs-property">top</span> = <span class="hljs-string">`<span class="hljs-subst">${top}</span>px`</span>;
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">el</span>.<span class="hljs-property">style</span>.<span class="hljs-property">left</span> = <span class="hljs-string">`<span class="hljs-subst">${left}</span>px`</span>;
+}
+</code></pre>
+<p>Note that we&#39;re getting the center point so we can place the element in a more logical way.</p>
+<p>With this done we get the following:</p>
+<p><img src="/images/react-widget-portal-2.png" alt="Info Pane Almost There"></p>
+<p>Yay, it&#39;s now positioning correctly! The downside is it&#39;s running off the side of the page again, so let&#39;s fix that up now. To do this all we need to do is get the edges of the page and force the element to stay within it.</p>
+<h2 id="widget-portal-complete">Widget Portal Complete</h2>
+<p>First I like to add a little buffer so it&#39;s not flat up against the edge of the page, so add this to the constructor:</p>
+<pre><code class="hljs language-jsx"><span class="hljs-variable language_">this</span>.<span class="hljs-property">BUFFER</span> = <span class="hljs-number">4</span>;
+</code></pre>
+<p>Next let&#39;s modify the componentDidMount function to take into account the page width and height. First grab the data we need based on the dimensions of the HTML:</p>
+<pre><code class="hljs language-jsx"><span class="hljs-keyword">const</span> documentHeight = <span class="hljs-variable language_">document</span>.<span class="hljs-property">documentElement</span>.<span class="hljs-property">clientHeight</span>;
+<span class="hljs-keyword">const</span> documentWidth = <span class="hljs-variable language_">document</span>.<span class="hljs-property">documentElement</span>.<span class="hljs-property">clientWidth</span>;
+</code></pre>
+<p>Next, after getting the container and portal dimensions we set all the absolute position values of the element:</p>
+<pre><code class="hljs language-jsx"><span class="hljs-keyword">let</span> top = containerTop + containerHeight;
+<span class="hljs-keyword">let</span> bottom = documentHeight - (top + height);
+<span class="hljs-keyword">let</span> left = containerXCenter - (width / <span class="hljs-number">2</span>);
+<span class="hljs-keyword">let</span> right = documentWidth - (left + width);
+</code></pre>
+<p>Lastly we need to make sure none of these elements fall outside the screen (and buffer), and if they do force them in.</p>
+<pre><code class="hljs language-jsx"><span class="hljs-keyword">if</span> (right &lt; <span class="hljs-variable language_">this</span>.<span class="hljs-property">BUFFER</span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">el</span>.<span class="hljs-property">style</span>.<span class="hljs-property">right</span> = <span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-variable language_">this</span>.BUFFER}</span>px`</span>;
+} <span class="hljs-keyword">else</span> {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">el</span>.<span class="hljs-property">style</span>.<span class="hljs-property">left</span> = <span class="hljs-string">`<span class="hljs-subst">${left &lt; <span class="hljs-variable language_">this</span>.BUFFER ? <span class="hljs-variable language_">this</span>.BUFFER : left}</span>px`</span>;
+}
+<span class="hljs-keyword">if</span> (bottom &lt; <span class="hljs-variable language_">this</span>.<span class="hljs-property">BUFFER</span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">el</span>.<span class="hljs-property">style</span>.<span class="hljs-property">bottom</span> = <span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-variable language_">this</span>.BUFFER}</span>px`</span>;
+} <span class="hljs-keyword">else</span> {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">el</span>.<span class="hljs-property">style</span>.<span class="hljs-property">top</span> = <span class="hljs-string">`<span class="hljs-subst">${top &lt; <span class="hljs-variable language_">this</span>.BUFFER ? <span class="hljs-variable language_">this</span>.BUFFER : top}</span>px`</span>;
+}
+</code></pre>
+<p>As you can see all we&#39;re doing is setting either the right/left and bottom/top absolute positions to make sure they sit within the bounds of the screen. You can see the result of this as so:</p>
+<p><img src="/images/react-widget-portal-3.png" alt="Info Pane Success"></p>
+<p>Success! The tooltips now all sit within the bounds of the page, and always will based on the size of whatever portal you throw at it. Well, as long as the portal itself isn&#39;t larger than the page, but that would just be silly, right?</p>
+<p>Just to make it clear how it all works I&#39;ll post the whole <code>componentDidMount</code> here with comments so you can see how all the parts work together.</p>
+<pre><code class="hljs language-jsx"><span class="hljs-title function_">componentDidMount</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-comment">// Get the document height and width which this portal is added to</span>
+    <span class="hljs-keyword">const</span> documentHeight = <span class="hljs-variable language_">document</span>.<span class="hljs-property">documentElement</span>.<span class="hljs-property">clientHeight</span>;
+    <span class="hljs-keyword">const</span> documentWidth = <span class="hljs-variable language_">document</span>.<span class="hljs-property">documentElement</span>.<span class="hljs-property">clientWidth</span>;
+
+    <span class="hljs-comment">// Place the modal Element into the root DOM node</span>
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">documentRoot</span>.<span class="hljs-title function_">appendChild</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">el</span>);
+
+    <span class="hljs-comment">// Get the size of the portal container</span>
+    <span class="hljs-keyword">const</span> {
+        <span class="hljs-attr">top</span>: containerTop,
+        <span class="hljs-attr">left</span>: containerLeft,
+        <span class="hljs-attr">width</span>: containerWidth,
+        <span class="hljs-attr">height</span>: containerHeight
+    } = (<span class="hljs-variable language_">this</span>.<span class="hljs-property">ref</span>.<span class="hljs-property">current</span>.<span class="hljs-property">getBoundingClientRect</span> &amp;&amp; <span class="hljs-variable language_">this</span>.<span class="hljs-property">ref</span>.<span class="hljs-property">current</span>.<span class="hljs-title function_">getBoundingClientRect</span>()) || {};
+
+    <span class="hljs-comment">// Get the container&#x27;s center point on the X-axis for positioning the element correctly</span>
+    <span class="hljs-keyword">const</span> containerXCenter = containerLeft + (containerWidth / <span class="hljs-number">2</span>);
+
+    <span class="hljs-comment">// Get the size of this portal element</span>
+    <span class="hljs-keyword">const</span> {width, height} = (<span class="hljs-variable language_">this</span>.<span class="hljs-property">el</span>.<span class="hljs-property">getBoundingClientRect</span> &amp;&amp; <span class="hljs-variable language_">this</span>.<span class="hljs-property">el</span>.<span class="hljs-title function_">getBoundingClientRect</span>()) || {};
+
+    <span class="hljs-comment">// Position the sides of the element from the respective sides of the screen</span>
+    <span class="hljs-keyword">let</span> top = containerTop + containerHeight;
+    <span class="hljs-keyword">let</span> bottom = documentHeight - (top + height);
+    <span class="hljs-keyword">let</span> left = containerXCenter - (width / <span class="hljs-number">2</span>);
+    <span class="hljs-keyword">let</span> right = documentWidth - (left + width);
+
+    <span class="hljs-comment">// Position the element correctly based on the center of the base of the parent element</span>
+    <span class="hljs-comment">// Ensure the Element doesn&#x27;t fall off the right of the screen</span>
+    <span class="hljs-keyword">if</span> (right &lt; <span class="hljs-variable language_">this</span>.<span class="hljs-property">BUFFER</span>) {
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">el</span>.<span class="hljs-property">style</span>.<span class="hljs-property">right</span> = <span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-variable language_">this</span>.BUFFER}</span>px`</span>;
+    } <span class="hljs-keyword">else</span> { <span class="hljs-comment">// Or the left</span>
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">el</span>.<span class="hljs-property">style</span>.<span class="hljs-property">left</span> = <span class="hljs-string">`<span class="hljs-subst">${left &lt; <span class="hljs-variable language_">this</span>.BUFFER ? <span class="hljs-variable language_">this</span>.BUFFER : left}</span>px`</span>;
+    }
+    <span class="hljs-comment">// Ensure the Element doesn&#x27;t fall off the bottom of the screen</span>
+    <span class="hljs-keyword">if</span> (bottom &lt; <span class="hljs-variable language_">this</span>.<span class="hljs-property">BUFFER</span>) {
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">el</span>.<span class="hljs-property">style</span>.<span class="hljs-property">bottom</span> = <span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-variable language_">this</span>.BUFFER}</span>px`</span>;
+    } <span class="hljs-keyword">else</span> { <span class="hljs-comment">// Or the top</span>
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">el</span>.<span class="hljs-property">style</span>.<span class="hljs-property">top</span> = <span class="hljs-string">`<span class="hljs-subst">${top &lt; <span class="hljs-variable language_">this</span>.BUFFER ? <span class="hljs-variable language_">this</span>.BUFFER : top}</span>px`</span>;
+    }
+}
+</code></pre>
+<p>Before we forget we have to make sure we clean up our references so make sure you do that in the standard React way like so:</p>
+<pre><code class="hljs language-jsx"><span class="hljs-title function_">componentWillUnmount</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">if</span> (!<span class="hljs-variable language_">this</span>.<span class="hljs-property">el</span>) <span class="hljs-keyword">return</span>;
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">documentRoot</span>.<span class="hljs-title function_">removeChild</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">el</span>);
+}
+</code></pre>
+<h2 id="conclusion">Conclusion</h2>
+<p>Now we have a complete and functional widget wrapper that uses React&#39;s <code>createPortal</code> to wrap any and all dropdown/modal/popup elements we may need. There are, of course, ways to improve upon this such as: passing in a reference instead of creating one within the portal for a more accurate location; handling correcting the elements position when zoomed in; and more, but I&#39;ll leave those as an exercise to the reader. (For a hint on the zoom, look at <code>window.scrollX</code> and <code>window.scrollY</code>)</p>
+<p>Thanks for reading, and if you have any questions/corrections please feel free to let me know!</p>
+</div>
+
+    <footer class="footer">&copy; StevenLaidlaw.com 2022</footer>
+  </body>
+</html>
