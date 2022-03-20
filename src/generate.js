@@ -21,7 +21,7 @@ const run = () => {
     const [date, name] = post.split("_");
     const [filename, extension] = name.split(".");
 
-    const postLink = `<div class="postLink"><strong>${date}</strong><a href="/posts/${filename}.html">${filename.replaceAll(
+    const postLink = `<div class="postLink">${date} <span>//</span> <a href="/posts/${filename}.html">${filename.replaceAll(
       "-",
       " "
     )}</a></div>`;

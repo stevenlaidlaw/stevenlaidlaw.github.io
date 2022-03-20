@@ -4,12 +4,16 @@
   "description": "",
   "main": "generate.js",
   "scripts": {
-    "build": "node ./generate.js"
+    "build": "node ./generate.js",
+    "dev": "nodemon -e md,html,js ./generate.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "highlight.js": "^11.5.0",
     "marked": "^4.0.12"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }
