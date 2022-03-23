@@ -5,7 +5,9 @@
   "main": "generate.js",
   "scripts": {
     "build": "node ./generate.js",
-    "dev": "nodemon -e md,html,js ./generate.js"
+    "dev": "concurrently npm:dev:*",
+    "dev:watch": "nodemon -e md,html,js ./generate.js",
+    "dev:run": "cd .. && npx dev-server"
   },
   "author": "",
   "license": "ISC",
@@ -14,6 +16,7 @@
     "marked": "^4.0.12"
   },
   "devDependencies": {
+    "concurrently": "^7.0.0",
     "nodemon": "^2.0.15"
   }
 }
