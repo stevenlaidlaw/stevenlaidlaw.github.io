@@ -17,7 +17,7 @@
     <style>
       :root {
         --color-fg: #e1e3e6;
-        --color-bg: #151618;
+        --color-bg: #010815;
       }
       body,
       html {
@@ -26,16 +26,15 @@
         padding: 0;
       }
       html {
-        background: repeating-linear-gradient(
-          var(--color-bg),
-          var(--color-bg) 3px,
-          #252628 3px,
-          #252628 4px
-        );
+        background: var(--color-bg);
       }
       body {
-        /* FF is the only browser that doesn't support this property. Annoying */
-        backdrop-filter: blur(1px);
+        background: repeating-linear-gradient(
+          var(--color-bg),
+          var(--color-bg) 1px,
+          rgba(255, 255, 255, 0.05) 1px,
+          rgba(255, 255, 255, 0.05) 2px
+        );
         color: var(--color-fg);
         font-family: "Roboto Mono", monospace;
         font-size: 21px;
