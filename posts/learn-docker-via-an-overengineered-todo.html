@@ -279,7 +279,7 @@
     <header>
       <h3>&gt; <a href="/">Steven Laidlaw</a></h3>
       <div>Software Engineer <span>//</span> Author</div>
-      <button class="theme-button">LIGHT</button>
+      <button class="theme-button">theme</button>
     </header>
 
     <div id="content"><h1 id="learn-docker-via-an-over-engineered-todo">Learn Docker via an Over-engineered Todo</h1>
@@ -483,11 +483,9 @@ docker-compose ps
       themeButton.addEventListener("click", () => {
         if (html.classList.contains("light")) {
           html.classList.remove("light");
-          themeButton.textContent = "DARK";
           localStorage.setItem("theme", "dark");
         } else {
           html.classList.add("light");
-          themeButton.textContent = "LIGHT";
           localStorage.setItem("theme", "light");
         }
       });
@@ -497,10 +495,8 @@ docker-compose ps
 
         if (theme === "light") {
           html.classList.add("light");
-          themeButton.textContent = "LIGHT";
         } else {
           html.classList.remove("light");
-          themeButton.textContent = "DARK";
         }
       };
 
