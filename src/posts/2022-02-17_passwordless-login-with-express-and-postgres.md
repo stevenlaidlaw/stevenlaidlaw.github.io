@@ -1,26 +1,5 @@
 # Passwordless authentication with Express and PostgreSQL
 
-## Table of Contents
-
-- [Introduction](#introduction)
-- [Disclaimer](#disclaimer)
-- [Overview](#overview)
-- [Implementation](#implementation)
-  - [Setup](#setup)
-  - [Database Structure](#database-structure)
-  - [Creating Queries](#creating-queries)
-  - [HTML Templates](#html-templates)
-  - [API endpoints](#api-endpoints)
-    - [GET /register, /login](#get-register-login)
-    - [POST /register](#post-register)
-    - [POST /login](#post-login)
-    - [POST /token](#post-token)
-    - [GET /account](#get-account)
-    - [GET /logout](#get-logout)
-- [Summary](#summary)
-
-### Introduction
-
 Static passwords suck. Not only are they a well-known [security risk](https://community.jisc.ac.uk/library/janet-services-documentation/passwords-threats-and-counter-measures), but they are also the [weakest part of the chain](https://www.afr.com/technology/passwords-often-the-weak-link-in-the-security-chain-20180808-h13pf3) when determining a user's authenticity.
 
 Users generally either make them so simple as to be easily guessable, or are reused so often that getting a password cracked in one website means the rest of your accounts are up for grabs. Even power users who use hard to guess randomly generated passwords often are required to use password managers to keep them all in line which introduces another single point of failure.
