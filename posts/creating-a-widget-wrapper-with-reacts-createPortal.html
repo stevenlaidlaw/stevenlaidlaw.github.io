@@ -24,6 +24,7 @@
         height: 100%;
         margin: 0;
         padding: 0;
+        transition: 300ms ease-in-out;
       }
       html {
         background: var(--color-bg);
@@ -261,11 +262,6 @@
         font-size: 0.7em;
       }
 
-      header > .theme-button {
-        font-size: 0.8;
-        font-weight: bold;
-      }
-
       footer {
         font-size: 0.8em;
       }
@@ -277,6 +273,25 @@
       footer > .copy > span {
         font-weight: bold;
       }
+
+      .theme-button {
+        font-size: 1.5rem;
+        position: absolute;
+        bottom: 2rem;
+        right: 2rem;
+        background: var(--color-fg);
+        color: var(--color-bg);
+        width: 3rem;
+        height: 3rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 100%;
+        transition: 300ms ease-in-out;
+      }
+      .theme-button:hover {
+        transform: scale(1.2);
+      }
     </style>
   </head>
   <body>
@@ -285,7 +300,6 @@
         <div class="logo"><a href="/">Steven Laidlaw</a></div>
         <div class="tagline">Software Engineer <span>//</span> Author</div>
       </div>
-      <button class="theme-button">THEME</button>
     </header>
 
     <div id="content"><h1 id="creating-a-widget-wrapper-with-reacts-createportal">Creating a Widget Wrapper with React&#39;s createPortal</h1>
@@ -458,14 +472,16 @@
 
     <footer>
       <p>
-        <a href="https://github.com/stevenlaidlaw">GitHub</a>
+        <a href="https://www.github.com/stevenlaidlaw">GitHub</a>
         <span>//</span>
         <a href="https://www.linkedin.com/in/stevenglaidlaw/">LinkedIn</a>
         <span>//</span>
-        <a href="https://mechanicalrock.io/">Work</a>
+        <a href="https://www.github.com/">Work</a>
       </p>
       <p class="copy">Copyright <span>&copy;</span> StevenLaidlaw.com 2022</p>
     </footer>
+
+    <button class="theme-button">☾☼</button>
 
     <script>
       const html = document.querySelector("html");
@@ -474,9 +490,11 @@
       themeButton.addEventListener("click", () => {
         if (html.classList.contains("dark")) {
           html.classList.remove("dark");
+          themeButton.innerHTML = "☾";
           localStorage.setItem("theme", "light");
         } else {
           html.classList.add("dark");
+          themeButton.innerHTML = "☼";
           localStorage.setItem("theme", "dark");
         }
       });
@@ -485,8 +503,10 @@
         const theme = localStorage.getItem("theme");
 
         if (theme === "dark") {
+          themeButton.innerHTML = "☼";
           html.classList.add("dark");
         } else {
+          themeButton.innerHTML = "☾";
           html.classList.remove("dark");
         }
       };
