@@ -24,7 +24,6 @@
         height: 100%;
         margin: 0;
         padding: 0;
-        transition: 300ms ease-in-out;
       }
       html {
         background: var(--color-bg);
@@ -126,7 +125,8 @@
         display: block;
         overflow-x: auto;
         padding: 1em;
-        font-size: 0.9em;
+        font-size: 0.7em;
+          line-height: 1.4;
         border-radius: 0.5em;
       }
       code.hljs {
@@ -276,7 +276,7 @@
 
       .theme-button {
         font-size: 1.5rem;
-        position: absolute;
+        position: fixed;
         bottom: 2rem;
         right: 2rem;
         background: var(--color-fg);
@@ -287,7 +287,6 @@
         justify-content: center;
         align-items: center;
         border-radius: 100%;
-        transition: 300ms ease-in-out;
       }
       .theme-button:hover {
         transform: scale(1.2);
@@ -321,31 +320,20 @@
       const html = document.querySelector("html");
       const themeButton = document.querySelector(".theme-button");
 
+      const isDarkMode = () => localStorage.getItem("theme") === "dark";
+
       themeButton.addEventListener("click", () => {
-        if (html.classList.contains("dark")) {
-          html.classList.remove("dark");
-          themeButton.innerHTML = "☾";
-          localStorage.setItem("theme", "light");
-        } else {
-          html.classList.add("dark");
-          themeButton.innerHTML = "☼";
-          localStorage.setItem("theme", "dark");
-        }
+        localStorage.setItem("theme", isDarkMode() ? "light" : "dark");
+        loadTheme();
       });
 
       const loadTheme = () => {
-        const theme = localStorage.getItem("theme");
-
-        if (theme === "dark") {
-          themeButton.innerHTML = "☼";
-          html.classList.add("dark");
-        } else {
-          themeButton.innerHTML = "☾";
-          html.classList.remove("dark");
-        }
+        themeButton.innerHTML = isDarkMode() ? "☼" : "☾";
+        html.classList.add(isDarkMode() ? "dark" : "light");
+        html.classList.remove(isDarkMode() ? "light" : "dark");
       };
 
-      window.onload = loadTheme;
+      window.onload = loadTheme
     </script>
   </body>
 </html>
