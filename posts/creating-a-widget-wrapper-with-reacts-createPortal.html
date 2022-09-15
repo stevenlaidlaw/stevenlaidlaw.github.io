@@ -114,43 +114,41 @@
         color: var(--color-bg);
       }
 
-      /*!
-        Theme: Dracula
-        Author: Mike Barkmin (http://github.com/mikebarkmin) based on Dracula Theme (http://github.com/dracula)
-        License: ~ MIT (or more permissive) [via base16-schemes-source]
-        Maintainer: @highlightjs/core-team
-        Version: 2021.09.0
-      */
+      // Theme: Gruvbox dark, soft
+      // Author: Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)
+      // License: ~ MIT (or more permissive) [via base16-schemes-source]
+      // Maintainer: @highlightjs/core-team
+      // Version: 2021.09.0
       pre code.hljs {
         display: block;
         overflow-x: auto;
         padding: 1em;
         font-size: 0.7em;
-          line-height: 1.4;
+        line-height: 1.4;
         border-radius: 0.5em;
       }
       code.hljs {
         padding: 3px 5px;
       }
       .hljs {
-        color: #e9e9f4;
-        background: #282936;
+        color: #d5c4a1;
+        background: #32302f;
       }
       .hljs ::selection,
       .hljs::selection {
-        background-color: #4d4f68;
-        color: #e9e9f4;
+        background-color: #504945;
+        color: #d5c4a1;
       }
       .hljs-comment {
-        color: #626483;
+        color: #665c54;
       }
       .hljs-tag {
-        color: #62d6e8;
+        color: #bdae93;
       }
       .hljs-operator,
       .hljs-punctuation,
       .hljs-subst {
-        color: #e9e9f4;
+        color: #d5c4a1;
       }
       .hljs-operator {
         opacity: 0.7;
@@ -161,7 +159,7 @@
       .hljs-selector-tag,
       .hljs-template-variable,
       .hljs-variable {
-        color: #ea51b2;
+        color: #fb4934;
       }
       .hljs-attr,
       .hljs-link,
@@ -169,56 +167,57 @@
       .hljs-number,
       .hljs-symbol,
       .hljs-variable.constant_ {
-        color: #b45bcf;
+        color: #fe8019;
       }
       .hljs-class .hljs-title,
       .hljs-title,
       .hljs-title.class_ {
-        color: #00f769;
+        color: #fabd2f;
       }
       .hljs-strong {
         font-weight: 700;
-        color: #00f769;
+        color: #fabd2f;
       }
       .hljs-addition,
       .hljs-code,
       .hljs-string,
       .hljs-title.class_.inherited__ {
-        color: #ebff87;
+        color: #b8bb26;
       }
       .hljs-built_in,
       .hljs-doctag,
       .hljs-keyword.hljs-atrule,
       .hljs-quote,
       .hljs-regexp {
-        color: #a1efe4;
+        color: #8ec07c;
       }
       .hljs-attribute,
       .hljs-function .hljs-title,
       .hljs-section,
       .hljs-title.function_,
       .ruby .hljs-property {
-        color: #62d6e8;
+        color: #83a598;
       }
       .diff .hljs-meta,
       .hljs-keyword,
       .hljs-template-tag,
       .hljs-type {
-        color: #b45bcf;
+        color: #d3869b;
       }
       .hljs-emphasis {
-        color: #b45bcf;
+        color: #d3869b;
         font-style: italic;
       }
       .hljs-meta,
       .hljs-meta .hljs-keyword,
       .hljs-meta .hljs-string {
-        color: #00f769;
+        color: #d65d0e;
       }
       .hljs-meta .hljs-keyword,
       .hljs-meta-keyword {
         font-weight: 700;
       }
+      // END THEME
 
       #content {
         padding: 1em;
@@ -499,7 +498,7 @@
         html.classList.remove(isDarkMode() ? "light" : "dark");
       };
 
-      window.onload = loadTheme
+      window.onload = loadTheme;
     </script>
   </body>
 </html>
