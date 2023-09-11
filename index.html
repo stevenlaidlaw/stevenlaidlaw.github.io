@@ -10,14 +10,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
       :root {
-        --color-fg: #010815;
-        --color-bg: #ffffff;
-        --color-hl: rgb(45, 106, 219);
-      }
-      html.dark {
-        --color-fg: #e1e3e6;
-        --color-bg: #22201F;
-        --color-hl: rgb(131, 179, 255);
+        --c-fg: #010815;
+        --c-bg: #ffffff;
+        --c-hl: rgb(45, 106, 219);
       }
       body,
       html {
@@ -26,17 +21,19 @@
         padding: 0;
       }
       html {
-        background: var(--color-bg);
+        background: linear-gradient(
+          45deg,
+          var(--c-bg) 50%,
+          var(--c-fg) 50%
+        );
       }
       body {
-        color: var(--color-fg);
+        color: var(--c-fg);
         font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
         font-size: 21px;
         display: flex;
         flex-direction: column;
         height: 100hv;
-        margin: 0 auto;
-        max-width: 768px;
       }
 
       h1,
@@ -73,7 +70,7 @@
         margin: 1em 0;
       }
       a {
-        color: var(--color-hl);
+        color: var(--c-hl);
         text-decoration: none;
       }
       ol,
@@ -103,239 +100,102 @@
       }
       button {
         background: transparent;
-        border: 1px solid var(--color-fg);
-        color: var(--color-fg);
+        border: 1px solid var(--c-fg);
+        color: var(--c-fg);
         border-radius: 0.5em;
         cursor: pointer;
         padding: 0.5em;
       }
       button:hover {
-        background: var(--color-fg);
-        color: var(--color-bg);
-      }
-
-      /*
-       Theme: Gruvbox dark, soft
-       Author: Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)
-       License: ~ MIT (or more permissive) [via base16-schemes-source]
-       Maintainer: @highlightjs/core-team
-       Version: 2021.09.0
-      */
-      pre code.hljs {
-        display: block;
-        overflow-x: auto;
-        padding: 1em;
-        font-size: 0.7em;
-        line-height: 1.4;
-        border-radius: 0.5em;
-      }
-      code.hljs {
-        padding: 3px 5px;
-      }
-      .hljs {
-        color: #d5c4a1;
-        background: #32302f;
-      }
-      .hljs ::selection,
-      .hljs::selection {
-        background-color: #504945;
-        color: #d5c4a1;
-      }
-      .hljs-comment {
-        color: #665c54;
-      }
-      .hljs-tag {
-        color: #bdae93;
-      }
-      .hljs-operator,
-      .hljs-punctuation,
-      .hljs-subst {
-        color: #d5c4a1;
-      }
-      .hljs-operator {
-        opacity: 0.7;
-      }
-      .hljs-bullet,
-      .hljs-deletion,
-      .hljs-name,
-      .hljs-selector-tag,
-      .hljs-template-variable,
-      .hljs-variable {
-        color: #fb4934;
-      }
-      .hljs-attr,
-      .hljs-link,
-      .hljs-literal,
-      .hljs-number,
-      .hljs-symbol,
-      .hljs-variable.constant_ {
-        color: #fe8019;
-      }
-      .hljs-class .hljs-title,
-      .hljs-title,
-      .hljs-title.class_ {
-        color: #fabd2f;
-      }
-      .hljs-strong {
-        font-weight: 700;
-        color: #fabd2f;
-      }
-      .hljs-addition,
-      .hljs-code,
-      .hljs-string,
-      .hljs-title.class_.inherited__ {
-        color: #b8bb26;
-      }
-      .hljs-built_in,
-      .hljs-doctag,
-      .hljs-keyword.hljs-atrule,
-      .hljs-quote,
-      .hljs-regexp {
-        color: #8ec07c;
-      }
-      .hljs-attribute,
-      .hljs-function .hljs-title,
-      .hljs-section,
-      .hljs-title.function_,
-      .ruby .hljs-property {
-        color: #83a598;
-      }
-      .diff .hljs-meta,
-      .hljs-keyword,
-      .hljs-template-tag,
-      .hljs-type {
-        color: #d3869b;
-      }
-      .hljs-emphasis {
-        color: #d3869b;
-        font-style: italic;
-      }
-      .hljs-meta,
-      .hljs-meta .hljs-keyword,
-      .hljs-meta .hljs-string {
-        color: #d65d0e;
-      }
-      .hljs-meta .hljs-keyword,
-      .hljs-meta-keyword {
-        font-weight: 700;
+        background: var(--c-fg);
+        color: var(--c-bg);
       }
 
       #content {
-        padding: 1em;
-      }
-
-      .postLink {
+        flex: 1;
         display: flex;
         align-items: center;
-        margin: 1em 0;
-        gap: 1em;
-        text-transform: capitalize;
-        font-size: 0.8em;
+        justify-content: center;
       }
 
-      header,
-      footer {
-        padding: 1em;
-      }
-
-      header span,
-      .postLink > span {
+      #content span {
         opacity: 0.5;
       }
 
-      header {
+      #content > #card {
+        background-color: var(--c-bg);
+        padding: 1em;
+        border-radius: 0.25em;
+        transition: all 0.3s ease-in-out;
+      }
+
+      #content > #card:hover {
+        transform: scale(1.1);
+      }
+
+      #content > #card > .header {
         display: flex;
-        align-items: baseline;
+        align-items: flex-start;
+        justify-content: space-between;
       }
 
-      header > .wrap {
-        flex: 1;
-      }
-
-      header > .wrap > .logo {
+      #content > #card > .header .logo {
         font-size: 1.2em;
-        margin-right: 1em;
         font-weight: bold;
       }
 
-      header > .wrap > .tagline {
+      #content > #card > .header .tagline {
+        margin-top: 0.5em;
         font-size: 0.7em;
       }
 
-      footer {
+      #content > #card > .header img {
+        width: 3em;
+        margin-left: 1em;
+      }
+
+      #content > #card > .links {
         font-size: 0.8em;
+        margin-top: 4em;
       }
 
-      footer > .copy {
+      .copy {
         opacity: 0.5;
+        font-size: 0.8em;
+        text-align: center;
+        padding: 1em;
       }
 
-      footer > .copy > span {
+      .copy > span {
         font-weight: bold;
-      }
-
-      .theme-button {
-        font-size: 1.5rem;
-        position: fixed;
-        bottom: 2rem;
-        right: 2rem;
-        background: var(--color-fg);
-        color: var(--color-bg);
-        width: 3rem;
-        height: 3rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 100%;
-      }
-      .theme-button:hover {
-        transform: scale(1.2);
       }
     </style>
   </head>
   <body>
-    <header>
-      <div class="wrap">
-        <div class="logo"><a href="/">Steven Laidlaw</a></div>
-        <div class="tagline">Software Engineer <span>//</span> Author</div>
+    <div id="content">
+      <div id="invert"></div>
+      <div id="card">
+        <div class="header">
+          <div class="section">
+            <div class="logo"><a href="/">Steven Laidlaw</a></div>
+            <div class="tagline">
+              Software Engineer <span>//</span> Content Creator
+              <span>//</span> Author
+            </div>
+          </div>
+          <div class="section">
+            <img src="./images/me.png" alt="Steven Laidlaw" />
+          </div>
+        </div>
+        <div class="links">
+          <a href="https://gh.io/sl">GitHub</a>
+          <span>//</span>
+          <a href="https://www.linkedin.com/in/stevenglaidlaw">LinkedIn</a>
+          <span>//</span>
+          <a href="https://gh.io">Work</a>
+        </div>
       </div>
-    </header>
-
-    <div id="content"><div class="postLink">2022-02-17 <span>//</span> <a href="/posts/passwordless-login-with-express-and-postgres.html">passwordless login with express and postgres</a></div>
-<div class="postLink">2019-06-16 <span>//</span> <a href="/posts/learn-docker-via-an-overengineered-todo.html">learn docker via an overengineered todo</a></div>
-<div class="postLink">2018-10-27 <span>//</span> <a href="/posts/creating-a-widget-wrapper-with-reacts-createPortal.html">creating a widget wrapper with reacts createPortal</a></div></div>
-
-    <footer>
-      <p>
-        <a href="https://gh.io/sl">GitHub</a>
-        <span>//</span>
-        <a href="https://www.linkedin.com/in/stevenglaidlaw">LinkedIn</a>
-        <span>//</span>
-        <a href="https://gh.io">Work</a>
-      </p>
-      <p class="copy">Copyright <span>&copy;</span> StevenLaidlaw.com 2022</p>
-    </footer>
-
-    <button class="theme-button">☾☼</button>
-
-    <script>
-      const html = document.querySelector("html");
-      const themeButton = document.querySelector(".theme-button");
-
-      const isDarkMode = () => localStorage.getItem("theme") === "dark";
-
-      themeButton.addEventListener("click", () => {
-        localStorage.setItem("theme", isDarkMode() ? "light" : "dark");
-        loadTheme();
-      });
-
-      const loadTheme = () => {
-        themeButton.innerHTML = isDarkMode() ? "☼" : "☾";
-        html.classList.add(isDarkMode() ? "dark" : "light");
-        html.classList.remove(isDarkMode() ? "light" : "dark");
-      };
-
-      window.onload = loadTheme;
-    </script>
+    </div>
+    <div class="copy">Copyright <span>&copy;</span> StevenLaidlaw.com 2023</div>
   </body>
 </html>
