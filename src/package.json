@@ -1,0 +1,22 @@
+{
+  "name": "src",
+  "version": "1.0.0",
+  "description": "",
+  "main": "generate.js",
+  "scripts": {
+    "build": "node ./generate.js",
+    "dev": "concurrently npm:dev:*",
+    "dev:watch": "nodemon -e md,html,js ./generate.js",
+    "dev:run": "cd .. && npx dev-server"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "highlight.js": "^11.5.0",
+    "marked": "^4.0.12"
+  },
+  "devDependencies": {
+    "concurrently": "^7.0.0",
+    "nodemon": "^2.0.15"
+  }
+}
