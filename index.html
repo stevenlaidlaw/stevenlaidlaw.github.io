@@ -236,14 +236,15 @@
         padding: 1em;
       }
 
-      footer {
+      header > * {
+        margin: 0 0;
       }
 
-      footer > .copy {
+      footer {
         opacity: 0.5;
       }
 
-      footer > .copy > span {
+      footer span {
         font-weight: bold;
       }
 
@@ -268,17 +269,8 @@
   </head>
   <body>
     <header>
-      <div class="wrap">
-        <h1 class="logo"><a href="/">Steven Laidlaw</a></h1>
-        <div class="tagline">Software Engineer <span>//</span> Author</div>
-      </div>
-    </header>
-
-    <div id="content"><p>Random stuff I write. Tutorials, opinions, rants.</p><ul><li class="postLink"><a href="/posts/passwordless-login-with-express-and-postgres.html">passwordless login with express and postgres</a></li>
-<li class="postLink"><a href="/posts/learn-docker-via-an-overengineered-todo.html">learn docker via an overengineered todo</a></li>
-<li class="postLink"><a href="/posts/creating-a-widget-wrapper-with-reacts-createPortal.html">creating a widget wrapper with reacts createPortal</a></li></ul></div>
-
-    <footer>
+      <h1 class="logo"><a href="/">Steven Laidlaw</a></h1>
+      <p>Software Engineer <span>//</span> Author</p>
       <p>
         <a href="https://gh.io/sl">GitHub</a>
         <span>//</span>
@@ -286,7 +278,15 @@
         <span>//</span>
         <a href="https://gh.io">Work</a>
       </p>
-      <p class="copy">Copyright <span>&copy;</span> StevenLaidlaw.com 2022</p>
+    </header>
+
+    <div id="content"><ul><li class="postLink"><a href="/posts/passwordless-login-with-express-and-postgres.html">passwordless login with express and postgres</a></li>
+<li class="postLink"><a href="/posts/learn-docker-via-an-overengineered-todo.html">learn docker via an overengineered todo</a></li>
+<li class="postLink"><a href="/posts/creating-a-widget-wrapper-with-reacts-createPortal.html">creating a widget wrapper with reacts createPortal</a></li></ul></div>
+
+    <footer>
+      <p>This website is just random stuff I write. Tutorials, opinions, rants. Everything here is my own opinion and not representitive of anyone but myself at that particular point in time. I reserve the right to be wrong and update my opinion.</p>
+      <p>Copyright me</p>
     </footer>
 
     <button class="theme-button">☾☼</button>

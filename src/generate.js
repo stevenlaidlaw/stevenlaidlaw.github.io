@@ -27,7 +27,7 @@ const run = () => {
     )}</a></li>`;
   });
 
-  const html = layoutContent.replace("{{content}}", `<p>Random stuff I write. Tutorials, opinions, rants.</p><ul>${postsLinks.join("\n")}</ul>`);
+  const html = layoutContent.replace("{{content}}", `<ul>${postsLinks.join("\n")}</ul>`);
   fs.writeFileSync("../index.html", html);
 
   // Generate the individual posts

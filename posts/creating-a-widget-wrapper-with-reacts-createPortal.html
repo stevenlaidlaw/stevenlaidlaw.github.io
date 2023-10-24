@@ -236,14 +236,15 @@
         padding: 1em;
       }
 
-      footer {
+      header > * {
+        margin: 0 0;
       }
 
-      footer > .copy {
+      footer {
         opacity: 0.5;
       }
 
-      footer > .copy > span {
+      footer span {
         font-weight: bold;
       }
 
@@ -268,10 +269,15 @@
   </head>
   <body>
     <header>
-      <div class="wrap">
-        <h1 class="logo"><a href="/">Steven Laidlaw</a></h1>
-        <div class="tagline">Software Engineer <span>//</span> Author</div>
-      </div>
+      <h1 class="logo"><a href="/">Steven Laidlaw</a></h1>
+      <p>Software Engineer <span>//</span> Author</p>
+      <p>
+        <a href="https://gh.io/sl">GitHub</a>
+        <span>//</span>
+        <a href="https://www.linkedin.com/in/stevenglaidlaw">LinkedIn</a>
+        <span>//</span>
+        <a href="https://gh.io">Work</a>
+      </p>
     </header>
 
     <div id="content"><h1 id="creating-a-widget-wrapper-with-reacts-createportal">Creating a Widget Wrapper with React&#39;s createPortal</h1>
@@ -443,14 +449,8 @@
 </div>
 
     <footer>
-      <p>
-        <a href="https://gh.io/sl">GitHub</a>
-        <span>//</span>
-        <a href="https://www.linkedin.com/in/stevenglaidlaw">LinkedIn</a>
-        <span>//</span>
-        <a href="https://gh.io">Work</a>
-      </p>
-      <p class="copy">Copyright <span>&copy;</span> StevenLaidlaw.com 2022</p>
+      <p>This website is just random stuff I write. Tutorials, opinions, rants. Everything here is my own opinion and not representitive of anyone but myself at that particular point in time. I reserve the right to be wrong and update my opinion.</p>
+      <p>Copyright me</p>
     </footer>
 
     <button class="theme-button">☾☼</button>
