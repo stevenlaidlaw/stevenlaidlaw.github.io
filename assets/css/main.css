@@ -3,11 +3,6 @@
   --color-bg: #ffffff;
   --color-hl: rgb(45, 106, 219);
 }
-html.dark {
-  --color-fg: #e1e3e6;
-  --color-bg: #22201F;
-  --color-hl: rgb(131, 179, 255);
-}
 body,
 html {
   height: 100%;
@@ -19,13 +14,12 @@ html {
 }
 body {
   color: var(--color-fg);
-  font-family: monospace;
-  font-size: 18px;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 16px;
   display: flex;
   flex-direction: column;
   height: 100hv;
   margin: 0 auto;
-  max-width: 768px;
 }
 
 h1,
@@ -115,47 +109,20 @@ button:hover {
 
 header,
 footer {
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 1em;
 }
 
-header > * {
-  margin: 0 0;
-}
-
-header .socials {
+.socials {
   display: flex;
   justify-content: center;
   gap: 1em;
+  /* filter: grayscale(100%); */
 }
 
-header .socials img {
+.socials img {
   width: 2em;
   height: 2em;
-}
-
-footer {
-  opacity: 0.5;
-}
-
-footer span {
-  font-weight: bold;
-}
-
-.theme-button {
-  font-size: 1.5rem;
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  background: var(--color-fg);
-  color: var(--color-bg);
-  width: 3rem;
-  height: 3rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 100%;
-}
-.theme-button:hover {
-  transform: scale(1.2);
 }
