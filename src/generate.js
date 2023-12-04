@@ -1,13 +1,7 @@
 const fs = require("fs");
 const { marked } = require("marked");
-const hljs = require("highlight.js");
 
 marked.setOptions({
-  highlight: (code, lang) => {
-    const language = hljs.getLanguage(lang) ? lang : "plaintext";
-    return hljs.highlight(code, { language }).value;
-  },
-  langPrefix: "hljs language-", // highlight.js css expects a top-level 'hljs' class.
   gfm: true,
 });
 

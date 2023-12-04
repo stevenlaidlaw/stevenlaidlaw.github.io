@@ -1,0 +1,161 @@
+:root {
+  --color-fg: #010815;
+  --color-bg: #ffffff;
+  --color-hl: rgb(45, 106, 219);
+}
+html.dark {
+  --color-fg: #e1e3e6;
+  --color-bg: #22201F;
+  --color-hl: rgb(131, 179, 255);
+}
+body,
+html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+html {
+  background: var(--color-bg);
+}
+body {
+  color: var(--color-fg);
+  font-family: monospace;
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  height: 100hv;
+  margin: 0 auto;
+  max-width: 768px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: sans-serif;
+  margin: 1em 0;
+  text-transform: none;
+  font-weight: 700;
+}
+h1 {
+  font-size: 2em;
+}
+h2 {
+  font-size: 1.5em;
+}
+h3 {
+  font-size: 1.25em;
+}
+h4 {
+  font-size: 1em;
+}
+h5 {
+  font-size: 0.875em;
+}
+h6 {
+  font-size: 0.75em;
+}
+p {
+  letter-spacing: 0.01em;
+  line-height: 1.8em;
+  margin: 1em 0;
+}
+a {
+  color: var(--color-hl);
+  text-decoration: none;
+}
+ol,
+ul {
+  line-height: 1.4;
+  margin: 0 0 20px;
+}
+ol ol,
+ol ul,
+ul ol,
+ul ul {
+  margin: 10px 0 0 20px;
+}
+ol li,
+ul li {
+  margin: 0 0 2px;
+}
+ol li:last-of-type,
+ul li:last-of-type {
+  margin-bottom: 0;
+}
+blockquote {
+  border-left: 4px solid #353638;
+  margin: 40px 0;
+  padding: 5px 30px;
+  opacity: 0.5;
+}
+button {
+  background: transparent;
+  border: 1px solid var(--color-fg);
+  color: var(--color-fg);
+  border-radius: 0.5em;
+  cursor: pointer;
+  padding: 0.5em;
+}
+button:hover {
+  background: var(--color-fg);
+  color: var(--color-bg);
+}
+
+#content {
+  padding: 1em;
+}
+
+.postLink {
+  margin: 1em 0;
+  text-transform: capitalize;
+}
+
+header,
+footer {
+  text-align: center;
+  padding: 1em;
+}
+
+header > * {
+  margin: 0 0;
+}
+
+header .socials {
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+}
+
+header .socials img {
+  width: 2em;
+  height: 2em;
+}
+
+footer {
+  opacity: 0.5;
+}
+
+footer span {
+  font-weight: bold;
+}
+
+.theme-button {
+  font-size: 1.5rem;
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--color-fg);
+  color: var(--color-bg);
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+}
+.theme-button:hover {
+  transform: scale(1.2);
+}
