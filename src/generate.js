@@ -1,40 +1,13 @@
 const fs = require("fs");
-const { marked } = require("marked");
-
-marked.setOptions({
-  gfm: true,
-});
 
 const run = () => {
-  fs.mkdirSync("../posts", { recursive: true });
-  const layoutContent = fs.readFileSync("./layout.html", "utf8");
-  const posts = fs.readdirSync("./posts").reverse();
-
+  const layoutContent = fs.readFileSync("./content/layout.html", "utf8");
   // Generate the index page
-  const postsLinks = posts.map((post) => {
-    const [number, name] = post.split("_");
-    const [filename, extension] = name.split(".");
+  // const sections = fs.readdirSync("./sections").map((section) => `<div class="section">${fs.readFileSync("./sections/" + section, "utf-8")}</div>`);
 
-    return `<li class="postLink"><a href="/posts/${filename}.html">${filename.replaceAll(
-      "-",
-      " "
-    )}</a></li>`;
-  });
-
-  const html = layoutContent.replace("{{content}}", `<ul>${postsLinks.join("\n")}</ul>`);
-  fs.writeFileSync("../index.html", html);
-
-  // Generate the individual posts
-  posts.forEach((post) => {
-    const postContent = fs.readFileSync(`./posts/${post}`, "utf8");
-    const postHtml = marked(postContent);
-    const [date, name] = post.split("_");
-    const [filename, extension] = name.split(".");
-
-    const html = layoutContent.replace("{{content}}", postHtml);
-
-    fs.writeFileSync(`../posts/${filename}.html`, html);
-  });
+  // // const html = layoutContent.replace("{{sections}}", sections.join(""));
+  // fs.writeFileSync("../index.html", html);
+  fs.writeFileSync("../index.html", layoutContent);
 };
 
 run();
