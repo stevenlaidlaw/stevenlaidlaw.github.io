@@ -720,28 +720,12 @@ button:hover,
   flex: none;
 }
 
-.flex-row {
-  flex-direction: row;
-}
-
-.flex-row-reverse {
-  flex-direction: row-reverse;
-}
-
 .flex-col {
   flex-direction: column;
 }
 
-.flex-col-reverse {
-  flex-direction: column-reverse;
-}
-
 .flex-wrap {
   flex-wrap: wrap;
-}
-
-.items-end {
-  align-items: flex-end;
 }
 
 .items-center {
@@ -822,10 +806,6 @@ button:hover,
 
   .sm\:flex-row-reverse {
     flex-direction: row-reverse;
-  }
-
-  .sm\:flex-col-reverse {
-    flex-direction: column-reverse;
   }
 }
 
