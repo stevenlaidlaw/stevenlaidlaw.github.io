@@ -3,6 +3,7 @@ module.exports = {
   theme: {
     fontFamily: {
       sans: [
+        "Nova Square",
         "Helvetica Neue",
         "Helvetica",
         "Nimbus Sans L",
@@ -14,7 +15,7 @@ module.exports = {
         "Droid Sans",
         "sans-serif",
       ],
-      header: ["Lexend Deca", "sans-serif"],
+      header: ["Nova Square", "Lexend Deca", "sans-serif"],
     },
   },
   plugins: [],
