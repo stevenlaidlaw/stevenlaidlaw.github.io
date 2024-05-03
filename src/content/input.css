@@ -3,10 +3,29 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --labs-sys-color-background: #111;
+    --labs-sys-color-on-background: white;
+    --base-speed: 4s;
+    --labs-sys-color-grid: #fac4ff;
+    --labs-sys-color-grid-glow: #df7373;
+    --labs-sys-color-sun-1: #fdb428;
+    --labs-sys-color-sun-2: #f672ca;
+    --labs-sys-color-sun-glow: #b9f;
+    --labs-sys-color-star: #f6c0c0;
+    --color-palm-trunk: #333;
+    --color-palm-leaf: #333;
+    --color-palm-leaf-2: #b9f;
+    --labs-sys-color-triangle: #6eccee;
+    --labs-sys-color-volume: var(--labs-sys-color-triangle);
+  }
+
+  html {
+    @apply h-full;
+  }
+
   body {
-    font-family: "Nova Square", sans-serif;
-    font-weight: 400;
-    font-style: normal;
+    @apply h-full w-full bg-neutral-900 text-white;
   }
 
   h1,
@@ -15,7 +34,7 @@
   h4,
   h5,
   h6 {
-    @apply font-header font-semibold tracking-tighter uppercase;
+    @apply font-header font-bold uppercase;
   }
 
   h1 {
@@ -202,62 +221,14 @@
     inherits: true;
     initial-value: 0deg;
   }
-  
-  :root {
-    --labs-sys-color-background: #111;
-    --labs-sys-color-on-background: white;
-    --base-speed: 4s;
-    --labs-sys-color-grid: #fac4ff;
-    --labs-sys-color-grid-glow: #df7373;
-    --labs-sys-color-sun-1: #fdb428;
-    --labs-sys-color-sun-2: #f672ca;
-    --labs-sys-color-sun-glow: #b9f;
-    --labs-sys-color-star: #f6c0c0;
-    --color-palm-trunk: #333;
-    --color-palm-leaf: #333;
-    --color-palm-leaf-2: #b9f;
-    --labs-sys-color-triangle: #6eccee;
-    --labs-sys-color-volume: var(--labs-sys-color-triangle);
-  }
-  
-  .logo {
-    --angle: 45deg;
-    background: linear-gradient(
-      var(--angle),
-      var(--labs-sys-color-sun-2),
-      var(--labs-sys-color-triangle)
-    );
-    /* width: 40vmin; */
-    aspect-ratio: 3/2;
-    mask: url(/assets/images/StevenLaidlawLogo.svg) center center
-      no-repeat;
-    mask-size: contain;
-    position: absolute;
-    bottom: 0;
-    z-index: -5;
-    animation: kode-text 4s linear infinite;
-    perspective: 40px;
-  
-    &:after {
-      content: "";
-      position: absolute;
-      top: 8vmin;
-      left: 1vmin;
-      /* width: 48vmin; */
-      /* height: 14vmin; */
-      background: repeating-radial-gradient(black, transparent 10vmin);
-      mix-blend-mode: overlay;
-      opacity: 0.2;
-      transform: rotate(347deg);
-    }
-  }
+
   @keyframes kode-text {
     from {
       --angle: 45deg;
       transform: translateY(-0vh);
     }
-  
-    49.5% {
+
+    49.8% {
       --angle: 360deg;
       transform: translateY(-1vh);
       filter: brightness(100%);
@@ -267,36 +238,86 @@
       transform: translateY(-1vh) scaleY(0.1) skewX(253deg);
       filter: brightness(190%);
     }
-  
-    51% {
+
+    50.2% {
       --angle: 360deg;
       transform: translateY(-1vh) scaleY(0.5) skewY(37deg);
       filter: brightness(190%);
     }
-  
-    52% {
+
+    50.4% {
       --angle: 360deg;
       filter: brightness(190%);
       transform: translateY(-0vh);
     }
-  
+
     to {
       --angle: 45deg;
       transform: translateY(-0vh);
     }
   }
+
+  @keyframes triangle {
+    from {
+      transform: rotate(0deg);
+    }
   
+    50% {
+      transform: rotateX(-15deg) rotateY(-20deg);
+    }
+  
+    to {
+      transform: rotate(0deg);
+    }
+  }
+
+  .main {
+    @apply absolute top-0 left-0 h-full w-full overflow-hidden overflow-y-scroll;
+  }
+
+  .socials {
+    @apply flex justify-center gap-4 py-4 flex-wrap;
+  }
+
+  .socials > a {
+    @apply w-8;
+  }
+
+  .logo-box {
+    @apply flex justify-center align-middle relative h-52 w-80 my-32 m-auto -z-50;
+  }
+
+  .logo {
+    @apply w-full absolute top-0 left-0 -z-10;
+    --angle: 45deg;
+    background: linear-gradient(
+      var(--angle),
+      var(--labs-sys-color-sun-2),
+      var(--labs-sys-color-triangle)
+    );
+    aspect-ratio: 3/2;
+    mask: url(/assets/images/StevenLaidlawLogo.svg) center center no-repeat;
+    mask-size: contain;
+    animation: kode-text 10s linear infinite;
+
+    &:after {
+      @apply absolute mix-blend-overlay opacity-20;
+      content: "";
+      top: 8vmin;
+      left: 1vmin;
+      background: repeating-radial-gradient(black, transparent 10vmin);
+      transform: rotate(347deg);
+    }
+  }
+
   .triangle {
-    position: absolute;
-    top: -150px;
-    aspect-ratio: 4/3;
+    @apply w-11/12 sm:w-96 h-80 absolute -z-20 -top-10;
+    aspect-ratio: 3/2;
     filter: drop-shadow(0 0 15px var(--labs-sys-color-triangle));
-    z-index: -10;
     animation: triangle 10s linear infinite;
     &:after {
       content: "";
-      position: absolute;
-      inset: 0;
+      @apply absolute inset-0;
       background: linear-gradient(45deg, white, var(--labs-sys-color-triangle));
       clip-path: polygon(
         6% 22%,
@@ -310,21 +331,26 @@
         29% 94%,
         100% 0%
       );
-      /* transform: translateY(4vmin); */
     }
   }
-  
-  @keyframes triangle {
-    from {
-      transform: translate(3vmin, 11.8vmin) rotate(1deg);
+
+  .releases {
+    @apply flex flex-col text-center uppercase w-11/12 sm:w-96 m-auto pb-16;
+  }
+
+  .releases > h2 {
+    @apply mb-4;
+  }
+
+  .releases > a {
+    @apply flex gap-4 items-center w-full bg-black bg-opacity-50 mt-2;
+
+    &:hover {
+      @apply bg-white bg-opacity-10;
     }
-  
-    50% {
-      transform: translate(3vmin, 12vmin) rotateX(-15deg) rotateY(-20deg);
-    }
-  
-    to {
-      transform: translate(3vmin, 11.8vmin) rotate(1deg);
-    }
+  }
+
+  .releases > a > img {
+    @apply w-16 h-16;
   }
 }
