@@ -440,10 +440,34 @@ video {
   display: none;
 }
 
+:root {
+  --labs-sys-color-background: #111;
+  --labs-sys-color-on-background: white;
+  --base-speed: 4s;
+  --labs-sys-color-grid: #fac4ff;
+  --labs-sys-color-grid-glow: #df7373;
+  --labs-sys-color-sun-1: #fdb428;
+  --labs-sys-color-sun-2: #f672ca;
+  --labs-sys-color-sun-glow: #b9f;
+  --labs-sys-color-star: #f6c0c0;
+  --color-palm-trunk: #333;
+  --color-palm-leaf: #333;
+  --color-palm-leaf-2: #b9f;
+  --labs-sys-color-triangle: #6eccee;
+  --labs-sys-color-volume: var(--labs-sys-color-triangle);
+}
+
+html {
+  height: 100%;
+}
+
 body {
-  font-family: "Nova Square", sans-serif;
-  font-weight: 400;
-  font-style: normal;
+  height: 100%;
+  width: 100%;
+  --tw-bg-opacity: 1;
+  background-color: rgb(23 23 23 / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 h1,
@@ -453,9 +477,8 @@ h1,
   h5,
   h6 {
   font-family: Nova Square, Lexend Deca, sans-serif;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: -0.05em;
 }
 
 h1 {
@@ -699,64 +722,13 @@ button:hover,
   initial-value: 0deg;
 }
 
-:root {
-  --labs-sys-color-background: #111;
-  --labs-sys-color-on-background: white;
-  --base-speed: 4s;
-  --labs-sys-color-grid: #fac4ff;
-  --labs-sys-color-grid-glow: #df7373;
-  --labs-sys-color-sun-1: #fdb428;
-  --labs-sys-color-sun-2: #f672ca;
-  --labs-sys-color-sun-glow: #b9f;
-  --labs-sys-color-star: #f6c0c0;
-  --color-palm-trunk: #333;
-  --color-palm-leaf: #333;
-  --color-palm-leaf-2: #b9f;
-  --labs-sys-color-triangle: #6eccee;
-  --labs-sys-color-volume: var(--labs-sys-color-triangle);
-}
-
-.logo {
-  --angle: 45deg;
-  background: linear-gradient(
-      var(--angle),
-      var(--labs-sys-color-sun-2),
-      var(--labs-sys-color-triangle)
-    );
-  /* width: 40vmin; */
-  aspect-ratio: 3/2;
-  -webkit-mask: url(/assets/images/StevenLaidlawLogo.svg) center center
-      no-repeat;
-          mask: url(/assets/images/StevenLaidlawLogo.svg) center center
-      no-repeat;
-  -webkit-mask-size: contain;
-          mask-size: contain;
-  position: absolute;
-  bottom: 0;
-  z-index: -5;
-  animation: kode-text 4s linear infinite;
-  perspective: 40px;
-  &:after {
-    content: "";
-    position: absolute;
-    top: 8vmin;
-    left: 1vmin;
-    /* width: 48vmin; */
-    /* height: 14vmin; */
-    background: repeating-radial-gradient(black, transparent 10vmin);
-    mix-blend-mode: overlay;
-    opacity: 0.2;
-    transform: rotate(347deg);
-  }
-}
-
 @keyframes kode-text {
   from {
     --angle: 45deg;
     transform: translateY(-0vh);
   }
 
-  49.5% {
+  49.8% {
     --angle: 360deg;
     transform: translateY(-1vh);
     filter: brightness(100%);
@@ -768,13 +740,13 @@ button:hover,
     filter: brightness(190%);
   }
 
-  51% {
+  50.2% {
     --angle: 360deg;
     transform: translateY(-1vh) scaleY(0.5) skewY(37deg);
     filter: brightness(190%);
   }
 
-  52% {
+  50.4% {
     --angle: 360deg;
     filter: brightness(190%);
     transform: translateY(-0vh);
@@ -786,17 +758,120 @@ button:hover,
   }
 }
 
+@keyframes triangle {
+  from {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotateX(-15deg) rotateY(-20deg);
+  }
+
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.main {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.socials {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.socials > a {
+  width: 2rem;
+}
+
+.logo-box {
+  position: relative;
+  z-index: -50;
+  margin: auto;
+  margin-top: 8rem;
+  margin-bottom: 8rem;
+  display: flex;
+  height: 13rem;
+  width: 20rem;
+  justify-content: center;
+  vertical-align: middle;
+}
+
+.logo {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: -10;
+  width: 100%;
+  --angle: 45deg;
+  background: linear-gradient(
+      var(--angle),
+      var(--labs-sys-color-sun-2),
+      var(--labs-sys-color-triangle)
+    );
+  aspect-ratio: 3/2;
+  -webkit-mask: url(/assets/images/StevenLaidlawLogo.svg) center center no-repeat;
+          mask: url(/assets/images/StevenLaidlawLogo.svg) center center no-repeat;
+  -webkit-mask-size: contain;
+          mask-size: contain;
+  animation: kode-text 10s linear infinite;
+  &:after {
+    position: absolute;
+  }
+  &:after {
+    opacity: 0.2;
+  }
+  &:after {
+    mix-blend-mode: overlay;
+  }
+  &:after {
+    content: "";
+    top: 8vmin;
+    left: 1vmin;
+    background: repeating-radial-gradient(black, transparent 10vmin);
+    transform: rotate(347deg);
+  }
+}
+
 .triangle {
   position: absolute;
-  top: -150px;
-  aspect-ratio: 4/3;
+  top: -2.5rem;
+  z-index: -20;
+  height: 20rem;
+  width: 91.666667%;
+}
+
+@media (min-width: 640px) {
+  .triangle {
+    width: 24rem;
+  }
+}
+
+.triangle {
+  aspect-ratio: 3/2;
   filter: drop-shadow(0 0 15px var(--labs-sys-color-triangle));
-  z-index: -10;
   animation: triangle 10s linear infinite;
   &:after {
     content: "";
+  }
+  &:after {
     position: absolute;
-    inset: 0;
+  }
+  &:after {
+    inset: 0px;
+  }
+  &:after {
     background: linear-gradient(45deg, white, var(--labs-sys-color-triangle));
     -webkit-clip-path: polygon(
         6% 22%,
@@ -822,22 +897,49 @@ button:hover,
         29% 94%,
         100% 0%
       );
-    /* transform: translateY(4vmin); */
   }
 }
 
-@keyframes triangle {
-  from {
-    transform: translate(3vmin, 11.8vmin) rotate(1deg);
-  }
+.releases {
+  margin: auto;
+  display: flex;
+  width: 91.666667%;
+  flex-direction: column;
+  padding-bottom: 4rem;
+  text-align: center;
+  text-transform: uppercase;
+}
 
-  50% {
-    transform: translate(3vmin, 12vmin) rotateX(-15deg) rotateY(-20deg);
+@media (min-width: 640px) {
+  .releases {
+    width: 24rem;
   }
+}
 
-  to {
-    transform: translate(3vmin, 11.8vmin) rotate(1deg);
+.releases > h2 {
+  margin-bottom: 1rem;
+}
+
+.releases > a {
+  margin-top: 0.5rem;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 1rem;
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.5;
+  &:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgb(255 255 255 / var(--tw-bg-opacity));
   }
+  &:hover {
+    --tw-bg-opacity: 0.1;
+  }
+}
+
+.releases > a > img {
+  height: 4rem;
+  width: 4rem;
 }
 
 *, ::before, ::after {
@@ -938,140 +1040,4 @@ button:hover,
   --tw-backdrop-opacity:  ;
   --tw-backdrop-saturate:  ;
   --tw-backdrop-sepia:  ;
-}
-
-.relative {
-  position: relative;
-}
-
-.-z-30 {
-  z-index: -30;
-}
-
-.flex {
-  display: flex;
-}
-
-.h-full {
-  height: 100%;
-}
-
-.w-11\/12 {
-  width: 91.666667%;
-}
-
-.w-12 {
-  width: 3rem;
-}
-
-.w-auto {
-  width: auto;
-}
-
-.w-8\/12 {
-  width: 66.666667%;
-}
-
-.w-4\/12 {
-  width: 33.333333%;
-}
-
-.w-9\/12 {
-  width: 75%;
-}
-
-.w-full {
-  width: 100%;
-}
-
-.flex-col {
-  flex-direction: column;
-}
-
-.flex-wrap {
-  flex-wrap: wrap;
-}
-
-.justify-center {
-  justify-content: center;
-}
-
-.gap-8 {
-  gap: 2rem;
-}
-
-.bg-neutral-900 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(23 23 23 / var(--tw-bg-opacity));
-}
-
-.px-8 {
-  padding-left: 2rem;
-  padding-right: 2rem;
-}
-
-.py-8 {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-}
-
-.text-center {
-  text-align: center;
-}
-
-.uppercase {
-  text-transform: uppercase;
-}
-
-.text-white {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-.opacity-0 {
-  opacity: 0;
-}
-
-@media (min-width: 640px) {
-  .sm\:w-96 {
-    width: 24rem;
-  }
-
-  .sm\:w-px {
-    width: 1px;
-  }
-
-  .sm\:w-8\/12 {
-    width: 66.666667%;
-  }
-
-  .sm\:w-3 {
-    width: 0.75rem;
-  }
-
-  .sm\:w-3\.5 {
-    width: 0.875rem;
-  }
-
-  .sm\:w-64 {
-    width: 16rem;
-  }
-
-  .sm\:w-72 {
-    width: 18rem;
-  }
-
-  .sm\:w-80 {
-    width: 20rem;
-  }
-
-  .sm\:py-24 {
-    padding-top: 6rem;
-    padding-bottom: 6rem;
-  }
-
-  .sm\:py-32 {
-    padding-top: 8rem;
-    padding-bottom: 8rem;
-  }
 }
