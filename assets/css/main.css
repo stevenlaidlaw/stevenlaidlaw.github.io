@@ -462,12 +462,15 @@ html {
 }
 
 body {
+  display: flex;
   height: 100%;
-  width: 100%;
+  align-items: center;
+  justify-content: center;
   --tw-bg-opacity: 1;
   background-color: rgb(23 23 23 / var(--tw-bg-opacity));
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+  background: linear-gradient(45deg, #110022, var(--color-palm-leaf));
 }
 
 h1,
@@ -748,7 +751,7 @@ button:hover,
 
   50.4% {
     --angle: 360deg;
-    filter: brightness(190%);
+    filter: brightness(100%);
     transform: translateY(-0vh);
   }
 
@@ -772,14 +775,62 @@ button:hover,
   }
 }
 
-.main {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  height: 100%;
+.wrapper {
+  position: relative;
+  margin: auto;
   width: 100%;
-  overflow: hidden;
-  overflow-y: scroll;
+  flex-shrink: 1;
+}
+
+@media (min-width: 640px) {
+  .wrapper {
+    width: 75%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .wrapper {
+    width: 66.666667%;
+  }
+}
+
+@media (min-width: 1280px) {
+  .wrapper {
+    width: 50%;
+  }
+}
+
+.wrapper {
+  box-shadow: 0 0 25px var(--labs-sys-color-sun-2);
+  border: 16px solid;
+  -o-border-image: linear-gradient(
+      var(--angle),
+      var(--labs-sys-color-sun-2),
+      var(--labs-sys-color-triangle)
+    ) 1;
+     border-image: linear-gradient(
+      var(--angle),
+      var(--labs-sys-color-sun-2),
+      var(--labs-sys-color-triangle)
+    ) 1;
+  animation: gradient-border-image 18s linear infinite;
+}
+
+@keyframes gradient-border-image {
+  0% {
+    --angle: 45deg;
+  }
+
+  50% {
+    --angle: 360deg;
+  }
+
+  100% {
+    --angle: 45deg;
+  }
+}
+
+.main {
 }
 
 .socials {

@@ -25,7 +25,8 @@
   }
 
   body {
-    @apply h-full w-full bg-neutral-900 text-white;
+    @apply h-full bg-neutral-900 text-white flex justify-center items-center;
+    background: linear-gradient(45deg, #110022, var(--color-palm-leaf));
   }
 
   h1,
@@ -247,7 +248,7 @@
 
     50.4% {
       --angle: 360deg;
-      filter: brightness(190%);
+      filter: brightness(100%);
       transform: translateY(-0vh);
     }
 
@@ -271,8 +272,33 @@
     }
   }
 
+  .wrapper {
+    @apply flex-shrink relative w-full sm:w-3/4 lg:w-2/3 xl:w-1/2 m-auto;
+    box-shadow: 0 0 25px var(--labs-sys-color-sun-2);
+    border: 16px solid;
+    border-image: linear-gradient(
+      var(--angle),
+      var(--labs-sys-color-sun-2),
+      var(--labs-sys-color-triangle)
+    ) 1;
+    animation: gradient-border-image 18s linear infinite;
+  }
+
+  @keyframes gradient-border-image {
+    0% {
+      --angle: 45deg;
+    }
+
+    50% {
+      --angle: 360deg;
+    }
+
+    100% {
+      --angle: 45deg;
+    }
+  }
+
   .main {
-    @apply absolute top-0 left-0 h-full w-full overflow-hidden overflow-y-scroll;
   }
 
   .socials {
