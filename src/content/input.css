@@ -322,6 +322,7 @@
   }
 
   .triangle {
+    @apply w-11/12 sm:w-96 h-80 absolute -z-20 -top-10;
     aspect-ratio: 3/2;
     filter: drop-shadow(0 0 15px var(--labs-sys-color-triangle));
     animation: triangle 10s linear infinite;

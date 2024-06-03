@@ -867,6 +867,20 @@ button:hover,
 }
 
 .triangle {
+  position: absolute;
+  top: -2.5rem;
+  z-index: -20;
+  height: 20rem;
+  width: 91.666667%;
+}
+
+@media (min-width: 640px) {
+  .triangle {
+    width: 24rem;
+  }
+}
+
+.triangle {
   aspect-ratio: 3/2;
   filter: drop-shadow(0 0 15px var(--labs-sys-color-triangle));
   animation: triangle 10s linear infinite;
@@ -1008,20 +1022,8 @@ button:hover,
   --tw-backdrop-sepia:  ;
 }
 
-.absolute {
-  position: absolute;
-}
-
 .relative {
   position: relative;
-}
-
-.-top-10 {
-  top: -2.5rem;
-}
-
-.-z-20 {
-  z-index: -20;
 }
 
 .-z-50 {
@@ -1055,10 +1057,6 @@ button:hover,
 
 .h-52 {
   height: 13rem;
-}
-
-.h-80 {
-  height: 20rem;
 }
 
 .w-11\/12 {
