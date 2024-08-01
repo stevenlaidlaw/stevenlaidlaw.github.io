@@ -458,10 +458,11 @@ video {
 }
 
 html {
-  height: 100%;
+  height: auto;
 }
 
 body {
+  position: relative;
   display: flex;
   height: 100%;
   align-items: center;
@@ -582,7 +583,7 @@ button:hover,
   height: 100%;
   width: 100%;
   overflow: hidden;
-  opacity: 0.4;
+  opacity: 0.3;
   z-index: 10;
   background: linear-gradient(
       45deg,

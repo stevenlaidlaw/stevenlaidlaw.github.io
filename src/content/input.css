@@ -21,11 +21,11 @@
   }
 
   html {
-    @apply h-full;
+    @apply h-auto;
   }
 
   body {
-    @apply h-full bg-neutral-900 text-white flex justify-center items-center;
+    @apply h-full bg-neutral-900 text-white flex justify-center items-center relative;
     background: linear-gradient(45deg, #110022, var(--color-palm-leaf));
   }
 
@@ -102,7 +102,7 @@
   }
 
   .error-noise {
-    @apply absolute w-full h-full top-0 left-0 overflow-hidden opacity-40 pointer-events-none;
+    @apply absolute w-full h-full top-0 left-0 overflow-hidden opacity-30 pointer-events-none;
     z-index: 10;
     background: linear-gradient(
       45deg,
