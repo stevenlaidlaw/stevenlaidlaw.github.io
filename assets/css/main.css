@@ -1039,28 +1039,14 @@ button:hover,
   margin: auto;
 }
 
-.m-2 {
-  margin: 0.5rem;
+.my-16 {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
 }
 
 .my-2 {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
-}
-
-.my-4 {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
-
-.my-12 {
-  margin-top: 3rem;
-  margin-bottom: 3rem;
-}
-
-.my-16 {
-  margin-top: 4rem;
-  margin-bottom: 4rem;
 }
 
 .flex {
@@ -1073,10 +1059,6 @@ button:hover,
 
 .h-52 {
   height: 13rem;
-}
-
-.h-8 {
-  height: 2rem;
 }
 
 .w-11\/12 {
@@ -1134,11 +1116,6 @@ button:hover,
 
 .p-2 {
   padding: 0.5rem;
-}
-
-.py-4 {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
 }
 
 .text-center {
