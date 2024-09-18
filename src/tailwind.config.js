@@ -1,5 +1,5 @@
-module.exports = {
-  content: ["./content/**/*.html"],
+export default {
+  content: ["./views/**/*.hbs"],
   theme: {
     fontFamily: {
       sans: [

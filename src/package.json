@@ -2,11 +2,12 @@
   "name": "src",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "generate.js",
   "scripts": {
     "build": "node ./generate.js",
     "dev": "concurrently npm:dev:*",
-    "dev:watch": "nodemon -e md,html,js ./generate.js",
+    "dev:watch": "nodemon -e html,js,hbs ./generate.js",
     "dev:css": "npx tailwindcss -i ./content/input.css -o ../assets/css/main.css --watch",
     "dev:run": "cd .. && npx dev-server"
   },
