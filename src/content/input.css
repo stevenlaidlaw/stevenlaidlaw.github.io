@@ -297,15 +297,25 @@
 
   html {
     @apply h-auto;
+    background-color: #161616;
   }
 
   body {
     @apply h-full bg-neutral-900 text-white flex flex-col justify-center items-center relative;
-    background: linear-gradient(45deg, #110022, var(--color-palm-leaf));
+    background-image: url(/assets/images/bg.jpg);
+    background-size: 100%;
+    background-position: top center;
+    background-repeat: no-repeat;
+  }
+
+  @media (min-width: 1200px) {
+    body {
+      background-size: 1200px;
+    }
   }
 
   .wrapper {
-    @apply flex-shrink relative w-full sm:w-3/4 lg:w-2/3 xl:w-1/2 m-auto mb-8 sm:my-8;
+    @apply flex-shrink relative w-full max-w-screen-sm m-auto mb-8 sm:my-8;
     box-shadow: 0 0 25px var(--labs-sys-color-sun-2);
     border: 16px solid;
     border-image: linear-gradient(
@@ -315,9 +325,6 @@
     ) 1;
     animation: gradient-border-image 18s linear infinite;
   }
-
-  .wrapper.sm {
-    @apply w-11/12;  }
 
   .logo {
     @apply w-full absolute top-0 left-0 -z-10;
