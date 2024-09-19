@@ -7,22 +7,20 @@
 </div>
 
 <div
-  class="flex justify-center align-middle relative h-52 w-80 my-16 m-auto z-0"
+  class="flex justify-center align-middle h-52 w-80 my-8 m-auto z-0"
 >
-  <div class="logo"></div>
-  <div class="triangle"></div>
+  <div class="w-full h-full bg-gradient-to-br [background-size:200%_200%] from-purple-500 to-cyan-500 animate-gradBg [mask:url(/assets/images/logo.svg)_0_0/100%_100%]"></div>
 </div>
 
 <div class="flex flex-col text-center uppercase m-4 mt-0 gap-4">
-  <iframe class="border-r-8 w-auto m-8" src="https://open.spotify.com/embed/playlist/5qDbcgGipA3LsdvWXfprdb?utm_source=generator&theme=0" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+  <iframe class="border-r-8 w-auto m-4" src="https://open.spotify.com/embed/playlist/5qDbcgGipA3LsdvWXfprdb?utm_source=generator&theme=0" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 
-  <h2 class="my-2">Releases</h2>
+  <div class="my-4 text-5xl">Releases</div>
   <div class="flex flex-wrap gap-8 justify-center mb-8">
     {{#each songs}}
-    <a class="w-32 bg-gray-800 bg-opacity-50 hover:bg-white hover:bg-opacity-10 hover:grayscale"
+    <a class="w-60 bg-gray-800 bg-opacity-50 hover:bg-white hover:bg-opacity-10 hover:grayscale"
       href="/release/{{slug}}.html">
       <img class="w-full" src="/assets/images/releases/200/{{slug}}.jpg" />
-      <div class="p-4">{{title}}</div>
     </a>
     {{/each}}
   </div>

@@ -1,15 +1,14 @@
 <img class="w-full" src="/assets/images/releases/{{slug}}.jpg" />
 
-<div class="text-center py-4">
-  <h1 class="mb-2">{{title}}</h1>
-  <div>listen now on your preferred service</div>
+<div class="text-center py-8 bg-black bg-opacity-80">
+  <div class="mb-2 text-2xl">Steven Laidlaw - {{title}}</div>
+  <div class="text-sm">Listen now on your preferred service</div>
 </div>
 
 {{#each links}}
-<div class="flex gap-4 items-center p-4 w-full border-t border-gray-600 bg-gray-900">
-  <img class="w-12 h-12" src="/assets/images/logos/{{slug}}.png" />
-  <div class="flex-1">{{title}}</div>
-  <a class="w-24 h-10 flex items-center justify-center text-sm rounded text-center bg-gray-800 border border-gray-600 no-underline uppercase hover:text-black hover:bg-gray-300" title="Play" href="{{url}}" target="_blank" rel="noopener">
+<div class="flex justify-between items-center p-6 w-full border-t border-white border-opacity-20 bg-black bg-opacity-50">
+  <img class="h-10" src="/assets/images/services/{{slug}}.svg" />
+  <a class="w-32 border border-white border-opacity-20 bg-white bg-opacity-5 hover:bg-opacity-20 p-3 rounded-lg flex items-center justify-center" title="Play" href="{{url}}" target="_blank" rel="noopener">
     Play
   </a>
 </div>

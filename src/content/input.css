@@ -4,112 +4,15 @@
 
 @layer base {
   :root {
-    --labs-sys-color-background: #111;
-    --labs-sys-color-on-background: white;
-    --base-speed: 4s;
-    --labs-sys-color-grid: #fac4ff;
-    --labs-sys-color-grid-glow: #df7373;
-    --labs-sys-color-sun-1: #fdb428;
-    --labs-sys-color-sun-2: #f672ca;
-    --labs-sys-color-sun-glow: #b9f;
-    --labs-sys-color-star: #f6c0c0;
-    --color-palm-trunk: #333;
-    --color-palm-leaf: #333;
-    --color-palm-leaf-2: #b9f;
-    --labs-sys-color-triangle: #6eccee;
-    --labs-sys-color-volume: var(--labs-sys-color-triangle);
+    --angle: 45deg;
+    --pink: #f672ca;
+    --blue: #6eccee;
   }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply font-header font-bold uppercase;
-  }
-
-  h1 {
-    @apply text-3xl;
-  }
-
-  h2 {
-    @apply text-2xl;
-  }
-
-  h3 {
-    @apply text-xl;
-  }
-
-  h4 {
-    @apply text-lg;
-  }
-
-  h6 {
-    @apply text-sm;
-  }
-
-  p {
-    @apply my-4 leading-6;
-  }
-
-  strong {
-    @apply font-bold;
-  }
-
-  em {
-    @apply italic;
-  }
-
-  ol {
-    @apply list-decimal;
-  }
-
-  ul {
-    @apply list-disc;
-  }
-
-  li {
-    @apply ml-4;
-  }
-
-  label {
-    @apply pr-4 uppercase;
-  }
-
-  input,
-  textarea,
-  select {
-    @apply p-2 rounded border;
-  }
-
-  a {
-    @apply underline;
-  }
-
-  button,
-  button[type="submit"] {
-    @apply py-2 px-4 text-sm rounded text-center bg-slate-600 text-white hover:text-white;
-  }
-
   /****************************/
   /*                          */
   /*      Old Tv Content      */
   /*                          */
   /****************************/
-
-  .error-noise {
-    @apply absolute w-full h-full top-0 left-0 overflow-hidden opacity-30 pointer-events-none;
-    z-index: 10;
-    background: linear-gradient(
-      45deg,
-      rgba(155, 0, 155, 1),
-      rgba(0, 155, 155, 1)
-    );
-    background-size: 400% 400%;
-    animation: gradientBackground 16s ease infinite;
-  }
-
   .error-effect {
     @apply absolute w-full h-full pointer-events-none;
     background-image: url(data:image/png;base64,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);
@@ -208,57 +111,10 @@
     }
   }
 
-  @keyframes gradientBackground {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-
   @property --angle {
     syntax: "<angle>";
     inherits: true;
     initial-value: 0deg;
-  }
-
-  @keyframes kode-text {
-    from {
-      --angle: 45deg;
-      transform: translateY(-0vh);
-    }
-
-    49.8% {
-      --angle: 360deg;
-      transform: translateY(-1vh);
-      filter: brightness(100%);
-    }
-    50% {
-      --angle: 360deg;
-      transform: translateY(-1vh) scaleY(0.1) skewX(253deg);
-      filter: brightness(190%);
-    }
-
-    50.2% {
-      --angle: 360deg;
-      transform: translateY(-1vh) scaleY(0.5) skewY(37deg);
-      filter: brightness(190%);
-    }
-
-    50.4% {
-      --angle: 360deg;
-      filter: brightness(100%);
-      transform: translateY(-0vh);
-    }
-
-    to {
-      --angle: 45deg;
-      transform: translateY(-0vh);
-    }
   }
 
   @keyframes triangle {
@@ -295,69 +151,15 @@
   /*                        */
   /**************************/
 
-  html {
-    @apply h-auto;
-    background-color: #161616;
-  }
-
-  body {
-    @apply h-full bg-neutral-900 text-white flex flex-col justify-center items-center relative;
-    background-image: url(/assets/images/bg.jpg);
-    background-size: 100%;
-    background-position: top center;
-    background-repeat: no-repeat;
-  }
-
-  @media (min-width: 1200px) {
-    body {
-      background-size: 1200px;
-    }
-  }
-
-  .wrapper {
-    @apply flex-shrink relative w-full max-w-screen-sm m-auto mb-8 sm:my-8;
-    box-shadow: 0 0 25px var(--labs-sys-color-sun-2);
-    border: 16px solid;
-    border-image: linear-gradient(
-      var(--angle),
-      var(--labs-sys-color-sun-2),
-      var(--labs-sys-color-triangle)
-    ) 1;
-    animation: gradient-border-image 18s linear infinite;
-  }
-
-  .logo {
-    @apply w-full absolute top-0 left-0 -z-10;
-    --angle: 45deg;
-    background: linear-gradient(
-      var(--angle),
-      var(--labs-sys-color-sun-2),
-      var(--labs-sys-color-triangle)
-    );
-    aspect-ratio: 3/2;
-    mask: url(/assets/images/logo.svg) center center no-repeat;
-    mask-size: contain;
-    animation: kode-text 10s linear infinite;
-
-    &:after {
-      @apply absolute mix-blend-overlay opacity-20;
-      content: "";
-      top: 8vmin;
-      left: 1vmin;
-      background: repeating-radial-gradient(black, transparent 10vmin);
-      transform: rotate(347deg);
-    }
-  }
-
   .triangle {
     @apply w-11/12 sm:w-96 h-80 absolute -z-20 -top-10;
     aspect-ratio: 3/2;
-    filter: drop-shadow(0 0 15px var(--labs-sys-color-triangle));
+    filter: drop-shadow(0 0 15px var(--blue));
     animation: triangle 10s linear infinite;
     &:after {
       content: "";
       @apply absolute inset-0;
-      background: linear-gradient(45deg, white, var(--labs-sys-color-triangle));
+      background: linear-gradient(45deg, white, var(--blue));
       clip-path: polygon(
         6% 22%,
         29% 94%,

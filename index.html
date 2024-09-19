@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+<head class="h-auto bg-black">
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Steven Laidlaw</title>
@@ -12,7 +12,7 @@
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="pr econnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Nova+Square&display=swap" rel="stylesheet" />
   <link href="/assets/css/main.css" rel="stylesheet" />
 
@@ -34,13 +34,13 @@
     /></noscript>
 </head>
 
-<body>
-  <div class="error-noise">
+<body class="h-full bg-neutral-900 bg-no-repeat bg-top [background-image:url(/assets/images/bg.jpg)] bg-contain text-white flex flex-col justify-center items-center relative">
+  <div class="absolute w-full h-full top-0 left-0 overflow-hidden opacity-50 pointer-events-none -z-10 bg-gradient-to-br [background-size:400%_400%] from-purple-500 to-cyan-500 animate-gradBg">
     <div class="error-effect">
       <div class="old-tv-content"></div>
     </div>
   </div>
-  <div class="wrapper">
+  <div class="flex-shrink relative w-full max-w-screen-sm m-auto mb-8 sm:my-8 [border-image:linear-gradient(var(--angle),var(--pink),var(--blue))_1] border-16 animate-gradBorder [box-shadow:0_0_25px_var(--pink)]">
     <div class="flex justify-center gap-4 flex-wrap mt-8">
   <a class="w-8" href="https://open.spotify.com/artist/4qIIu6vj9ilkYHgBF2vHe5" target="_blank" rel="noopener" title="Spotify">
     <img class="w-6 h-6" src="/assets/images/logos/spotify.png" />
@@ -63,46 +63,39 @@
 </div>
 
 <div
-  class="flex justify-center align-middle relative h-52 w-80 my-16 m-auto z-0"
+  class="flex justify-center align-middle h-52 w-80 my-8 m-auto z-0"
 >
-  <div class="logo"></div>
-  <div class="triangle"></div>
+  <div class="w-full h-full bg-gradient-to-br [background-size:200%_200%] from-purple-500 to-cyan-500 animate-gradBg [mask:url(/assets/images/logo.svg)_0_0/100%_100%]"></div>
 </div>
 
 <div class="flex flex-col text-center uppercase m-4 mt-0 gap-4">
-  <iframe class="border-r-8 w-auto m-8" src="https://open.spotify.com/embed/playlist/5qDbcgGipA3LsdvWXfprdb?utm_source=generator&theme=0" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+  <iframe class="border-r-8 w-auto m-4" src="https://open.spotify.com/embed/playlist/5qDbcgGipA3LsdvWXfprdb?utm_source=generator&theme=0" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 
-  <h2 class="my-2">Releases</h2>
+  <div class="my-4 text-5xl">Releases</div>
   <div class="flex flex-wrap gap-8 justify-center mb-8">
-    <a class="w-32 bg-gray-800 bg-opacity-50 hover:bg-white hover:bg-opacity-10 hover:grayscale"
+    <a class="w-60 bg-gray-800 bg-opacity-50 hover:bg-white hover:bg-opacity-10 hover:grayscale"
       href="/release/sure.html">
       <img class="w-full" src="/assets/images/releases/200/sure.jpg" />
-      <div class="p-4">Sure</div>
     </a>
-    <a class="w-32 bg-gray-800 bg-opacity-50 hover:bg-white hover:bg-opacity-10 hover:grayscale"
+    <a class="w-60 bg-gray-800 bg-opacity-50 hover:bg-white hover:bg-opacity-10 hover:grayscale"
       href="/release/falling-out-your-life.html">
       <img class="w-full" src="/assets/images/releases/200/falling-out-your-life.jpg" />
-      <div class="p-4">Falling Out Your Life</div>
     </a>
-    <a class="w-32 bg-gray-800 bg-opacity-50 hover:bg-white hover:bg-opacity-10 hover:grayscale"
+    <a class="w-60 bg-gray-800 bg-opacity-50 hover:bg-white hover:bg-opacity-10 hover:grayscale"
       href="/release/i-never-told-them.html">
       <img class="w-full" src="/assets/images/releases/200/i-never-told-them.jpg" />
-      <div class="p-4">I Never Told Them</div>
     </a>
-    <a class="w-32 bg-gray-800 bg-opacity-50 hover:bg-white hover:bg-opacity-10 hover:grayscale"
+    <a class="w-60 bg-gray-800 bg-opacity-50 hover:bg-white hover:bg-opacity-10 hover:grayscale"
       href="/release/obsessed.html">
       <img class="w-full" src="/assets/images/releases/200/obsessed.jpg" />
-      <div class="p-4">Obsessed</div>
     </a>
-    <a class="w-32 bg-gray-800 bg-opacity-50 hover:bg-white hover:bg-opacity-10 hover:grayscale"
+    <a class="w-60 bg-gray-800 bg-opacity-50 hover:bg-white hover:bg-opacity-10 hover:grayscale"
       href="/release/shadowed-light.html">
       <img class="w-full" src="/assets/images/releases/200/shadowed-light.jpg" />
-      <div class="p-4">Shadowed Light</div>
     </a>
-    <a class="w-32 bg-gray-800 bg-opacity-50 hover:bg-white hover:bg-opacity-10 hover:grayscale"
+    <a class="w-60 bg-gray-800 bg-opacity-50 hover:bg-white hover:bg-opacity-10 hover:grayscale"
       href="/release/we-used-to.html">
       <img class="w-full" src="/assets/images/releases/200/we-used-to.jpg" />
-      <div class="p-4">We Used To</div>
     </a>
   </div>
 </div>
