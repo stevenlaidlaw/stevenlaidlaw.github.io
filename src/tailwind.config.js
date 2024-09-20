@@ -18,12 +18,11 @@ export default {
       header: ["Nova Square", "Lexend Deca", "sans-serif"],
     },
     extend: {
-      borderWidth: {
-        16: "16px",
-      },
       animation: {
-        gradBg: "gradBg 18s linear infinite",
-        gradBorder: "gradBorder 18s linear infinite",
+        gradBg: "gradBg 8s linear infinite",
+        gradBorder: "gradBorder 10s linear infinite",
+        jitter: "jitter 10ms linear infinite",
+        noise: "noise 200ms linear infinite",
       },
       keyframes: {
         gradBg: {
@@ -34,7 +33,22 @@ export default {
           "0%, 100%": { '--angle': "45deg" },
           "50%": { '--angle': "360deg" },
         },
-      }
+        jitter: {
+          "0%, 100%": { transform: "translate(-1px, -1px)" },
+          "50%": { transform: "translate(1px, 1px)" },
+        },
+      },
+      backgroundSize: {
+        "size-2x": "200% 200%",
+        "size-3x": "300% 300%",
+        "size-4x": "400% 400%",
+      },
+      backgroundImage: {
+        "rpt-gradient": "repeating-linear-gradient(0, #000, #000 2px, transparent 4px)",
+      },
+      boxShadow: {
+        even: "0 0 25px 0 rgba(0, 0, 0, 0.05)",
+      },
     }
   },
   plugins: [],
