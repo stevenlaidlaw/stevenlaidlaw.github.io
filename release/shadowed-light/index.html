@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head class="h-auto bg-black">
+<head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Shadowed Light - Steven Laidlaw</title>
@@ -28,14 +28,15 @@
     'https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '221962575062598');
     fbq('track', 'PageView');
-    </script>
+    </script> 
     <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=221962575062598&ev=PageView&noscript=1"
     /></noscript>
 </head>
 
-<body class="bg-top [background-image:url(/assets/images/me.png)] bg-cover bg-fixed backdrop-blur-3xl text-white">
-  <div class="w-full max-w-[500px] m-auto mb-8 sm:my-8 gradient-border border-[16px] animate-gradBorder shadow-even shadow-pink-300 bg-no-repeat bg-top [background-image:url(/assets/images/me.png)] bg-contain">
+<body class="before:absolute before:w-[200%] before:h-[200%] before:top-[-50%] before:left-[-50%] before:-z-50 before:[background-image:url(/assets/images/me-blur.png)] before:bg-cover before:bg-fixed before:animate-spin-slow overflow-hidden text-white">
+  <div class="py-8">
+    <div class="w-full max-w-[500px] m-auto gradient-border border-[16px] animate-gradBorder shadow-even shadow-pink-300 bg-no-repeat bg-top [background-image:url(/assets/images/me.png)] bg-contain">
   <img class="w-full" src="/assets/images/releases/shadowed-light.jpg" />
 
   <div class="text-center py-8 bg-black bg-opacity-80">
@@ -62,6 +63,7 @@
     </a>
   </div>
 </div>
+  </div>
 
   <div class="flex justify-center gap-4 flex-wrap mt-4">
     <a class="w-8" href="https://open.spotify.com/artist/4qIIu6vj9ilkYHgBF2vHe5" target="_blank" rel="noopener" title="Spotify">

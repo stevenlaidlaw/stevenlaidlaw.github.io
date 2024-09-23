@@ -602,10 +602,6 @@ video {
   height: 1.5rem;
 }
 
-.h-auto {
-  height: auto;
-}
-
 .h-full {
   height: 100%;
 }
@@ -634,16 +630,12 @@ video {
   width: 100%;
 }
 
-.max-w-screen-sm {
-  max-width: 640px;
-}
-
-.max-w-\[300px\] {
-  max-width: 300px;
-}
-
 .max-w-\[500px\] {
   max-width: 500px;
+}
+
+.max-w-screen-sm {
+  max-width: 640px;
 }
 
 @keyframes gradBg {
@@ -700,6 +692,10 @@ video {
 
 .gap-8 {
   gap: 2rem;
+}
+
+.overflow-hidden {
+  overflow: hidden;
 }
 
 .rounded-lg {
@@ -861,12 +857,6 @@ video {
   --tw-shadow: var(--tw-shadow-colored);
 }
 
-.backdrop-blur-3xl {
-  --tw-backdrop-blur: blur(64px);
-  -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
-          backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
-}
-
 @property --angle {
   syntax: "<angle>";
 
@@ -896,8 +886,69 @@ video {
           mask: url(/assets/images/logo.svg) 0 0/100% 100%;
 }
 
+.\[background-image\:url\(\/assets\/images\/me-blur\.png\)\] {
+  background-image: url(/assets/images/me-blur.png);
+}
+
 .\[background-image\:url\(\/assets\/images\/me\.png\)\] {
   background-image: url(/assets/images/me.png);
+}
+
+.before\:absolute::before {
+  content: var(--tw-content);
+  position: absolute;
+}
+
+.before\:left-\[-50\%\]::before {
+  content: var(--tw-content);
+  left: -50%;
+}
+
+.before\:top-\[-50\%\]::before {
+  content: var(--tw-content);
+  top: -50%;
+}
+
+.before\:-z-50::before {
+  content: var(--tw-content);
+  z-index: -50;
+}
+
+.before\:h-\[200\%\]::before {
+  content: var(--tw-content);
+  height: 200%;
+}
+
+.before\:w-\[200\%\]::before {
+  content: var(--tw-content);
+  width: 200%;
+}
+
+@keyframes spin {
+  to {
+    content: var(--tw-content);
+    transform: rotate(360deg);
+  }
+}
+
+.before\:animate-spin-slow::before {
+  content: var(--tw-content);
+  animation: spin 18s linear infinite;
+}
+
+.before\:bg-cover::before {
+  content: var(--tw-content);
+  background-size: cover;
+}
+
+.before\:bg-fixed::before {
+  content: var(--tw-content);
+  background-attachment: fixed;
+}
+
+.before\:\[background-image\:url\(\/assets\/images\/me-blur\.png\)\]::before {
+  content: var(--tw-content);
+  background-image: url(/assets/images/me-blur.png);
 }
 
 .hover\:bg-white:hover {
@@ -916,11 +967,4 @@ video {
 .hover\:grayscale:hover {
   --tw-grayscale: grayscale(100%);
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
-}
-
-@media (min-width: 640px) {
-  .sm\:my-8 {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-  }
 }
