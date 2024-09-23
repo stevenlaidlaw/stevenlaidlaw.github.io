@@ -894,36 +894,6 @@ video {
   background-image: url(/assets/images/me.png);
 }
 
-.before\:absolute::before {
-  content: var(--tw-content);
-  position: absolute;
-}
-
-.before\:left-\[-50\%\]::before {
-  content: var(--tw-content);
-  left: -50%;
-}
-
-.before\:top-\[-50\%\]::before {
-  content: var(--tw-content);
-  top: -50%;
-}
-
-.before\:-z-50::before {
-  content: var(--tw-content);
-  z-index: -50;
-}
-
-.before\:h-\[200\%\]::before {
-  content: var(--tw-content);
-  height: 200%;
-}
-
-.before\:w-\[200\%\]::before {
-  content: var(--tw-content);
-  width: 200%;
-}
-
 @keyframes spin {
   to {
     content: var(--tw-content);
@@ -944,11 +914,6 @@ video {
 .before\:bg-fixed::before {
   content: var(--tw-content);
   background-attachment: fixed;
-}
-
-.before\:\[background-image\:url\(\/assets\/images\/me-blur\.png\)\]::before {
-  content: var(--tw-content);
-  background-image: url(/assets/images/me-blur.png);
 }
 
 .hover\:bg-white:hover {
