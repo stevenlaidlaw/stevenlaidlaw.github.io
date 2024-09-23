@@ -23,6 +23,7 @@ export default {
         gradBorder: "gradBorder 10s linear infinite",
         jitter: "jitter 10ms linear infinite",
         noise: "noise 200ms linear infinite",
+        "spin-slow": "spin 18s linear infinite",
       },
       keyframes: {
         gradBg: {

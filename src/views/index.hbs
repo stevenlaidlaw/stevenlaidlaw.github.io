@@ -1,4 +1,4 @@
-<div class="w-full max-w-screen-sm m-auto mb-8 sm:my-8 gradient-border border-[16px] animate-gradBorder shadow-even shadow-pink-300 bg-no-repeat bg-top [background-image:url(/assets/images/me.png)] bg-contain">
+<div class="w-full max-w-screen-sm m-auto gradient-border border-[16px] animate-gradBorder shadow-even shadow-pink-300 bg-no-repeat bg-top [background-image:url(/assets/images/me.png)] bg-contain">
   <div class="flex justify-center gap-4 flex-wrap mt-8">
     {{#each socials}}
     <a class="w-8" href="{{url}}" target="_blank" rel="noopener" title="{{title}}">
@@ -20,7 +20,7 @@
     <div class="flex flex-wrap gap-8 justify-center mb-8">
       {{#each songs}}
       <a class="w-60 bg-gray-800 bg-opacity-50 hover:bg-white hover:bg-opacity-10 hover:grayscale"
-        href="/release/{{slug}}.html">
+        href="/release/{{slug}}">
         <img class="w-full" src="/assets/images/releases/200/{{slug}}.jpg" />
       </a>
       {{/each}}

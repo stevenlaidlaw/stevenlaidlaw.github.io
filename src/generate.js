@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync, mkdirSync } from "fs";
+import { readFileSync, writeFileSync, mkdirSync, rmSync } from "fs";
 import Handlebars from "handlebars";
 import { socials, songs } from "./data.js";
 
@@ -16,6 +16,7 @@ function build() {
   writeFileSync("../index.html", indexHtml);
 
   // Release pages
+  rmSync("../release", { recursive: true, force: true });
   mkdirSync("../release", { recursive: true });
   songs.forEach(song => {
     const releaseHtml = mainLayout({
@@ -25,7 +26,8 @@ function build() {
       title: song.title,
       socials: socials,
     });
-    writeFileSync(`../release/${song.slug}.html`, releaseHtml);
+    mkdirSync(`../release/${song.slug}`, { recursive: true });
+    writeFileSync(`../release/${song.slug}/index.html`, releaseHtml);
   });
 }
 
