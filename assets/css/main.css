@@ -540,8 +540,32 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
+.pointer-events-none {
+  pointer-events: none;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.left-\[-100\%\] {
+  left: -100%;
+}
+
+.top-\[-100\%\] {
+  top: -100%;
+}
+
 .z-0 {
   z-index: 0;
+}
+
+.z-50 {
+  z-index: 50;
 }
 
 .m-4 {
@@ -560,6 +584,16 @@ video {
 .my-8 {
   margin-top: 2rem;
   margin-bottom: 2rem;
+}
+
+.my-16 {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+}
+
+.my-12 {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
 }
 
 .mb-2 {
@@ -602,6 +636,14 @@ video {
   height: 1.5rem;
 }
 
+.h-\[10vh\] {
+  height: 10vh;
+}
+
+.h-\[300\%\] {
+  height: 300%;
+}
+
 .h-full {
   height: 100%;
 }
@@ -622,6 +664,10 @@ video {
   width: 2rem;
 }
 
+.w-\[300\%\] {
+  width: 300%;
+}
+
 .w-auto {
   width: auto;
 }
@@ -636,6 +682,14 @@ video {
 
 .max-w-screen-sm {
   max-width: 640px;
+}
+
+.flex-1 {
+  flex: 1 1 0%;
+}
+
+.flex-none {
+  flex: none;
 }
 
 @keyframes gradBg {
@@ -666,6 +720,76 @@ video {
   animation: gradBorder 10s linear infinite;
 }
 
+@keyframes jitter {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+
+  10% {
+    transform: translate(-5%, -10%);
+  }
+
+  20% {
+    transform: translate(-15%, 5%);
+  }
+
+  30% {
+    transform: translate(7%, -25%);
+  }
+
+  40% {
+    transform: translate(-5%, 25%);
+  }
+
+  50% {
+    transform: translate(-15%, 10%);
+  }
+
+  60% {
+    transform: translate(15%, 0%);
+  }
+
+  70% {
+    transform: translate(0%, 15%);
+  }
+
+  80% {
+    transform: translate(3%, 5%);
+  }
+
+  90% {
+    transform: translate(-10%, 10%);
+  }
+}
+
+.animate-jitter {
+  animation: jitter 8s steps(10) infinite;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateY(0);
+    opacity: 0%;
+  }
+
+  30% {
+    opacity: 3%;
+  }
+
+  70% {
+    opacity: 3%;
+  }
+
+  100% {
+    transform: translateY(90vh);
+    opacity: 0%;
+  }
+}
+
+.animate-scroll {
+  animation: scroll 10s linear infinite;
+}
+
 .flex-col {
   flex-direction: column;
 }
@@ -694,10 +818,6 @@ video {
   gap: 2rem;
 }
 
-.overflow-hidden {
-  overflow: hidden;
-}
-
 .rounded-lg {
   border-radius: 0.5rem;
 }
@@ -716,6 +836,10 @@ video {
 
 .border-t {
   border-top-width: 1px;
+}
+
+.border-b {
+  border-bottom-width: 1px;
 }
 
 .border-white {
@@ -759,8 +883,16 @@ video {
   --tw-bg-opacity: 0.8;
 }
 
+.bg-opacity-20 {
+  --tw-bg-opacity: 0.2;
+}
+
 .bg-gradient-to-br {
   background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
+}
+
+.bg-rpt-gradient {
+  background-image: repeating-linear-gradient(0, #000, #000 2px, transparent 4px);
 }
 
 .from-sky-400 {
@@ -779,10 +911,6 @@ video {
 
 .bg-cover {
   background-size: cover;
-}
-
-.bg-size-2x {
-  background-size: 200% 200%;
 }
 
 .bg-fixed {
@@ -812,6 +940,16 @@ video {
 .py-8 {
   padding-top: 2rem;
   padding-bottom: 2rem;
+}
+
+.py-16 {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.py-12 {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
 }
 
 .text-center {
@@ -844,6 +982,14 @@ video {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.opacity-10 {
+  opacity: 0.1;
+}
+
+.opacity-5 {
+  opacity: 0.05;
 }
 
 .shadow-even {
@@ -894,26 +1040,8 @@ video {
   background-image: url(/assets/images/me.png);
 }
 
-@keyframes spin {
-  to {
-    content: var(--tw-content);
-    transform: rotate(360deg);
-  }
-}
-
-.before\:animate-spin-slow::before {
-  content: var(--tw-content);
-  animation: spin 18s linear infinite;
-}
-
-.before\:bg-cover::before {
-  content: var(--tw-content);
-  background-size: cover;
-}
-
-.before\:bg-fixed::before {
-  content: var(--tw-content);
-  background-attachment: fixed;
+.\[background-image\:url\(\/assets\/images\/noise\.webp\)\] {
+  background-image: url(/assets/images/noise.webp);
 }
 
 .hover\:bg-white:hover {
@@ -932,4 +1060,77 @@ video {
 .hover\:grayscale:hover {
   --tw-grayscale: grayscale(100%);
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+@media (min-width: 1024px) {
+  .lg\:flex {
+    display: flex;
+  }
+
+  .lg\:h-full {
+    height: 100%;
+  }
+
+  .lg\:w-\[500px\] {
+    width: 500px;
+  }
+
+  .lg\:max-w-full {
+    max-width: 100%;
+  }
+
+  @keyframes gradBorder {
+    0%, 100% {
+      --angle: 45deg;
+    }
+
+    50% {
+      --angle: 360deg;
+    }
+  }
+
+  .lg\:animate-gradBorder {
+    animation: gradBorder 10s linear infinite;
+  }
+
+  .lg\:border-\[16px\] {
+    border-width: 16px;
+  }
+
+  .lg\:border-none {
+    border-style: none;
+  }
+
+  .lg\:shadow-none {
+    --tw-shadow: 0 0 #0000;
+    --tw-shadow-colored: 0 0 #0000;
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  }
+
+  .lg\:shadow-even {
+    --tw-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.05);
+    --tw-shadow-colored: 0 0 25px 0 var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  }
+
+  .lg\:shadow-pink-300 {
+    --tw-shadow-color: #f9a8d4;
+    --tw-shadow: var(--tw-shadow-colored);
+  }
+
+  .lg\:gradient-border {
+    --angle: 45deg;
+    -o-border-image: linear-gradient(
+        var(--angle),
+        #f9a8d4,
+        #38bdf8
+      )
+      1;
+       border-image: linear-gradient(
+        var(--angle),
+        #f9a8d4,
+        #38bdf8
+      )
+      1;
+  }
 }

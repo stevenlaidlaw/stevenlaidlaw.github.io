@@ -1,4 +1,4 @@
-<div class="w-full max-w-screen-sm m-auto gradient-border border-[16px] animate-gradBorder shadow-even shadow-pink-300 bg-no-repeat bg-top [background-image:url(/assets/images/me.png)] bg-contain">
+<div class="w-full max-w-screen-sm m-auto my-8 gradient-border border-[16px] animate-gradBorder shadow-even shadow-pink-300 bg-no-repeat bg-top [background-image:url(/assets/images/me.png)] bg-contain">
   <div class="flex justify-center gap-4 flex-wrap mt-8">
     {{#each socials}}
     <a class="w-8" href="{{url}}" target="_blank" rel="noopener" title="{{title}}">
@@ -10,7 +10,7 @@
   <div
     class="flex justify-center align-middle h-52 w-60 my-8 mt-60 m-auto z-0"
   >
-    <div class="w-full h-full bg-gradient-to-br bg-size-2x from-sky-400 to-pink-300 animate-gradBg logo-mask"></div>
+    <div class="w-full h-full bg-gradient-to-br bg-size-[200%_200%] from-sky-400 to-pink-300 animate-gradBg logo-mask"></div>
   </div>
 
   <div class="flex flex-col text-center uppercase m-4 mt-0 gap-4">
@@ -26,4 +26,16 @@
       {{/each}}
     </div>
   </div>
+</div>
+
+<div class="flex justify-center gap-4 flex-wrap my-12">
+  {{#each socials}}
+  <a class="w-8" href="{{url}}" target="_blank" rel="noopener" title="{{title}}">
+    <img class="w-6 h-6" src="/assets/images/logos/{{slug}}.png" />
+  </a>
+  {{/each}}
+</div>
+
+<div class="w-full py-12 mt-8 bg-neutral-900 text-center">
+  Copyright © 2024 <a href="/" title="Steven Laidlaw - Home">Steven Laidlaw</a>
 </div>

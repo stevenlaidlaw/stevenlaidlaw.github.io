@@ -21,9 +21,8 @@ export default {
       animation: {
         gradBg: "gradBg 8s linear infinite",
         gradBorder: "gradBorder 10s linear infinite",
-        jitter: "jitter 10ms linear infinite",
-        noise: "noise 200ms linear infinite",
-        "spin-slow": "spin 18s linear infinite",
+        jitter: "jitter 8s steps(10) infinite",
+        scroll: "scroll 10s linear infinite",
       },
       keyframes: {
         gradBg: {
@@ -35,14 +34,23 @@ export default {
           "50%": { '--angle': "360deg" },
         },
         jitter: {
-          "0%, 100%": { transform: "translate(-1px, -1px)" },
-          "50%": { transform: "translate(1px, 1px)" },
+          "0%, 100%": { transform:"translate(0, 0)" },
+          "10%": { transform:"translate(-5%, -10%)" },
+          "20%": { transform:"translate(-15%, 5%)" },
+          "30%": { transform:"translate(7%, -25%)" },
+          "40%": { transform:"translate(-5%, 25%)" },
+          "50%": { transform:"translate(-15%, 10%)" },
+          "60%": { transform:"translate(15%, 0%)" },
+          "70%": { transform:"translate(0%, 15%)" },
+          "80%": { transform:"translate(3%, 5%)" },
+          "90%": { transform:"translate(-10%, 10%)" },
         },
-      },
-      backgroundSize: {
-        "size-2x": "200% 200%",
-        "size-3x": "300% 300%",
-        "size-4x": "400% 400%",
+        scroll: {
+          "0%": { transform: "translateY(0)", opacity: "0%" },
+          "30%": { opacity: "3%" },
+          "70%": { opacity: "3%" },
+          "100%": { transform: "translateY(90vh)", opacity: "0%" },
+        },
       },
       backgroundImage: {
         "rpt-gradient": "repeating-linear-gradient(0, #000, #000 2px, transparent 4px)",

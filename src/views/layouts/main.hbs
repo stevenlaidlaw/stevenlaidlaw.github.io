@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
 
 <head>
   <meta charset="UTF-8" />
@@ -34,23 +34,15 @@
     /></noscript>
 </head>
 
-{{!-- <body class="[background-image:url(/assets/images/me-blur.png)] bg-cover bg-fixed text-white"> --}}
-<body class="[background-image:url(/assets/images/me-blur.png)] bg-cover bg-fixed overflow-hidden text-white">
-  <div class="py-8">
-    {{{body}}}
-  </div>
-
-  <div class="flex justify-center gap-4 flex-wrap mt-4">
-    {{#each socials}}
-    <a class="w-8" href="{{url}}" target="_blank" rel="noopener" title="{{title}}">
-      <img class="w-6 h-6" src="/assets/images/logos/{{slug}}.png" />
-    </a>
-    {{/each}}
-  </div>
-  
-  <div class="w-full p-8 mt-8 bg-neutral-900 text-center">
-    Copyright © 2024 <a href="/" title="Steven Laidlaw - Home">Steven Laidlaw</a>
-  </div>
+<body class="text-white [background-image:url(/assets/images/me-blur.png)] bg-cover bg-fixed w-full h-full">
+  {{!-- Noise --}}
+  <div class="pointer-events-none [background-image:url(/assets/images/noise.webp)] fixed top-[-100%] left-[-100%] w-[300%] h-[300%] opacity-10 animate-jitter"></div>
+  {{!-- White bar --}}
+  <div class="pointer-events-none absolute w-full h-[10vh] bg-white animate-scroll z-50 opacity-5"></div>
+  {{!-- Scanlines --}}
+  <div class="pointer-events-none fixed w-full h-full bg-rpt-gradient opacity-5"></div>
+  {{!-- Content --}}
+  {{{body}}}
 </body>
 
 </html>
