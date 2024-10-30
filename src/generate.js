@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync, mkdirSync, rmSync } from "fs";
 import Handlebars from "handlebars";
 import { socials, songs } from "./data.js";
 
-function build() {
+const oldBuild = () => {
   // Templates
   const mainLayout = Handlebars.compile(readFileSync("./views/layouts/main.hbs", "utf8"));
   const index = Handlebars.compile(readFileSync("./views/index.hbs", "utf8"));
@@ -29,6 +29,15 @@ function build() {
     mkdirSync(`../release/${song.slug}`, { recursive: true });
     writeFileSync(`../release/${song.slug}/index.html`, releaseHtml);
   });
-}
+};
+
+const build = () => {
+  const mainLayout = Handlebars.compile(readFileSync("./views/layouts/main.hbs", "utf8"));
+  const newIndex = Handlebars.compile(readFileSync("./views/newIndex.hbs", "utf8"));
+  const indexHtml = mainLayout({
+    body: newIndex(),
+  });
+  writeFileSync("../index.html", indexHtml);
+};
 
 build();
