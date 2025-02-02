@@ -30,20 +30,20 @@ export default {
           "50%": { backgroundPosition: "100% 50%" },
         },
         gradBorder: {
-          "0%, 100%": { '--angle': "45deg" },
-          "50%": { '--angle': "360deg" },
+          "0%, 100%": { "--angle": "45deg" },
+          "50%": { "--angle": "360deg" },
         },
         jitter: {
-          "0%, 100%": { transform:"translate(0, 0)" },
-          "10%": { transform:"translate(-5%, -10%)" },
-          "20%": { transform:"translate(-15%, 5%)" },
-          "30%": { transform:"translate(7%, -25%)" },
-          "40%": { transform:"translate(-5%, 25%)" },
-          "50%": { transform:"translate(-15%, 10%)" },
-          "60%": { transform:"translate(15%, 0%)" },
-          "70%": { transform:"translate(0%, 15%)" },
-          "80%": { transform:"translate(3%, 5%)" },
-          "90%": { transform:"translate(-10%, 10%)" },
+          "0%, 100%": { transform: "translate(0, 0)" },
+          "10%": { transform: "translate(-5%, -10%)" },
+          "20%": { transform: "translate(-15%, 5%)" },
+          "30%": { transform: "translate(7%, -25%)" },
+          "40%": { transform: "translate(-5%, 25%)" },
+          "50%": { transform: "translate(-15%, 10%)" },
+          "60%": { transform: "translate(15%, 0%)" },
+          "70%": { transform: "translate(0%, 15%)" },
+          "80%": { transform: "translate(3%, 5%)" },
+          "90%": { transform: "translate(-10%, 10%)" },
         },
         scroll: {
           "0%": { transform: "translateY(0)", opacity: "0%" },
@@ -53,12 +53,13 @@ export default {
         },
       },
       backgroundImage: {
-        "rpt-gradient": "repeating-linear-gradient(0, #000, #000 2px, transparent 4px)",
+        "rpt-gradient":
+          "repeating-linear-gradient(0, #000, #000 2px, transparent 4px)",
       },
       boxShadow: {
         even: "0 0 25px 0 rgba(0, 0, 0, 0.05)",
       },
-    }
+    },
   },
   plugins: [],
 };
