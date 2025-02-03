@@ -1,23 +1,18 @@
-/**
- * Configure your Gatsby site with this file.
- *
- * See: https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/
- */
-
+const author = `Steven Laidlaw`
 /**
  * @type {import('gatsby').GatsbyConfig}
  */
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Starter Blog`,
+    title: `devoid of context`,
     author: {
-      name: `Kyle Mathews`,
-      summary: `who lives and works in San Francisco building useful things.`,
+      name: author,
     },
-    description: `A starter blog demonstrating what Gatsby can do.`,
-    siteUrl: `https://gatsbystarterblogsource.gatsbyjs.io/`,
+    description: `unfiltered ramblings of software engineer ${author}`,
+    siteUrl: `https://stevenlaidlaw.com`,
     social: {
-      twitter: `kylemathews`,
+      github: `https://github.com/stevenlaidlaw`,
+      linkedin: `https://www.linkedin.com/in/stevenglaidlaw/`,
     },
   },
   plugins: [
