@@ -1,7 +1,7 @@
 ---
 title: Hello World
-date: "2015-05-01T22:12:03.284Z"
-description: "Hello World"
+date: "2015-05-01"
+description: "An example of what a blog post can look like"
 ---
 
 This is my first post on my new fake blog! How exciting!
@@ -23,8 +23,42 @@ Oh, and here's a great quote from this Wikipedia on
 
 You can also write code blocks here!
 
-```js
-const saltyDuckEgg = "chinese preserved food product"
+```jsx
+import Layout from "../components/layout"
+import Seo from "../components/seo"
+
+const BlogIndex = ({ data, location }) => {
+  const posts = data.allMarkdownRemark.nodes
+
+  return (
+    <Layout location={location}>
+      <ol style={{ listStyle: `none` }}>
+        {posts.map(post => (
+          <li key={post.fields.slug}>
+            <article
+              className="post-list-item"
+              itemScope
+              itemType="http://schema.org/Article"
+            >
+              <h2>
+                <Link to={post.fields.slug} itemProp="url">
+                  <span itemProp="headline">
+                    {post.frontmatter.title || post.fields.slug}
+                  </span>
+                </Link>
+              </h2>
+              <p>
+                <span>{post.frontmatter.date}</span>
+                {" // "}
+                {post.frontmatter.description}
+              </p>
+            </article>
+          </li>
+        ))}
+      </ol>
+    </Layout>
+  )
+}
 ```
 
 | Number | Title                                    | Year |
