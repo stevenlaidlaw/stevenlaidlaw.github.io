@@ -2,6 +2,7 @@
 title: Hello World
 date: "2015-05-01"
 description: "An example of what a blog post can look like"
+draft: true
 ---
 
 This is my first post on my new fake blog! How exciting!

@@ -1,0 +1,1 @@
+devoid of context blog source

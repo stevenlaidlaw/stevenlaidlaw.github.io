@@ -30,7 +30,7 @@ const Layout = ({ children }) => {
         <div>{description}</div>
         <div>
           <a href="https://github.com/stevenlaidlaw">github</a>
-          <span> // </span>
+          {" // "}
           <a href="https://www.linkedin.com/in/stevenglaidlaw/">linkedin</a>
         </div>
       </header>
