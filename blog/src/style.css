@@ -1,6 +1,7 @@
 /* CSS Custom Properties Definitions */
 
 :root {
+  /* Spacing */
   --maxWidth-none: "none";
   --maxWidth-xs: 20rem;
   --maxWidth-sm: 24rem;
@@ -27,33 +28,29 @@
   --spacing-20: 5rem;
   --spacing-24: 6rem;
   --spacing-32: 8rem;
-  --fontFamily-sans: "MontserratVariable", system-ui, -apple-system,
-    BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
-    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
-    "Noto Color Emoji";
-  --fontFamily-serif: "Merriweather", "Georgia", Cambria, "Times New Roman",
+  /* Fonts */
+  --fontFamily-serif: "Libre Baskerville", "Georgia", Cambria, "Times New Roman",
     Times, serif;
-  --font-body: var(--fontFamily-serif);
-  --font-heading: var(--fontFamily-sans);
+  --fontFamily-sans: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  --font-body: var(--fontFamily-sans);
+  --font-heading: var(--fontFamily-serif);
   --fontWeight-normal: 400;
   --fontWeight-bold: 700;
   --fontWeight-black: 900;
-  --fontSize-root: 16px;
+  --fontSize-root: 18px;
   --lineHeight-none: 1;
   --lineHeight-tight: 1.1;
   --lineHeight-normal: 1.5;
   --lineHeight-relaxed: 1.625;
-  /* 1.200 Minor Third Type Scale */
-  --fontSize-0: 0.833rem;
-  --fontSize-1: 1rem;
-  --fontSize-2: 1.2rem;
-  --fontSize-3: 1.44rem;
-  --fontSize-4: 1.728rem;
-  --fontSize-5: 2.074rem;
-  --fontSize-6: 2.488rem;
-  --fontSize-7: 2.986rem;
+  --fontSize-h5: 1rem;
+  --fontSize-h4: 1.25rem;
+  --fontSize-h3: 1.5rem;
+  --fontSize-h2: 2rem;
+  --fontSize-h1: 2.5rem;
+  /* Colors */
   --color-primary: #005b99;
-  --color-text: #2e353f;
+  --color-background: #fbf0d9;
+  --color-text: #000;
   --color-text-light: #4f5969;
   --color-heading: #1a202c;
   --color-heading-black: black;
@@ -77,8 +74,9 @@ html {
 
 body {
   font-family: var(--font-body);
-  font-size: var(--fontSize-1);
+  font-size: var(--fontSize-root);
   color: var(--color-text);
+  background: var(--color-background)
 }
 
 footer {
@@ -117,28 +115,28 @@ h6 {
 
 h1 {
   font-weight: var(--fontWeight-black);
-  font-size: var(--fontSize-6);
+  font-size: var(--fontSize-h1);
   color: var(--color-heading-black);
 }
 
 h2 {
-  font-size: var(--fontSize-5);
+  font-size: var(--fontSize-h2);
 }
 
 h3 {
-  font-size: var(--fontSize-4);
+  font-size: var(--fontSize-h3);
 }
 
 h4 {
-  font-size: var(--fontSize-3);
+  font-size: var(--fontSize-h4);
 }
 
 h5 {
-  font-size: var(--fontSize-2);
+  font-size: var(--fontSize-h5);
 }
 
 h6 {
-  font-size: var(--fontSize-1);
+  font-size: var(--fontSize-root);
 }
 
 h1 > a {
@@ -200,7 +198,7 @@ blockquote {
   margin-right: var(--spacing-8);
   padding: var(--spacing-0) var(--spacing-0) var(--spacing-0) var(--spacing-6);
   border-left: var(--spacing-1) solid var(--color-primary);
-  font-size: var(--fontSize-2);
+  font-size: var(--fontSize-h5);
   font-style: italic;
   margin-bottom: var(--spacing-8);
 }
@@ -249,7 +247,7 @@ a:focus {
 }
 
 .main-heading {
-  font-size: var(--fontSize-7);
+  font-size: 3rem;
   margin: 0;
 }
 
@@ -263,7 +261,7 @@ a:focus {
 }
 
 .post-list-item h2 {
-  font-size: var(--fontSize-4);
+  font-size: var(--fontSize-h3);
   color: var(--color-primary);
   margin-bottom: var(--spacing-2);
   margin-top: var(--spacing-0);
@@ -277,7 +275,7 @@ a:focus {
   font-weight: var(--fontWeight-bold);
   font-family: var(--font-heading);
   text-decoration: none;
-  font-size: var(--fontSize-2);
+  font-size: var(--fontSize-h5);
 }
 
 .bio {
@@ -301,7 +299,7 @@ a:focus {
 }
 
 .blog-post header p {
-  font-size: var(--fontSize-2);
+  font-size: var(--fontSize-h5);
   font-family: var(--font-heading);
 }
 

@@ -5,22 +5,16 @@ const author = `Steven Laidlaw`
 module.exports = {
   siteMetadata: {
     title: `devoid of context`,
-    author: {
-      name: author,
-    },
-    description: `unfiltered ramblings of software engineer ${author}`,
+    author,
+    description: `the unfiltered ramblings of software engineer ${author}`,
     siteUrl: `https://stevenlaidlaw.com`,
-    social: {
-      github: `https://github.com/stevenlaidlaw`,
-      linkedin: `https://www.linkedin.com/in/stevenglaidlaw/`,
-    },
   },
   plugins: [
     `gatsby-plugin-image`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/content/blog`,
+        path: `${__dirname}/articles`,
         name: `blog`,
       },
     },
