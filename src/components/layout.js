@@ -13,11 +13,9 @@ const Layout = ({ children }) => {
     <div className="global-wrapper">
       <div class="theme-toggle">
         <div class="theme-toggle-label">
-          {isDark
-            ? "how can you see anything in here?"
-            : "ahh the light burns me!"}
+          {isDark ? "how can you see anything?" : "the light burns me!"}
         </div>
-        <label class="switch">
+        <label class="switch" aria-label="toggle theme">
           <input type="checkbox" onClick={toggleTheme} checked={isDark} />
           <span class="slider"></span>
         </label>
