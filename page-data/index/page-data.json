@@ -1,1 +1,1 @@
-{"componentChunkName":"component---src-pages-index-js","path":"/","result":{"data":{"allMarkdownRemark":{"nodes":[]}},"pageContext":{}},"staticQueryHashes":["3000541721"],"slicesMap":{}}
+{"componentChunkName":"component---src-pages-index-js","path":"/","result":{"data":{"allMarkdownRemark":{"nodes":[{"fields":{"slug":"/20250118_reduce_reuse_refector/"},"frontmatter":{"date":"2025-01-18","title":"Reduce, Reuse, Refactor","description":"A few things I like to keep in mind when refactoring code."}}]}},"pageContext":{}},"staticQueryHashes":["3000541721"],"slicesMap":{}}
