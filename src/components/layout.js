@@ -29,6 +29,10 @@ const Layout = ({ children }) => {
         <div>
           <a href="https://github.com/stevenlaidlaw">github</a>
           {" // "}
+          <a rel="me" href="https://mastodon.social/@stevenlaidlaw">
+            Mastodon
+          </a>
+          {" // "}
           <a href="https://www.linkedin.com/in/stevenglaidlaw/">linkedin</a>
         </div>
       </header>
