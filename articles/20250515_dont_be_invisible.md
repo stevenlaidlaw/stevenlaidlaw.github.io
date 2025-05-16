@@ -1,7 +1,7 @@
 ---
 title: "Don't be invisible"
 date: "2025-05-15"
-description: "How to make your work visible and valuable."
+description: "Make your work visible and valuable."
 ---
 
 You know the funny thing about being a software engineer? A lot of us got into this career because we liked the idea of talking to computers more than people. Machines are predictable, rational, and (mostly) fair judges of effort. If something isn't working, the feedback loop is immediate. It's not subjective. No politics. No office drama.
