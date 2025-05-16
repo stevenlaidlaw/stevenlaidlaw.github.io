@@ -1,6 +1,6 @@
 ---
 title: "Size doesn't matter"
-date: "2025-05-15"
+date: "2025-05-16"
 description: "Should you care about the size of your organization?"
 ---
 
