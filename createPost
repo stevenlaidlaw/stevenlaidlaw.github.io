@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Create a new post in the `articles` directory with a timestamp and title
+# Usage: ./createPost.sh "Post Title"
+
+# Check if the title argument is provided
+if [ -z "$1" ]; then
+  echo "Usage: $0 \"Post Title\""
+  exit 1
+fi
+
+# Create a slug from the title
+slug=$(echo "$1" | tr '[:upper:]' '[:lower:]' | tr ' ' '_' | tr -cd '[:alnum:]_')
+filename="$(date +"%Y%m%d")_${slug}.md"
+post_path="articles/$filename"
+mkdir -p articles
+touch "$post_path"
+
+# Front matter
+cat <<EOL > "$post_path"
+---
+title: "$1"
+date: "$(date +"%Y-%m-%d")"
+description: ""
+---
+EOL
+
+# Open the post in the default text editor
+code "$post_path"
