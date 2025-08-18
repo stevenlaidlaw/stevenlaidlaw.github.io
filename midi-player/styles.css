@@ -1,0 +1,297 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h3 {
+    margin-bottom: 4px;
+    color: #666;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-size: 12px;
+}
+
+.sidebar input,
+.sidebar select {
+    width: 100%;
+    padding: 4px;
+    margin: 4px 0;
+    border: 1px solid #999;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.sidebar button {
+    padding: 4px 8px;
+    margin: 4px 0;
+}
+
+.app-container {
+    display: flex;
+    min-height: 100vh;
+    position: relative;
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Grid Controller Container */
+.grid-controller-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    padding: 4px;
+}
+
+.grid-controller {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    gap: 8px;
+    background: #222;
+    padding: 10px;
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    aspect-ratio: 1;
+    width: min(calc(100vh - 40px), calc(100vw - 480px));
+}
+
+.grid-button {
+    background: #ddd;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.1s ease;
+    position: relative;
+    aspect-ratio: 1;
+    opacity: 0.8;
+}
+
+.grid-button.root {
+    background: #4d79ff;
+}
+
+.grid-button.note {
+    background: #799aff;
+}
+
+.grid-button.chord {
+    background: #d787ff;
+}
+
+.grid-button.chord-root {
+    background: #c859ff;
+}
+
+.grid-button.modifier {
+    background: #ffb46e;
+}
+
+.grid-button.inversion {
+    background: #bfff8a;
+}
+
+.grid-button.octave {
+    background: #71fff1;
+}
+
+.grid-button.hold {
+    background: #ff7171;
+}
+
+.grid-button:hover {
+    opacity: 1;
+}
+
+.grid-button:active,
+.grid-button.active {
+    opacity: 1;
+    color: white;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 400px;
+    height: 100vh;
+    background: white;
+    overflow-y: auto;
+}
+
+/* Compact Settings Row */
+.compact-settings {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 14px;
+    border: 1px solid #dee2e6;
+}
+
+.compact-control {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+.compact-control label {
+    font-size: 10px;
+    font-weight: bold;
+    color: #666;
+    margin-bottom: 3px;
+    text-align: center;
+}
+
+.compact-control select,
+.compact-control input {
+    width: 100%;
+    padding: 2px 4px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 11px;
+    text-align: center;
+}
+
+.compact-control input[type="number"] {
+    width: 50px;
+}
+
+.sidebar-content {
+    padding: 4px;
+}
+
+.settings-content>div {
+    margin-bottom: 4px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #ddd;
+}
+
+.settings-content>div:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.status-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #ff6b6b;
+    animation: pulse 2s infinite;
+}
+
+.status-dot.connected {
+    background-color: #51cf66;
+}
+
+.status-dot.error {
+    background-color: #ff6b6b;
+}
+
+.midi-devices {
+    margin-bottom: 4px;
+    padding: 4px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #f9f9f9;
+}
+
+.device-item {
+    display: flex;
+    align-items: center;
+}
+
+.device-item input[type="checkbox"] {
+    margin: 2px 8px 2px 0;
+    width: auto;
+    transform: scale(1.2);
+}
+
+.device-item label {
+    cursor: pointer;
+    flex: 1;
+    margin: 0;
+    font-weight: normal;
+    color: #333;
+}
+
+.device-item:hover {
+    background: #f0f0f0;
+}
+
+.log-entry.midi-in {
+    background-color: #e2e3ff;
+    color: #4c4d99;
+    border-left: 3px solid #51cf66;
+}
+
+.control-group label {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: bold;
+    color: #555;
+}
+
+.midi-log {
+    margin-bottom: 4px;
+}
+
+#midi-log-content {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 4px;
+    height: 200px;
+    overflow-y: auto;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    line-height: 1.4;
+    margin-bottom: 10px;
+}
+
+.log-entry {
+    margin-bottom: 4px;
+    padding: 4px;
+    border-radius: 3px;
+}
+
+.log-entry.note-on {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.log-entry.note-off {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.log-entry.cc {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+.log-entry.program {
+    background-color: #fff3cd;
+    color: #856404;
+}
